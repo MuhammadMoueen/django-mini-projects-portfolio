@@ -11,9 +11,9 @@ def home(request):
         notes = Note.objects.filter(
             Q(title__icontains=search_query) | 
             Q(content__icontains=search_query)
-        )
+        ).order_by('created_at')
     else:
-        notes = Note.objects.all()
+        notes = Note.objects.all().order_by('created_at')
     
     total_notes = Note.objects.count()
     
