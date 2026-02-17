@@ -72,8 +72,7 @@
             </div>
         </div>
         
-        <!-- Tips Card -->
-        <div class="card mt-4" style="background: rgba(255, 255, 255, 0.95);">
+        <div class="card mt-4 tips-card">
             <div class="card-body">
                 <h6 class="card-title fw-bold">
                     <i class="bi bi-lightbulb"></i> Quick Tips
@@ -91,26 +90,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-    // Auto-resize textarea as user types
-    const textarea = document.getElementById('content');
-    textarea.addEventListener('input', function() {
-        this.style.height = 'auto';
-        this.style.height = this.scrollHeight + 'px';
-    });
-    
-    // Character counter for title
-    const titleInput = document.getElementById('title');
-    titleInput.addEventListener('input', function() {
-        const remaining = 200 - this.value.length;
-        const helpText = this.nextElementSibling;
-        if (remaining < 20) {
-            helpText.textContent = `${remaining} characters remaining`;
-            helpText.classList.add('text-warning');
-        } else {
-            helpText.textContent = 'Give your note a clear and descriptive title (max 200 characters)';
-            helpText.classList.remove('text-warning');
-        }
-    });
-</script>
+{% load static %}
+<script src="{% static 'js/notes.js' %}"></script>
 {% endblock %}

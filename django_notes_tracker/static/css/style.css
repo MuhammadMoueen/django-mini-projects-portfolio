@@ -1,0 +1,142 @@
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #8b5cf6;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --dark-color: #1f2937;
+    --light-color: #f9fafb;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--primary-color) !important;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 8px;
+    padding: 10px 25px;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+}
+
+.btn-danger {
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-weight: 600;
+}
+
+.btn-success {
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-weight: 600;
+}
+
+.note-card {
+    margin-bottom: 1.5rem;
+    background: white;
+}
+
+.note-title {
+    color: var(--dark-color);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.note-content {
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+.note-date {
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+.page-header {
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+.form-control, .form-control:focus {
+    border-radius: 8px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: white;
+}
+
+.empty-state i {
+    font-size: 5rem;
+    opacity: 0.5;
+}
+
+footer {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    color: white;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.tips-card {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.note-stats-card {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.note-detail-content {
+    white-space: pre-wrap;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.inline-form {
+    display: inline;
+}

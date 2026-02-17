@@ -4,8 +4,6 @@ from .models import Note
 
 
 class NoteModelTest(TestCase):
-
-    
     def setUp(self):
         self.note = Note.objects.create(
             title="Test Note",
@@ -24,12 +22,11 @@ class NoteModelTest(TestCase):
         long_content = "A" * 150
         note = Note.objects.create(title="Long Note", content=long_content)
         short_content = note.get_short_content(100)
-        self.assertEqual(len(short_content), 103)  # 100 + "..."
+        self.assertEqual(len(short_content), 103)
         self.assertTrue(short_content.endswith("..."))
 
 
 class NoteViewTest(TestCase):
-    
     def setUp(self):
         self.client = Client()
         self.note = Note.objects.create(
@@ -47,10 +44,10 @@ class NoteViewTest(TestCase):
             'title': 'New Note',
             'content': 'New content'
         })
-        self.assertEqual(response.status_code, 302)  # Redirect after POST
+        self.assertEqual(response.status_code, 302)
         self.assertTrue(Note.objects.filter(title='New Note').exists())
     
     def test_delete_note_view(self):
         response = self.client.post(reverse('delete_note', args=[self.note.id]))
-        self.assertEqual(response.status_code, 302)  # Redirect after POST
+        self.assertEqual(response.status_code, 302)
         self.assertFalse(Note.objects.filter(id=self.note.id).exists())
