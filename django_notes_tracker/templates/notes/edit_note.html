@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Note - Django Notes Tracker{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-header">
+            <h1 class="display-4 fw-bold">
+                <i class="bi bi-pencil-square"></i> Edit Note
+            </h1>
+            <p class="lead">Update your note</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body p-4">
+                <form method="POST" action="{% url 'edit_note' note.id %}">
+                    {% csrf_token %}
+                    
+                    <!-- Title Field -->
+                    <div class="mb-4">
+                        <label for="title" class="form-label fw-bold">
+                            <i class="bi bi-card-heading"></i> Note Title
+                        </label>
+                        <input 
+                            type="text" 
+                            class="form-control form-control-lg" 
+                            id="title" 
+                            name="title" 
+                            placeholder="Enter a descriptive title for your note"
+                            value="{{ title|default:note.title }}"
+                            required
+                            maxlength="200"
+                        >
+                        <div class="form-text">
+                            Give your note a clear and descriptive title (max 200 characters)
+                        </div>
+                    </div>
+                    
+                    <!-- Content Field -->
+                    <div class="mb-4">
+                        <label for="content" class="form-label fw-bold">
+                            <i class="bi bi-text-paragraph"></i> Note Content
+                        </label>
+                        <textarea 
+                            class="form-control" 
+                            id="content" 
+                            name="content" 
+                            rows="10" 
+                            placeholder="Write your note content here..."
+                            required
+                        >{{ content|default:note.content }}</textarea>
+                        <div class="form-text">
+                            Write the main content of your note
+                        </div>
+                    </div>
+                    
+                    <!-- Form Actions -->
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a href="{% url 'view_note' note.id %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Update Note
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4 tips-card">
+            <div class="card-body">
+                <h6 class="card-title fw-bold">
+                    <i class="bi bi-lightbulb"></i> Quick Tips
+                </h6>
+                <ul class="mb-0">
+                    <li>Use clear and descriptive titles to easily find your notes later</li>
+                    <li>Organize your thoughts with bullet points or paragraphs</li>
+                    <li>You can search for notes by title or content from the home page</li>
+                    <li>All changes are saved immediately when you click Update Note</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/notes.js' %}"></script>
+{% endblock %}

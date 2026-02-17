@@ -52,6 +52,31 @@ def view_note(request, note_id):
     return render(request, 'notes/view_note.html', context)
 
 
+def edit_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id)
+    
+    if request.method == 'POST':
+        title = request.POST.get('title', '').strip()
+        content = request.POST.get('content', '').strip()
+        
+        if not title:
+            messages.error(request, 'Title is required!')
+            return render(request, 'notes/edit_note.html', {'note': note, 'content': content})
+        
+        if not content:
+            messages.error(request, 'Content is required!')
+            return render(request, 'notes/edit_note.html', {'note': note, 'title': title})
+        
+        note.title = title
+        note.content = content
+        note.save()
+        messages.success(request, f'Note "{note.title}" has been updated successfully!')
+        return redirect('view_note', note_id=note.id)
+    
+    context = {'note': note}
+    return render(request, 'notes/edit_note.html', context)
+
+
 def delete_note(request, note_id):
     if request.method == 'POST':
         note = get_object_or_404(Note, id=note_id)
