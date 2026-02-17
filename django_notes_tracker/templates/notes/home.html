@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Django Notes Tracker{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-header">
+            <h1 class="display-4 fw-bold">
+                <i class="bi bi-journal-bookmark"></i> My Notes
+            </h1>
+            <p class="lead">Organize your thoughts, one note at a time</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-collection"></i> 
+                            Total Notes: <span class="badge bg-primary">{{ total_notes }}</span>
+                        </h5>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="{% url 'add_note' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-lg"></i> Create New Note
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search Bar -->
+<div class="row mb-4">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form method="GET" action="{% url 'home' %}">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            name="search" 
+                            placeholder="Search notes by title or content..."
+                            value="{{ search_query }}"
+                        >
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                        {% if search_query %}
+                        <a href="{% url 'home' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Clear
+                        </a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notes List -->
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        {% if notes %}
+            {% if search_query %}
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> 
+                    Found {{ notes|length }} note{{ notes|length|pluralize }} for "{{ search_query }}"
+                </div>
+            {% endif %}
+            
+            {% for note in notes %}
+            <div class="card note-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="note-title">
+                            <i class="bi bi-file-text"></i> {{ note.title }}
+                        </h5>
+                        <span class="note-date">
+                            <i class="bi bi-calendar3"></i> 
+                            {{ note.created_at|date:"M d, Y" }}
+                        </span>
+                    </div>
+                    
+                    <p class="note-content mb-3">
+                        {{ note.get_short_content }}
+                    </p>
+                    
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'view_note' note.id %}" class="btn btn-sm btn-success">
+                            <i class="bi bi-eye"></i> View Full Note
+                        </a>
+                        
+                        <!-- Delete Button with Confirmation Modal -->
+                        <button 
+                            type="button" 
+                            class="btn btn-sm btn-danger" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#deleteModal{{ note.id }}"
+                        >
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Delete Confirmation Modal -->
+            <div class="modal fade" id="deleteModal{{ note.id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="bi bi-exclamation-triangle text-danger"></i> 
+                                Confirm Delete
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete the note:</p>
+                            <p class="fw-bold">"{{ note.title }}"?</p>
+                            <p class="text-danger">This action cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+                            <form method="POST" action="{% url 'delete_note' note.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> Delete Note
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="bi bi-inbox"></i>
+                {% if search_query %}
+                    <h3 class="mt-4">No notes found</h3>
+                    <p>No notes match your search "{{ search_query }}"</p>
+                    <a href="{% url 'home' %}" class="btn btn-light mt-3">
+                        <i class="bi bi-arrow-left"></i> View All Notes
+                    </a>
+                {% else %}
+                    <h3 class="mt-4">No notes yet</h3>
+                    <p>Start creating your first note to get organized!</p>
+                    <a href="{% url 'add_note' %}" class="btn btn-light mt-3">
+                        <i class="bi bi-plus-circle"></i> Create Your First Note
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
