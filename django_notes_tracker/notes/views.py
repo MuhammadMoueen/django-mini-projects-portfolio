@@ -76,7 +76,6 @@ def edit_note(request, note_id):
     context = {'note': note}
     return render(request, 'notes/edit_note.html', context)
 
-
 def delete_note(request, note_id):
     if request.method == 'POST':
         note = get_object_or_404(Note, id=note_id)
