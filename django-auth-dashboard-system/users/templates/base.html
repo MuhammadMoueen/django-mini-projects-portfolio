@@ -15,10 +15,10 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
-                <i class="bi bi-shield-check"></i> Auth Dashboard
+            <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}" aria-label="Authentication Dashboard Home">
+                <i class="bi bi-shield-check" aria-hidden="true"></i> Auth Dashboard
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -52,8 +52,8 @@
                         </li>
                     {% endif %}
                     <li class="nav-item">
-                        <button class="nav-link btn btn-link" id="themeToggle">
-                            <i class="bi bi-moon-stars" id="themeIcon"></i>
+                        <button class="nav-link btn btn-link" id="themeToggle" aria-label="Toggle dark mode">
+                            <i class="bi bi-moon-stars" id="themeIcon" aria-hidden="true"></i>
                         </button>
                     </li>
                 </ul>
@@ -66,7 +66,7 @@
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                     {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close alert"></button>
                 </div>
             {% endfor %}
         </div>
