@@ -89,6 +89,7 @@ body {
     border-radius: 0.5rem !important;
     padding: 0.5rem 1.25rem !important;
     transition: all 0.3s ease !important;
+    will-change: transform, box-shadow;
 }
 
 .btn-logout:hover {
@@ -178,6 +179,7 @@ body {
     border-radius: 0.5rem;
     font-weight: 600;
     transition: all 0.3s ease;
+    will-change: transform, box-shadow;
 }
 
 .btn-primary:hover {
@@ -243,6 +245,7 @@ body {
     padding: 2rem;
     height: 100%;
     transition: all 0.3s ease;
+    will-change: transform, box-shadow;
 }
 
 .stat-card:hover {
@@ -435,6 +438,7 @@ body {
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    will-change: transform, box-shadow;
 }
 
 .metric-card::before {
