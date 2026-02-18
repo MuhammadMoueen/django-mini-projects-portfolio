@@ -799,3 +799,44 @@ body {
     font-weight: 600;
     font-size: 0.95rem;
 }
+
+/* Additional Responsive Breakpoints */
+@media (max-width: 576px) {
+    .dashboard-welcome {
+        padding: 1.5rem;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 1.75rem;
+    }
+
+    .auth-card {
+        padding: 1.25rem;
+    }
+
+    .action-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .metric-card {
+        padding: 1.25rem;
+    }
+
+    .stat-card {
+        padding: 1.25rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .dashboard-welcome {
+        padding: 3rem;
+    }
+
+    .metric-card {
+        padding: 2rem;
+    }
+
+    .stat-card {
+        padding: 2.5rem;
+    }
+}
