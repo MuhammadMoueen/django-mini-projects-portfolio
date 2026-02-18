@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Auth Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="dashboard-header mb-4">
+                <h1 class="display-4 fw-bold">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </h1>
+                <p class="lead">Welcome back, <strong>{{ user.username }}</strong>!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="stat-card">
+                <div class="stat-icon bg-primary">
+                    <i class="bi bi-person-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Profile</h3>
+                    <p class="text-muted mb-3">Manage your account settings</p>
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm">
+                        View Profile <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="stat-card">
+                <div class="stat-icon bg-success">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Security</h3>
+                    <p class="text-muted mb-3">Your account is secured</p>
+                    <button class="btn btn-outline-success btn-sm" disabled>
+                        Active <i class="bi bi-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="stat-card">
+                <div class="stat-icon bg-info">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Session</h3>
+                    <p class="text-muted mb-3">Currently logged in</p>
+                    <span class="badge bg-info">Active Session</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-8">
+            <div class="info-card">
+                <h4 class="mb-3">
+                    <i class="bi bi-info-circle"></i> About This Dashboard
+                </h4>
+                <p>This is a professional authentication system built with Django. It demonstrates:</p>
+                <ul class="feature-list">
+                    <li><i class="bi bi-check-circle-fill text-success"></i> User Registration & Login</li>
+                    <li><i class="bi bi-check-circle-fill text-success"></i> Session Management</li>
+                    <li><i class="bi bi-check-circle-fill text-success"></i> Protected Routes</li>
+                    <li><i class="bi bi-check-circle-fill text-success"></i> Modern Responsive UI</li>
+                    <li><i class="bi bi-check-circle-fill text-success"></i> Dark/Light Theme Toggle</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="info-card">
+                <h5 class="mb-3">Quick Stats</h5>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Username:</span>
+                    <strong>{{ user.username }}</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Email:</span>
+                    <strong>{{ user.email }}</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Status:</span>
+                    <span class="badge bg-success">Active</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Member Since:</span>
+                    <strong>{{ user.date_joined|date:"M d, Y" }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - Auth Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="profile-header mb-4">
+                <div class="d-flex align-items-center">
+                    <div class="profile-avatar">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <div class="ms-4">
+                        <h2 class="fw-bold mb-1">{{ user.username }}</h2>
+                        <p class="text-muted mb-0">{{ user.email }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card mb-4">
+                <h4 class="mb-4">
+                    <i class="bi bi-person-badge"></i> Account Information
+                </h4>
+                
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <strong>Username:</strong>
+                    </div>
+                    <div class="col-sm-8">
+                        {{ user.username }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <strong>Email Address:</strong>
+                    </div>
+                    <div class="col-sm-8">
+                        {{ user.email }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <strong>First Name:</strong>
+                    </div>
+                    <div class="col-sm-8">
+                        {{ user.first_name|default:"Not set" }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <strong>Last Name:</strong>
+                    </div>
+                    <div class="col-sm-8">
+                        {{ user.last_name|default:"Not set" }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <strong>Date Joined:</strong>
+                    </div>
+                    <div class="col-sm-8">
+                        {{ user.date_joined|date:"F d, Y at h:i A" }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <strong>Last Login:</strong>
+                    </div>
+                    <div class="col-sm-8">
+                        {{ user.last_login|date:"F d, Y at h:i A" }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <strong>Account Status:</strong>
+                    </div>
+                    <div class="col-sm-8">
+                        {% if user.is_active %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-danger">Inactive</span>
+                        {% endif %}
+                        {% if user.is_staff %}
+                            <span class="badge bg-primary">Staff</span>
+                        {% endif %}
+                        {% if user.is_superuser %}
+                            <span class="badge bg-warning">Admin</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h5 class="mb-3">
+                    <i class="bi bi-gear"></i> Account Actions
+                </h5>
+                <div class="d-grid gap-2 d-md-flex">
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
