@@ -3,98 +3,240 @@
 {% block title %}Dashboard - Auth Dashboard{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row">
-        <div class="col-12">
-            <div class="dashboard-header mb-4">
-                <h1 class="display-4 fw-bold">
-                    <i class="bi bi-speedometer2"></i> Dashboard
+<div class="container-fluid px-4 py-4">
+    <div class="dashboard-welcome mb-4">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="dashboard-title mb-2">
+                    <i class="bi bi-grid-fill me-2"></i>Dashboard
                 </h1>
-                <p class="lead">Welcome back, <strong>{{ user.username }}</strong>!</p>
+                <p class="dashboard-subtitle mb-0">
+                    Welcome back, <span class="username-highlight">{{ user.username }}</span>! Here's your overview.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <div class="dashboard-date">
+                    <i class="bi bi-calendar3 me-2"></i>
+                    <span>{{ user.last_login|date:"F d, Y" }}</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="row g-4">
-        <div class="col-md-6 col-lg-4">
-            <div class="stat-card">
-                <div class="stat-icon bg-primary">
+    <div class="row g-4 mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="metric-card metric-primary">
+                <div class="metric-icon">
                     <i class="bi bi-person-circle"></i>
                 </div>
-                <div class="stat-content">
-                    <h3>Profile</h3>
-                    <p class="text-muted mb-3">Manage your account settings</p>
-                    <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm">
-                        View Profile <i class="bi bi-arrow-right"></i>
+                <div class="metric-details">
+                    <h3 class="metric-value">1</h3>
+                    <p class="metric-label">Active Account</p>
+                </div>
+                <div class="metric-footer">
+                    <a href="{% url 'profile' %}" class="metric-link">
+                        View Profile <i class="bi bi-arrow-right-short"></i>
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="stat-card">
-                <div class="stat-icon bg-success">
+        <div class="col-xl-3 col-md-6">
+            <div class="metric-card metric-success">
+                <div class="metric-icon">
                     <i class="bi bi-shield-check"></i>
                 </div>
-                <div class="stat-content">
-                    <h3>Security</h3>
-                    <p class="text-muted mb-3">Your account is secured</p>
-                    <button class="btn btn-outline-success btn-sm" disabled>
-                        Active <i class="bi bi-check-circle"></i>
-                    </button>
+                <div class="metric-details">
+                    <h3 class="metric-value">100%</h3>
+                    <p class="metric-label">Security Score</p>
+                </div>
+                <div class="metric-footer">
+                    <span class="status-badge status-success">
+                        <i class="bi bi-check-circle-fill"></i> Protected
+                    </span>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="stat-card">
-                <div class="stat-icon bg-info">
+        <div class="col-xl-3 col-md-6">
+            <div class="metric-card metric-info">
+                <div class="metric-icon">
                     <i class="bi bi-clock-history"></i>
                 </div>
-                <div class="stat-content">
-                    <h3>Session</h3>
-                    <p class="text-muted mb-3">Currently logged in</p>
-                    <span class="badge bg-info">Active Session</span>
+                <div class="metric-details">
+                    <h3 class="metric-value">Active</h3>
+                    <p class="metric-label">Session Status</p>
+                </div>
+                <div class="metric-footer">
+                    <span class="status-badge status-info">
+                        <i class="bi bi-circle-fill pulse"></i> Online
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="metric-card metric-warning">
+                <div class="metric-icon">
+                    <i class="bi bi-envelope-check"></i>
+                </div>
+                <div class="metric-details">
+                    <h3 class="metric-value">Verified</h3>
+                    <p class="metric-label">Email Status</p>
+                </div>
+                <div class="metric-footer">
+                    <span class="status-badge status-warning">
+                        <i class="bi bi-check-circle-fill"></i> Confirmed
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row mt-5">
+    <div class="row g-4">
         <div class="col-lg-8">
-            <div class="info-card">
-                <h4 class="mb-3">
-                    <i class="bi bi-info-circle"></i> About This Dashboard
-                </h4>
-                <p>This is a professional authentication system built with Django. It demonstrates:</p>
-                <ul class="feature-list">
-                    <li><i class="bi bi-check-circle-fill text-success"></i> User Registration & Login</li>
-                    <li><i class="bi bi-check-circle-fill text-success"></i> Session Management</li>
-                    <li><i class="bi bi-check-circle-fill text-success"></i> Protected Routes</li>
-                    <li><i class="bi bi-check-circle-fill text-success"></i> Modern Responsive UI</li>
-                    <li><i class="bi bi-check-circle-fill text-success"></i> Dark/Light Theme Toggle</li>
-                </ul>
+            <div class="content-card">
+                <div class="card-header-custom">
+                    <h5 class="card-title-custom">
+                        <i class="bi bi-bar-chart-line-fill me-2"></i>Account Overview
+                    </h5>
+                </div>
+                <div class="card-body-custom">
+                    <div class="overview-grid">
+                        <div class="overview-item">
+                            <div class="overview-icon overview-icon-primary">
+                                <i class="bi bi-person-badge"></i>
+                            </div>
+                            <div class="overview-content">
+                                <h6>Username</h6>
+                                <p>{{ user.username }}</p>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-icon overview-icon-success">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <div class="overview-content">
+                                <h6>Email Address</h6>
+                                <p>{{ user.email }}</p>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-icon overview-icon-info">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <div class="overview-content">
+                                <h6>Member Since</h6>
+                                <p>{{ user.date_joined|date:"F d, Y" }}</p>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-icon overview-icon-warning">
+                                <i class="bi bi-clock"></i>
+                            </div>
+                            <div class="overview-content">
+                                <h6>Last Login</h6>
+                                <p>{{ user.last_login|date:"M d, Y - H:i" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card mt-4">
+                <div class="card-header-custom">
+                    <h5 class="card-title-custom">
+                        <i class="bi bi-lightning-charge-fill me-2"></i>Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body-custom">
+                    <div class="action-grid">
+                        <a href="{% url 'profile' %}" class="action-button action-primary">
+                            <i class="bi bi-person-gear"></i>
+                            <span>Edit Profile</span>
+                        </a>
+                        <a href="{% url 'dashboard' %}" class="action-button action-success">
+                            <i class="bi bi-shield-lock"></i>
+                            <span>Security Settings</span>
+                        </a>
+                        <a href="{% url 'dashboard' %}" class="action-button action-info">
+                            <i class="bi bi-bell"></i>
+                            <span>Notifications</span>
+                        </a>
+                        <a href="{% url 'logout' %}" class="action-button action-danger">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="col-lg-4">
-            <div class="info-card">
-                <h5 class="mb-3">Quick Stats</h5>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Username:</span>
-                    <strong>{{ user.username }}</strong>
+            <div class="content-card">
+                <div class="card-header-custom">
+                    <h5 class="card-title-custom">
+                        <i class="bi bi-person-circle me-2"></i>Profile Summary
+                    </h5>
                 </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Email:</span>
-                    <strong>{{ user.email }}</strong>
+                <div class="card-body-custom text-center">
+                    <div class="profile-avatar-large">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <h4 class="mt-3 mb-1">{{ user.username }}</h4>
+                    <p class="text-muted mb-3">{{ user.email }}</p>
+                    <div class="profile-badges">
+                        <span class="profile-badge badge-active">
+                            <i class="bi bi-check-circle-fill"></i> Active
+                        </span>
+                        {% if user.is_staff %}
+                        <span class="profile-badge badge-staff">
+                            <i class="bi bi-star-fill"></i> Staff
+                        </span>
+                        {% endif %}
+                    </div>
+                    <hr class="my-3">
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <i class="bi bi-calendar-plus"></i>
+                            <span>Joined {{ user.date_joined|date:"M Y" }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="bi bi-clock-history"></i>
+                            <span>Last seen {{ user.last_login|timesince }} ago</span>
+                        </div>
+                    </div>
+                    <a href="{% url 'profile' %}" class="btn btn-primary w-100 mt-3">
+                        <i class="bi bi-pencil-square"></i> View Full Profile
+                    </a>
                 </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Status:</span>
-                    <span class="badge bg-success">Active</span>
+            </div>
+
+            <div class="content-card mt-4">
+                <div class="card-header-custom">
+                    <h5 class="card-title-custom">
+                        <i class="bi bi-info-circle me-2"></i>System Info
+                    </h5>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <span>Member Since:</span>
-                    <strong>{{ user.date_joined|date:"M d, Y" }}</strong>
+                <div class="card-body-custom">
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span class="info-label">Framework</span>
+                            <span class="info-value">Django 5.0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Database</span>
+                            <span class="info-value">SQLite</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Theme</span>
+                            <span class="info-value">Dark/Light</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Version</span>
+                            <span class="info-value">1.0.0</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
