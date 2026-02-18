@@ -23,4 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
             themeIcon.className = 'bi bi-moon-stars';
         }
     }
+
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+    }, 100);
 });
