@@ -70,6 +70,21 @@ body {
     background-color: var(--bg-tertiary);
 }
 
+.btn-logout {
+    background: linear-gradient(135deg, var(--danger-color), #dc2626) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border-radius: 0.5rem !important;
+    padding: 0.5rem 1.25rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+}
+
 .main-content {
     flex: 1;
     padding-top: 2rem;
