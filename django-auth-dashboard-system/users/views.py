@@ -15,6 +15,8 @@ def signup_view(request):
             login(request, user)
             messages.success(request, 'Account created successfully!')
             return redirect('dashboard')
+        else:
+            messages.error(request, 'Please correct the errors below.')
     else:
         form = SignUpForm()
     
@@ -34,6 +36,8 @@ def login_view(request):
                 login(request, user)
                 messages.success(request, f'Welcome back, {username}!')
                 return redirect('dashboard')
+        else:
+            messages.error(request, 'Invalid username or password.')
     else:
         form = LoginForm()
     
