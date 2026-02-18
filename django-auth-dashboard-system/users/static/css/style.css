@@ -185,24 +185,39 @@ body {
     box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
 }
 
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
 .btn-outline-primary {
     border-color: var(--primary-color);
     color: var(--primary-color);
+    transition: all 0.3s ease;
 }
 
 .btn-outline-primary:hover {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
 }
 
 .btn-outline-success {
     border-color: var(--success-color);
     color: var(--success-color);
+    transition: all 0.3s ease;
 }
 
 .btn-outline-success:hover {
     background-color: var(--success-color);
     border-color: var(--success-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
 }
 
 .btn-outline-danger {
