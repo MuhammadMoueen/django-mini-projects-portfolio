@@ -17,6 +17,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (label && label.tagName === 'LABEL') {
                     label.textContent = fileName;
                 }
+                
+                const file = e.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('image-preview');
+                        if (preview) {
+                            preview.src = e.target.result;
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
             }
         });
     }
