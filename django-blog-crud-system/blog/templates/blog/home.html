@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Blog System{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center mb-5">
+    <h1 class="display-4 fw-bold mb-3">Welcome to BlogSys</h1>
+    <p class="lead text-muted mb-4">Discover amazing stories and share your thoughts with the world</p>
+    {% if not user.is_authenticated %}
+    <div>
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg me-2">Get Started</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">Sign In</a>
+    </div>
+    {% else %}
+    <a href="{% url 'post_create' %}" class="btn btn-primary btn-lg">Create New Post</a>
+    {% endif %}
+</div>
+
+<div class="search-section mb-4">
+    <form method="get" action="{% url 'home' %}">
+        <div class="input-group search-box mb-3">
+            <input type="text" name="search" class="form-control" placeholder="Search posts by title, content, or author..." value="{{ search_query }}">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+        
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                {% if search_query %}
+                <small class="text-white">Showing results for: <strong>"{{ search_query }}"</strong></small>
+                <a href="{% url 'home' %}" class="ms-2 text-white">Clear</a>
+                {% endif %}
+            </div>
+            
+            <div class="sort-options">
+                <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest First</option>
+                    <option value="oldest" {% if sort_by == 'oldest' %}selected{% endif %}>Oldest First</option>
+                    <option value="title" {% if sort_by == 'title' %}selected{% endif %}>By Title</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="posts-section">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Latest Posts</h2>
+        {% if page_obj.paginator.count %}
+        <span class="badge bg-light text-dark">{{ page_obj.paginator.count }} Post{{ page_obj.paginator.count|pluralize }}</span>
+        {% endif %}
+    </div>
+    
+    {% if page_obj %}
+    <div class="row g-4">
+        {% for post in page_obj %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card post-card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text text-muted">{{ post.content|truncatewords:20 }}</p>
+                    <div class="mt-auto">
+                        <div class="post-meta mb-3">
+                            <small class="text-muted">
+                                By <a href="{% url 'author_posts' post.author.username %}" class="author-link">{{ post.author.username }}</a> | {{ post.created_at|date:"M d, Y" }}
+                            </small>
+                        </div>
+                        <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <nav class="mt-5">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">Previous</a>
+            </li>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li class="page-item active">
+                <span class="page-link">{{ num }}</span>
+            </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">{{ num }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <div class="text-center py-5">
+        <p class="lead text-white">No posts found{% if search_query %} matching your search{% endif %}.</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'post_create' %}" class="btn btn-primary">Create Post</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
