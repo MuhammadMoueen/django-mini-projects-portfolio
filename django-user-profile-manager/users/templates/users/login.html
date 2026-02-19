@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Profile Manager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header">
+                <h3 class="text-center mb-0">
+                    <i class="bi bi-box-arrow-in-right"></i> Login
+                </h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" id="username" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" id="password" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-check-circle"></i> Login
+                    </button>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                Don't have an account? <a href="{% url 'register' %}">Register here</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
