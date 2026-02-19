@@ -7,6 +7,9 @@
     --text-dark: #333;
     --card-bg: #ffffff;
     --border-color: #e0e0e0;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
 }
 
 * {
