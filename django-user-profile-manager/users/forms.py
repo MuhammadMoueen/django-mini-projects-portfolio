@@ -26,6 +26,8 @@ class UserUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
+        self.fields['username'].help_text = 'Required. 150 characters or fewer.'
+        self.fields['email'].help_text = 'Enter a valid email address.'
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
