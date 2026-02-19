@@ -1,0 +1,13 @@
+[run]
+source = users
+omit = 
+    */tests/*
+    */test_*.py
+    */migrations/*
+    */management/*
+    */__pycache__/*
+
+[report]
+precision = 2
+show_missing = True
+skip_covered = False
