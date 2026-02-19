@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found - Blog System{% endblock %}
+
+{% block content %}
+<div class="error-page text-center">
+    <div class="error-content">
+        <h1 class="error-code display-1 fw-bold text-white mb-3">404</h1>
+        <h2 class="text-white mb-4">Oops! Page Not Found</h2>
+        <p class="lead text-white mb-5">The page you're looking for doesn't exist or has been moved.</p>
+        <div class="error-actions">
+            <a href="{% url 'home' %}" class="btn btn-primary btn-lg me-3">Go Home</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-lg">My Dashboard</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
