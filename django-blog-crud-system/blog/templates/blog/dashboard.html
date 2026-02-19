@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Blog System{% endblock %}
+
+{% block content %}
+<div class="dashboard-header mb-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="display-5 fw-bold mb-2">My Dashboard</h1>
+            <p class="text-muted">Welcome back, {{ user.username }}!</p>
+        </div>
+        <a href="{% url 'post_create' %}" class="btn btn-primary">Create New Post</a>
+    </div>
+</div>
+
+<div class="stats-cards mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <h3 class="display-4 fw-bold text-white mb-2">{{ total_posts }}</h3>
+                    <p class="text-white mb-0">Total Posts</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card-secondary">
+                <div class="card-body">
+                    <h3 class="display-4 fw-bold text-white mb-2">{{ posts_this_week }}</h3>
+                    <p class="text-white mb-0">Posts This Week</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card-accent">
+                <div class="card-body">
+                    <h3 class="display-4 fw-bold text-white mb-2">{{ recent_posts.count }}</h3>
+                    <p class="text-white mb-0">Recent Activity</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="posts-section">
+    <h2 class="mb-4">My Posts</h2>
+    
+    {% if posts %}
+    <div class="row g-4">
+        {% for post in posts %}
+        <div class="col-md-6">
+            <div class="card post-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ post.title }}</h5>
+                        {% if post.is_recently_updated %}
+                        <span class="badge bg-success">Updated</span>
+                        {% endif %}
+                    </div>
+                    <p class="card-text text-muted">{{ post.content|truncatewords:15 }}</p>
+                    <div class="post-meta mb-3">
+                        <small class="text-muted">
+                            Created: {{ post.created_at|date:"M d, Y" }}
+                            {% if post.updated_at != post.created_at %}
+                            <br>Updated: {{ post.updated_at|date:"M d, Y" }}
+                            {% endif %}
+                        </small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="{% url 'post_edit' post.pk %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                        <a href="{% url 'post_delete' post.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="empty-state">
+            <p class="lead text-white mb-4">You haven't created any posts yet.</p>
+            <a href="{% url 'post_create' %}" class="btn btn-primary btn-lg">Create Your First Post</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
