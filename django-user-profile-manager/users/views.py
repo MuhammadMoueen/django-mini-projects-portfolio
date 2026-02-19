@@ -40,9 +40,15 @@ def user_logout(request):
 @login_required
 def dashboard(request):
     profile = request.user.profile
+    from datetime import datetime, timedelta
+    recent_date = datetime.now() - timedelta(days=30)
+    recent_users = User.objects.filter(date_joined__gte=recent_date).count()
+    
     context = {
         'profile': profile,
         'total_users': User.objects.count(),
+        'recent_users': recent_users,
+        'completion_percentage': profile.profile_completion_percentage,
     }
     return render(request, 'users/dashboard.html', context)
 
