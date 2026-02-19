@@ -62,10 +62,12 @@ python manage.py runserver
 
 ## Technology Stack
 
-- Django 5.0.14
-- Bootstrap 5
-- SQLite Database
-- Pillow for Image Processing
+- **Backend**: Django 5.0.14
+- **Frontend**: Bootstrap 5.3
+- **Database**: SQLite3
+- **Image Processing**: Pillow 10.2.0
+- **Icons**: Bootstrap Icons
+- **Authentication**: Django Built-in Auth System
 
 ## Pages
 
