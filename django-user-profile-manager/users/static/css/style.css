@@ -222,6 +222,7 @@ body {
     color: var(--text-light);
     padding: 2rem 0;
     margin-top: 3rem;
+    border-top: 3px solid var(--accent);
 }
 
 .shadow {
