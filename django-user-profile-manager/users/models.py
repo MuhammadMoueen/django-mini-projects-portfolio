@@ -2,10 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from .validators import validate_image_size, validate_image_extension
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    profile_picture = models.ImageField(
+        upload_to='profile_pics/', 
+        blank=True, 
+        null=True,
+        validators=[validate_image_size, validate_image_extension]
+    )
     full_name = models.CharField(max_length=200, blank=True)
     bio = models.TextField(blank=True)
     phone = models.CharField(max_length=20, blank=True)
