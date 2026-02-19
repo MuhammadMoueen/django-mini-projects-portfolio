@@ -267,4 +267,9 @@ a:hover {
     .navbar-brand {
         font-size: 1.2rem;
     }
+    
+    .btn-primary, .btn-secondary {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
 }
