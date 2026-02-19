@@ -25,9 +25,9 @@
     <div class="col-md-4 mb-4">
         <div class="card stat-card">
             <div class="card-body text-center">
-                <i class="bi bi-person-check stat-icon"></i>
-                <h3>Active</h3>
-                <p class="text-muted">Your Status</p>
+                <i class="bi bi-person-plus stat-icon"></i>
+                <h3>{{ recent_users }}</h3>
+                <p class="text-muted">New (30 days)</p>
             </div>
         </div>
     </div>
@@ -35,9 +35,9 @@
     <div class="col-md-4 mb-4">
         <div class="card stat-card">
             <div class="card-body text-center">
-                <i class="bi bi-calendar-check stat-icon"></i>
-                <h3>{{ profile.created_at|date:"M d, Y" }}</h3>
-                <p class="text-muted">Joined Date</p>
+                <i class="bi bi-check-circle stat-icon"></i>
+                <h3>{{ completion_percentage }}%</h3>
+                <p class="text-muted">Profile Complete</p>
             </div>
         </div>
     </div>
