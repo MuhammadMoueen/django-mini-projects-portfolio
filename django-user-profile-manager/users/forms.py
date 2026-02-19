@@ -14,6 +14,17 @@ class UserRegisterForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
+        
+        self.fields['username'].widget.attrs['placeholder'] = 'Choose a username'
+        self.fields['email'].widget.attrs['placeholder'] = 'your.email@example.com'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Create a strong password'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm your password'
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('This email address is already in use.')
+        return email
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
