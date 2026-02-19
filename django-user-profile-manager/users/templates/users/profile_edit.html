@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile - Profile Manager{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header">
+                <h3 class="mb-0">
+                    <i class="bi bi-pencil"></i> Edit Profile
+                </h3>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <h5 class="mb-3">Account Information</h5>
+                    
+                    <div class="mb-3">
+                        <label for="{{ user_form.username.id_for_label }}" class="form-label">Username</label>
+                        {{ user_form.username }}
+                        {% if user_form.username.errors %}
+                            <div class="text-danger small">{{ user_form.username.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ user_form.email.id_for_label }}" class="form-label">Email</label>
+                        {{ user_form.email }}
+                        {% if user_form.email.errors %}
+                            <div class="text-danger small">{{ user_form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <hr>
+                    <h5 class="mb-3">Profile Information</h5>
+
+                    <div class="mb-3">
+                        <label for="{{ profile_form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>
+                        {{ profile_form.profile_picture }}
+                        {% if profile_form.profile_picture.errors %}
+                            <div class="text-danger small">{{ profile_form.profile_picture.errors }}</div>
+                        {% endif %}
+                        {% if user.profile.profile_picture %}
+                            <div class="mt-2">
+                                <img src="{{ user.profile.profile_picture.url }}" alt="Current" class="profile-image-small">
+                                <small class="text-muted d-block">Current profile picture</small>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ profile_form.full_name.id_for_label }}" class="form-label">Full Name</label>
+                        {{ profile_form.full_name }}
+                        {% if profile_form.full_name.errors %}
+                            <div class="text-danger small">{{ profile_form.full_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ profile_form.bio.id_for_label }}" class="form-label">Bio</label>
+                        {{ profile_form.bio }}
+                        {% if profile_form.bio.errors %}
+                            <div class="text-danger small">{{ profile_form.bio.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ profile_form.phone.id_for_label }}" class="form-label">Phone (Optional)</label>
+                        {{ profile_form.phone }}
+                        {% if profile_form.phone.errors %}
+                            <div class="text-danger small">{{ profile_form.phone.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ profile_form.location.id_for_label }}" class="form-label">Location (Optional)</label>
+                        {{ profile_form.location }}
+                        {% if profile_form.location.errors %}
+                            <div class="text-danger small">{{ profile_form.location.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Save Changes
+                        </button>
+                        <a href="{% url 'profile' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
