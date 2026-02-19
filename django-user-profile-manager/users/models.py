@@ -26,6 +26,16 @@ class UserProfile(models.Model):
         ordering = ['-created_at']
         verbose_name = 'User Profile'
         verbose_name_plural = 'User Profiles'
+    
+    @property
+    def get_full_name(self):
+        return self.full_name if self.full_name else self.user.username
+    
+    @property
+    def profile_completion_percentage(self):
+        fields = ['full_name', 'bio', 'phone', 'location', 'profile_picture']
+        filled = sum([1 for field in fields if getattr(self, field)])
+        return int((filled / len(fields)) * 100)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
