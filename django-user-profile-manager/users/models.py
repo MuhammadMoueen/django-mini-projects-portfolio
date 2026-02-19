@@ -21,6 +21,11 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'User Profile'
+        verbose_name_plural = 'User Profiles'
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
