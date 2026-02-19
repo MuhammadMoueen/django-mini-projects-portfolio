@@ -33,6 +33,13 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['profile_picture', 'full_name', 'bio', 'phone', 'location']
+        labels = {
+            'profile_picture': 'Profile Picture',
+            'full_name': 'Full Name',
+            'bio': 'About Me',
+            'phone': 'Phone Number',
+            'location': 'City/Location',
+        }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -43,6 +50,11 @@ class ProfileUpdateForm(forms.ModelForm):
                 self.fields[field].widget.attrs.update({'class': 'form-control', 'rows': 4})
             else:
                 self.fields[field].widget.attrs.update({'class': 'form-control'})
+        
+        self.fields['full_name'].widget.attrs['placeholder'] = 'Enter your full name'
+        self.fields['bio'].widget.attrs['placeholder'] = 'Tell us about yourself...'
+        self.fields['phone'].widget.attrs['placeholder'] = '+1 234 567 8900'
+        self.fields['location'].widget.attrs['placeholder'] = 'City, Country'
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
