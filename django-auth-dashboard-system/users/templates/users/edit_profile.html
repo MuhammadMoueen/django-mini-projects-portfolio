@@ -155,7 +155,7 @@
 
 #imageCropper {
     width: 100%;
-    height: 400px;
+    height: 500px;
 }
 
 .modal-content {
@@ -170,11 +170,17 @@
 .modal-footer {
     border-top: 1px solid var(--border-color);
 }
+
+.modal-dialog {
+    max-width: 600px;
+}
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     let croppieInstance = null;
+    let zoomAnimationFrame = null;
+    
     const imageInput = document.getElementById('imageInput');
     const selectImageBtn = document.getElementById('selectImageBtn');
     const cropperModal = new bootstrap.Modal(document.getElementById('cropperModal'));
@@ -186,64 +192,88 @@ document.addEventListener('DOMContentLoaded', function() {
     
     imageInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                if (croppieInstance) {
-                    croppieInstance.destroy();
-                }
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            if (croppieInstance) {
+                croppieInstance.destroy();
+                croppieInstance = null;
+            }
+            
+            cropperModal.show();
+            
+            setTimeout(() => {
+                const cropperElement = document.getElementById('imageCropper');
+                croppieInstance = new Croppie(cropperElement, {
+                    viewport: { width: 300, height: 300, type: 'circle' },
+                    boundary: { width: 500, height: 500 },
+                    showZoomer: false,
+                    enableOrientation: true,
+                    enableResize: false,
+                    mouseWheelZoom: false
+                });
                 
-                cropperModal.show();
-                
-                setTimeout(() => {
-                    croppieInstance = new Croppie(document.getElementById('imageCropper'), {
-                        viewport: { width: 200, height: 200, type: 'circle' },
-                        boundary: { width: 400, height: 400 },
-                        showZoomer: false,
-                        enableOrientation: true
-                    });
-                    
-                    croppieInstance.bind({
-                        url: event.target.result
-                    });
-                    
+                croppieInstance.bind({
+                    url: event.target.result,
+                    zoom: 0
+                }).then(() => {
                     zoomSlider.value = 0;
-                }, 300);
-            };
-            reader.readAsDataURL(file);
-        }
+                });
+            }, 250);
+        };
+        reader.readAsDataURL(file);
     });
     
     zoomSlider.addEventListener('input', function() {
-        if (croppieInstance) {
-            croppieInstance.setZoom(parseFloat(this.value));
+        if (!croppieInstance) return;
+        
+        if (zoomAnimationFrame) {
+            cancelAnimationFrame(zoomAnimationFrame);
         }
+        
+        const zoomValue = parseFloat(this.value);
+        zoomAnimationFrame = requestAnimationFrame(() => {
+            croppieInstance.setZoom(zoomValue);
+        });
     });
     
     cropButton.addEventListener('click', function() {
+        if (!croppieInstance) return;
+        
+        croppieInstance.result({
+            type: 'base64',
+            size: 'viewport',
+            format: 'png',
+            quality: 1,
+            circle: false
+        }).then(function(base64) {
+            document.getElementById('croppedImage').value = base64;
+            
+            if (currentAvatar.tagName === 'IMG') {
+                currentAvatar.src = base64;
+            } else {
+                const img = document.createElement('img');
+                img.src = base64;
+                img.className = 'avatar-preview';
+                img.id = 'currentAvatar';
+                currentAvatar.parentNode.replaceChild(img, currentAvatar);
+            }
+            
+            cropperModal.hide();
+        });
+    });
+    
+    document.getElementById('cropperModal').addEventListener('hidden.bs.modal', function() {
         if (croppieInstance) {
-            croppieInstance.result({
-                type: 'base64',
-                size: 'viewport',
-                format: 'png',
-                quality: 1,
-                circle: false
-            }).then(function(base64) {
-                document.getElementById('croppedImage').value = base64;
-                
-                if (currentAvatar.tagName === 'IMG') {
-                    currentAvatar.src = base64;
-                } else {
-                    const img = document.createElement('img');
-                    img.src = base64;
-                    img.className = 'avatar-preview';
-                    img.id = 'currentAvatar';
-                    currentAvatar.parentNode.replaceChild(img, currentAvatar);
-                }
-                
-                cropperModal.hide();
-            });
+            croppieInstance.destroy();
+            croppieInstance = null;
         }
+        if (zoomAnimationFrame) {
+            cancelAnimationFrame(zoomAnimationFrame);
+            zoomAnimationFrame = null;
+        }
+        imageInput.value = '';
     });
 });
 </script>
