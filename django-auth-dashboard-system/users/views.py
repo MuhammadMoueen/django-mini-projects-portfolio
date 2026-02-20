@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import SignUpForm, LoginForm, UserProfileForm, CustomPasswordChangeForm
 from .models import UserProfile
+import base64
+from django.core.files.base import ContentFile
 
 def signup_view(request):
     if request.user.is_authenticated:
@@ -56,15 +58,19 @@ def dashboard_view(request):
     return render(request, 'users/dashboard.html', {'profile': profile})
 
 @login_required
-def profile_view(request):
-    return render(request, 'users/profile.html')
-
-@login_required
 def edit_profile_view(request):
     profile, created = UserProfile.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=profile, user=request.user)
+        
+        cropped_image = request.POST.get('cropped_image')
+        if cropped_image:
+            format, imgstr = cropped_image.split(';base64,')
+            ext = format.split('/')[-1]
+            data = ContentFile(base64.b64decode(imgstr), name=f'avatar_{request.user.id}.{ext}')
+            profile.profile_picture = data
+        
         if form.is_valid():
             request.user.first_name = form.cleaned_data.get('first_name', '')
             request.user.last_name = form.cleaned_data.get('last_name', '')
@@ -75,7 +81,7 @@ def edit_profile_view(request):
     else:
         form = UserProfileForm(instance=profile, user=request.user)
     
-    return render(request, 'users/edit_profile.html', {'form': form})
+    return render(request, 'users/edit_profile.html', {'form': form, 'profile': profile})
 
 @login_required
 def change_password_view(request):
@@ -90,4 +96,3 @@ def change_password_view(request):
         form = CustomPasswordChangeForm(request.user)
     
     return render(request, 'users/change_password.html', {'form': form})
-

@@ -18,7 +18,7 @@
 
             <div class="card">
                 <div class="card-body p-4">
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" id="profileForm">
                         {% csrf_token %}
                         
                         {% if form.errors %}
@@ -32,68 +32,82 @@
                             <div class="col-md-6">
                                 <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
                                 {{ form.first_name }}
-                                {% if form.first_name.errors %}
-                                    <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
-                                {% endif %}
                             </div>
 
                             <div class="col-md-6">
                                 <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
                                 {{ form.last_name }}
-                                {% if form.last_name.errors %}
-                                    <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
-                                {% endif %}
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth</label>
                                 {{ form.date_of_birth }}
-                                {% if form.date_of_birth.errors %}
-                                    <div class="text-danger small mt-1">{{ form.date_of_birth.errors }}</div>
-                                {% endif %}
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>
-                                {{ form.profile_picture }}
-                                {% if form.profile_picture.errors %}
-                                    <div class="text-danger small mt-1">{{ form.profile_picture.errors }}</div>
-                                {% endif %}
                             </div>
 
                             <div class="col-12">
                                 <label for="{{ form.bio.id_for_label }}" class="form-label">Bio</label>
                                 {{ form.bio }}
-                                {% if form.bio.errors %}
-                                    <div class="text-danger small mt-1">{{ form.bio.errors }}</div>
-                                {% endif %}
                             </div>
 
                             <div class="col-md-6">
                                 <label for="{{ form.skills.id_for_label }}" class="form-label">Skills</label>
                                 {{ form.skills }}
-                                {% if form.skills.errors %}
-                                    <div class="text-danger small mt-1">{{ form.skills.errors }}</div>
-                                {% endif %}
                             </div>
 
                             <div class="col-md-6">
                                 <label for="{{ form.education.id_for_label }}" class="form-label">Education</label>
                                 {{ form.education }}
-                                {% if form.education.errors %}
-                                    <div class="text-danger small mt-1">{{ form.education.errors }}</div>
-                                {% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Profile Picture</label>
+                                <div class="profile-image-upload">
+                                    <div class="current-avatar mb-3">
+                                        {% if profile.profile_picture %}
+                                            <img src="{{ profile.profile_picture.url }}" alt="Current Avatar" id="currentAvatar" class="avatar-preview">
+                                        {% else %}
+                                            <div class="avatar-preview-empty" id="currentAvatar">
+                                                <i class="bi bi-person-fill"></i>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <input type="file" id="imageInput" accept="image/*" class="form-control" style="display: none;">
+                                    <button type="button" class="btn btn-outline-primary" id="selectImageBtn">
+                                        <i class="bi bi-image me-2"></i>Choose New Image
+                                    </button>
+                                </div>
+                                
+                                <div id="cropperModal" class="modal" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Crop Profile Picture</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div id="imageCropper"></div>
+                                                <div class="cropper-controls mt-3">
+                                                    <label class="form-label">Zoom</label>
+                                                    <input type="range" id="zoomSlider" min="0" max="1" step="0.01" value="0" class="form-range">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-primary" id="cropButton">Apply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <input type="hidden" name="cropped_image" id="croppedImage">
                             </div>
                         </div>
 
                         <div class="d-flex gap-2 mt-4">
                             <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-check-circle me-2"></i>
-                                Save Changes
+                                <i class="bi bi-check-circle me-2"></i>Save Changes
                             </button>
-                            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
-                                Cancel
-                            </a>
+                            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>
@@ -101,4 +115,136 @@
         </div>
     </div>
 </div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+
+<style>
+.profile-image-upload {
+    text-align: center;
+}
+
+.current-avatar {
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--border-color);
+}
+
+.avatar-preview-empty {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--border-color);
+}
+
+.avatar-preview-empty i {
+    font-size: 3rem;
+    color: white;
+}
+
+#imageCropper {
+    width: 100%;
+    height: 400px;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let croppieInstance = null;
+    const imageInput = document.getElementById('imageInput');
+    const selectImageBtn = document.getElementById('selectImageBtn');
+    const cropperModal = new bootstrap.Modal(document.getElementById('cropperModal'));
+    const zoomSlider = document.getElementById('zoomSlider');
+    const cropButton = document.getElementById('cropButton');
+    const currentAvatar = document.getElementById('currentAvatar');
+    
+    selectImageBtn.addEventListener('click', () => imageInput.click());
+    
+    imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                if (croppieInstance) {
+                    croppieInstance.destroy();
+                }
+                
+                cropperModal.show();
+                
+                setTimeout(() => {
+                    croppieInstance = new Croppie(document.getElementById('imageCropper'), {
+                        viewport: { width: 200, height: 200, type: 'circle' },
+                        boundary: { width: 400, height: 400 },
+                        showZoomer: false,
+                        enableOrientation: true
+                    });
+                    
+                    croppieInstance.bind({
+                        url: event.target.result
+                    });
+                    
+                    zoomSlider.value = 0;
+                }, 300);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    zoomSlider.addEventListener('input', function() {
+        if (croppieInstance) {
+            croppieInstance.setZoom(parseFloat(this.value));
+        }
+    });
+    
+    cropButton.addEventListener('click', function() {
+        if (croppieInstance) {
+            croppieInstance.result({
+                type: 'base64',
+                size: 'viewport',
+                format: 'png',
+                quality: 1,
+                circle: false
+            }).then(function(base64) {
+                document.getElementById('croppedImage').value = base64;
+                
+                if (currentAvatar.tagName === 'IMG') {
+                    currentAvatar.src = base64;
+                } else {
+                    const img = document.createElement('img');
+                    img.src = base64;
+                    img.className = 'avatar-preview';
+                    img.id = 'currentAvatar';
+                    currentAvatar.parentNode.replaceChild(img, currentAvatar);
+                }
+                
+                cropperModal.hide();
+            });
+        }
+    });
+});
+</script>
 {% endblock %}
