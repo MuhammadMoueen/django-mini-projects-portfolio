@@ -10,18 +10,7 @@
 
 <div class="auth-container">
     <div class="auth-split-layout">
-        <!-- Left Panel - Welcome Section -->
-        <div class="auth-left-panel">
-            <div class="auth-welcome-content">
-                <h1 class="welcome-title">Welcome Back!</h1>
-                <p class="welcome-subtitle">Enter your personal details to use all of site features</p>
-                <a href="{% url 'login' %}" class="btn-auth-switch">
-                    <span>SIGN IN</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- Right Panel - Signup Form -->
+        <!-- Left Panel - Signup Form -->
         <div class="auth-right-panel">
             <div class="auth-form-container">
                 <h2 class="auth-form-title">Create Account</h2>
@@ -97,6 +86,17 @@
                         SIGN UP
                     </button>
                 </form>
+            </div>
+        </div>
+
+        <!-- Right Panel - Welcome Section -->
+        <div class="auth-left-panel">
+            <div class="auth-welcome-content">
+                <h1 class="welcome-title">Welcome Back!</h1>
+                <p class="welcome-subtitle">Enter your personal details to use all of site features</p>
+                <a href="{% url 'login' %}" class="btn-auth-switch">
+                    <span>SIGN IN</span>
+                </a>
             </div>
         </div>
     </div>
