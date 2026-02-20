@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile - Auth Dashboard{% endblock %}
+
+{% block content %}
+<div class="minimal-dashboard">
+    <div class="container py-5">
+        
+        <!-- Page Header -->
+        <div class="welcome-section mb-4">
+            <h1 class="welcome-title">
+                <i class="bi bi-pencil-square me-3"></i>
+                Edit Profile
+            </h1>
+            <p class="welcome-subtitle">Update your account information</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="info-card">
+                    <div class="card-header-minimal">
+                        <h3 class="card-title-minimal">
+                            <i class="bi bi-person-badge me-2"></i>
+                            Profile Information
+                        </h3>
+                    </div>
+                    <div class="card-body-minimal">
+                        <form method="post" class="profile-form">
+                            {% csrf_token %}
+
+                            <div class="mb-4">
+                                <label for="username" class="form-label">
+                                    <i class="bi bi-person-fill me-2"></i>Username
+                                </label>
+                                <input type="text" 
+                                       class="form-control-minimal" 
+                                       id="username" 
+                                       name="username" 
+                                       value="{{ user.username }}"
+                                       required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="email" class="form-label">
+                                    <i class="bi bi-envelope-fill me-2"></i>Email Address
+                                </label>
+                                <input type="email" 
+                                       class="form-control-minimal" 
+                                       id="email" 
+                                       name="email" 
+                                       value="{{ user.email }}"
+                                       placeholder="your.email@example.com">
+                            </div>
+
+                            <div class="info-box mb-4">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <small>Account created: {{ user.date_joined|date:"F d, Y" }}</small>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn-security btn-primary-minimal">
+                                    <i class="bi bi-check-circle"></i>
+                                    <span>Save Changes</span>
+                                </button>
+                                <a href="{% url 'dashboard' %}" class="btn-security btn-secondary-minimal text-center">
+                                    <i class="bi bi-x-circle"></i>
+                                    <span>Cancel</span>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+.profile-form .form-control-minimal {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.profile-form .form-control-minimal:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-label {
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.info-box {
+    padding: 1rem;
+    background: rgba(59, 130, 246, 0.1);
+    border-left: 3px solid var(--info-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+}
+</style>
+{% endblock %}
