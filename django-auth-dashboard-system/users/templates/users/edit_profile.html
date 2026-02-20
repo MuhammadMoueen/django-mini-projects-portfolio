@@ -213,53 +213,99 @@
 document.addEventListener('DOMContentLoaded', function() {
     let croppieInstance = null;
     let zoomAnimationFrame = null;
+    let isProcessing = false;
     
-    const imageInput = document.getElementById('imageInput');
-    const selectImageBtn = document.getElementById('selectImageBtn');
-    const cropperModal = new bootstrap.Modal(document.getElementById('cropperModal'));
-    const zoomSlider = document.getElementById('zoomSlider');
-    const cropButton = document.getElementById('cropButton');
-    const currentAvatar = document.getElementById('currentAvatar');
+    const elements = {
+        imageInput: document.getElementById('imageInput'),
+        selectImageBtn: document.getElementById('selectImageBtn'),
+        cropperModal: new bootstrap.Modal(document.getElementById('cropperModal'), {
+            backdrop: 'static',
+            keyboard: false
+        }),
+        zoomSlider: document.getElementById('zoomSlider'),
+        cropButton: document.getElementById('cropButton'),
+        currentAvatar: document.getElementById('currentAvatar')
+    };
     
-    selectImageBtn.addEventListener('click', () => imageInput.click());
-    
-    imageInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
+    const initializeCropper = (imageUrl) => {
+        const cropperElement = document.getElementById('imageCropper');
         
+        return new Croppie(cropperElement, {
+            viewport: { width: 300, height: 300, type: 'circle' },
+            boundary: { width: 500, height: 500 },
+            showZoomer: false,
+            enableOrientation: true,
+            enableResize: false,
+            mouseWheelZoom: false
+        });
+    };
+    
+    const destroyCropper = () => {
+        if (croppieInstance) {
+            croppieInstance.destroy();
+            croppieInstance = null;
+        }
+        if (zoomAnimationFrame) {
+            cancelAnimationFrame(zoomAnimationFrame);
+            zoomAnimationFrame = null;
+        }
+    };
+    
+    const updateAvatar = (base64Image) => {
+        if (elements.currentAvatar.tagName === 'IMG') {
+            elements.currentAvatar.src = base64Image;
+        } else {
+            const img = document.createElement('img');
+            img.src = base64Image;
+            img.className = 'avatar-preview';
+            img.id = 'currentAvatar';
+            elements.currentAvatar.parentNode.replaceChild(img, elements.currentAvatar);
+            elements.currentAvatar = img;
+        }
+    };
+    
+    elements.selectImageBtn.addEventListener('click', () => {
+        if (!isProcessing) elements.imageInput.click();
+    });
+    
+    elements.imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file || isProcessing) return;
+        
+        if (!file.type.startsWith('image/')) {
+            alert('Please select a valid image file.');
+            return;
+        }
+        
+        isProcessing = true;
         const reader = new FileReader();
+        
         reader.onload = function(event) {
-            if (croppieInstance) {
-                croppieInstance.destroy();
-                croppieInstance = null;
-            }
-            
-            cropperModal.show();
+            destroyCropper();
+            elements.cropperModal.show();
             
             setTimeout(() => {
-                const cropperElement = document.getElementById('imageCropper');
-                croppieInstance = new Croppie(cropperElement, {
-                    viewport: { width: 300, height: 300, type: 'circle' },
-                    boundary: { width: 500, height: 500 },
-                    showZoomer: false,
-                    enableOrientation: true,
-                    enableResize: false,
-                    mouseWheelZoom: false
-                });
-                
+                croppieInstance = initializeCropper();
                 croppieInstance.bind({
                     url: event.target.result,
                     zoom: 0
                 }).then(() => {
-                    zoomSlider.value = 0;
+                    elements.zoomSlider.value = 0;
+                    isProcessing = false;
                 });
-            }, 250);
+            }, 200);
         };
+        
+        reader.onerror = () => {
+            alert('Failed to read image file.');
+            isProcessing = false;
+        };
+        
         reader.readAsDataURL(file);
     });
     
-    zoomSlider.addEventListener('input', function() {
-        if (!croppieInstance) return;
+    elements.zoomSlider.addEventListener('input', function() {
+        if (!croppieInstance || isProcessing) return;
         
         if (zoomAnimationFrame) {
             cancelAnimationFrame(zoomAnimationFrame);
@@ -267,12 +313,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const zoomValue = parseFloat(this.value);
         zoomAnimationFrame = requestAnimationFrame(() => {
-            croppieInstance.setZoom(zoomValue);
+            if (croppieInstance) {
+                croppieInstance.setZoom(zoomValue);
+            }
         });
     });
     
-    cropButton.addEventListener('click', function() {
-        if (!croppieInstance) return;
+    elements.cropButton.addEventListener('click', function() {
+        if (!croppieInstance || isProcessing) return;
+        
+        isProcessing = true;
+        elements.cropButton.disabled = true;
         
         croppieInstance.result({
             type: 'base64',
@@ -282,31 +333,21 @@ document.addEventListener('DOMContentLoaded', function() {
             circle: false
         }).then(function(base64) {
             document.getElementById('croppedImage').value = base64;
-            
-            if (currentAvatar.tagName === 'IMG') {
-                currentAvatar.src = base64;
-            } else {
-                const img = document.createElement('img');
-                img.src = base64;
-                img.className = 'avatar-preview';
-                img.id = 'currentAvatar';
-                currentAvatar.parentNode.replaceChild(img, currentAvatar);
-            }
-            
-            cropperModal.hide();
+            updateAvatar(base64);
+            elements.cropperModal.hide();
+        }).catch(function(error) {
+            console.error('Crop failed:', error);
+            alert('Failed to crop image. Please try again.');
+        }).finally(function() {
+            elements.cropButton.disabled = false;
+            isProcessing = false;
         });
     });
     
     document.getElementById('cropperModal').addEventListener('hidden.bs.modal', function() {
-        if (croppieInstance) {
-            croppieInstance.destroy();
-            croppieInstance = null;
-        }
-        if (zoomAnimationFrame) {
-            cancelAnimationFrame(zoomAnimationFrame);
-            zoomAnimationFrame = null;
-        }
-        imageInput.value = '';
+        destroyCropper();
+        elements.imageInput.value = '';
+        isProcessing = false;
     });
 });
 </script>
