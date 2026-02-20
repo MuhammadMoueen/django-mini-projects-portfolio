@@ -3,115 +3,133 @@
 {% block title %}Dashboard - Auth Dashboard{% endblock %}
 
 {% block content %}
-<!-- Minimal Clean Dashboard -->
-<div class="minimal-dashboard">
-    <div class="container py-5">
-        
-        <!-- Welcome Section -->
-        <div class="welcome-section mb-5">
-            <h1 class="welcome-title">
-                <i class="bi bi-person-circle me-3"></i>
-                Welcome, {{ user.username }}!
-            </h1>
-            <p class="welcome-subtitle">Manage your account and security settings</p>
-        </div>
-
-        <div class="row g-4">
-            <!-- User Information Card -->
-            <div class="col-lg-6">
-                <div class="info-card">
-                    <div class="card-header-minimal">
-                        <h3 class="card-title-minimal">
-                            <i class="bi bi-person-badge me-2"></i>
-                            User Information
-                        </h3>
-                    </div>
-                    <div class="card-body-minimal">
-                        <div class="info-item-minimal">
-                            <div class="info-label-minimal">
-                                <i class="bi bi-person"></i>
-                                <span>Username</span>
-                            </div>
-                            <div class="info-value-minimal">{{ user.username }}</div>
-                        </div>
-                        
-                        <div class="info-item-minimal">
-                            <div class="info-label-minimal">
-                                <i class="bi bi-envelope"></i>
-                                <span>Email</span>
-                            </div>
-                            <div class="info-value-minimal">{{ user.email|default:"Not provided" }}</div>
-                        </div>
-                        
-                        <div class="info-item-minimal">
-                            <div class="info-label-minimal">
-                                <i class="bi bi-calendar-check"></i>
-                                <span>Date Joined</span>
-                            </div>
-                            <div class="info-value-minimal">{{ user.date_joined|date:"F d, Y" }}</div>
-                        </div>
-                        
-                        <div class="info-item-minimal">
-                            <div class="info-label-minimal">
-                                <i class="bi bi-clock-history"></i>
-                                <span>Last Login</span>
-                            </div>
-                            <div class="info-value-minimal">{{ user.last_login|date:"F d, Y - h:i A" }}</div>
-                        </div>
-                    </div>
+<div class="container py-5">
+    <!-- Profile Header with Avatar -->
+    <div class="text-center mb-5">
+        <div class="profile-avatar-container">
+            {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-avatar">
+            {% else %}
+                <div class="profile-avatar-placeholder">
+                    <i class="bi bi-person-fill"></i>
                 </div>
-            </div>
+            {% endif %}
+        </div>
+        <h2 class="mt-4 mb-2">{{ user.get_full_name|default:user.username }}</h2>
+        <p class="text-muted">@{{ user.username }}</p>
+    </div>
 
-            <!-- Security Section -->
-            <div class="col-lg-6">
-                <div class="info-card">
-                    <div class="card-header-minimal">
-                        <h3 class="card-title-minimal">
-                            <i class="bi bi-shield-lock me-2"></i>
-                            Account Actions
-                        </h3>
+    <!-- Action Buttons -->
+    <div class="row g-3 mb-5">
+        <div class="col-md-6">
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary w-100 py-3">
+                <i class="bi bi-pencil-square me-2"></i>
+                Edit Profile
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'change_password' %}" class="btn btn-outline-primary w-100 py-3">
+                <i class="bi bi-shield-lock me-2"></i>
+                Change Password
+            </a>
+        </div>
+    </div>
+
+    <!-- Profile Information Cards -->
+    <div class="row g-4">
+        <!-- Personal Information -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">
+                        <i class="bi bi-person-badge me-2"></i>
+                        Personal Information
+                    </h5>
+                    
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">First Name</span>
+                        <span class="profile-info-value">{{ user.first_name|default:"Not provided yet" }}</span>
                     </div>
-                    <div class="card-body-minimal">
-                        <p class="security-description">
-                            Manage your account information and session
-                        </p>
-                        
-                        <div class="security-actions">
-                            <a href="{% url 'edit_profile' %}" class="btn-security btn-primary-minimal">
-                                <i class="bi bi-pencil-square"></i>
-                                <span>Edit Profile</span>
-                            </a>
-                            
-                            <a href="{% url 'logout' %}" class="btn-security btn-danger-minimal">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Logout</span>
-                            </a>
-                        </div>
-
-                        <div class="security-tip mt-4">
-                            <i class="bi bi-lightbulb text-warning me-2"></i>
-                            <small>Tip: Keep your email address updated to receive important account notifications.</small>
-                        </div>
+                    
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">Last Name</span>
+                        <span class="profile-info-value">{{ user.last_name|default:"Not provided yet" }}</span>
+                    </div>
+                    
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">Date of Birth</span>
+                        <span class="profile-info-value">{{ profile.date_of_birth|date:"F d, Y"|default:"Not provided yet" }}</span>
+                    </div>
+                    
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">Email</span>
+                        <span class="profile-info-value">{{ user.email|default:"Not provided yet" }}</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Account Status -->
-        <div class="row g-4 mt-4">
-            <div class="col-12">
-                <div class="status-card">
-                    <div class="status-icon">
-                        <i class="bi bi-check-circle-fill"></i>
+        <!-- Professional Information -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">
+                        <i class="bi bi-briefcase me-2"></i>
+                        Professional Information
+                    </h5>
+                    
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">Skills</span>
+                        <span class="profile-info-value">{{ profile.skills|default:"Not provided yet" }}</span>
                     </div>
-                    <div class="status-content">
-                        <h4>Your account is active and secure</h4>
-                        <p>All security checks passed. Last verified: {{ user.last_login|date:"F d, Y" }}</p>
+                    
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">Education</span>
+                        <span class="profile-info-value">{{ profile.education|default:"Not provided yet" }}</span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Bio -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">
+                        <i class="bi bi-file-text me-2"></i>
+                        Bio
+                    </h5>
+                    <p class="profile-bio">{{ profile.bio|default:"Not provided yet" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Info -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Account Information
+                    </h5>
+                    
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">Username</span>
+                        <span class="profile-info-value">{{ user.username }}</span>
+                    </div>
+                    
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">Date Joined</span>
+                        <span class="profile-info-value">{{ user.date_joined|date:"F d, Y" }}</span>
+                    </div>
+                    
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">Last Login</span>
+                        <span class="profile-info-value">{{ user.last_login|date:"F d, Y - h:i A" }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

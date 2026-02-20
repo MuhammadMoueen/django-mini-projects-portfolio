@@ -3,111 +3,102 @@
 {% block title %}Edit Profile - Auth Dashboard{% endblock %}
 
 {% block content %}
-<div class="minimal-dashboard">
-    <div class="container py-5">
-        
-        <!-- Page Header -->
-        <div class="welcome-section mb-4">
-            <h1 class="welcome-title">
-                <i class="bi bi-pencil-square me-3"></i>
-                Edit Profile
-            </h1>
-            <p class="welcome-subtitle">Update your account information</p>
-        </div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="d-flex align-items-center mb-4">
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary me-3">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <div>
+                    <h2 class="mb-0">Edit Profile</h2>
+                    <p class="text-muted mb-0">Update your personal information</p>
+                </div>
+            </div>
 
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="info-card">
-                    <div class="card-header-minimal">
-                        <h3 class="card-title-minimal">
-                            <i class="bi bi-person-badge me-2"></i>
-                            Profile Information
-                        </h3>
-                    </div>
-                    <div class="card-body-minimal">
-                        <form method="post" class="profile-form">
-                            {% csrf_token %}
+            <div class="card">
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <i class="bi bi-exclamation-triangle me-2"></i>
+                                Please correct the errors below.
+                            </div>
+                        {% endif %}
 
-                            <div class="mb-4">
-                                <label for="username" class="form-label">
-                                    <i class="bi bi-person-fill me-2"></i>Username
-                                </label>
-                                <input type="text" 
-                                       class="form-control-minimal" 
-                                       id="username" 
-                                       name="username" 
-                                       value="{{ user.username }}"
-                                       required>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
+                                {% endif %}
                             </div>
 
-                            <div class="mb-4">
-                                <label for="email" class="form-label">
-                                    <i class="bi bi-envelope-fill me-2"></i>Email Address
-                                </label>
-                                <input type="email" 
-                                       class="form-control-minimal" 
-                                       id="email" 
-                                       name="email" 
-                                       value="{{ user.email }}"
-                                       placeholder="your.email@example.com">
+                            <div class="col-md-6">
+                                <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
+                                {% endif %}
                             </div>
 
-                            <div class="info-box mb-4">
-                                <i class="bi bi-info-circle me-2"></i>
-                                <small>Account created: {{ user.date_joined|date:"F d, Y" }}</small>
+                            <div class="col-md-6">
+                                <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth</label>
+                                {{ form.date_of_birth }}
+                                {% if form.date_of_birth.errors %}
+                                    <div class="text-danger small mt-1">{{ form.date_of_birth.errors }}</div>
+                                {% endif %}
                             </div>
 
-                            <div class="d-grid gap-2 mt-4">
-                                <button type="submit" class="btn-security btn-primary-minimal">
-                                    <i class="bi bi-check-circle"></i>
-                                    <span>Save Changes</span>
-                                </button>
-                                <a href="{% url 'dashboard' %}" class="btn-security btn-secondary-minimal text-center">
-                                    <i class="bi bi-x-circle"></i>
-                                    <span>Cancel</span>
-                                </a>
+                            <div class="col-md-6">
+                                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>
+                                {{ form.profile_picture }}
+                                {% if form.profile_picture.errors %}
+                                    <div class="text-danger small mt-1">{{ form.profile_picture.errors }}</div>
+                                {% endif %}
                             </div>
-                        </form>
-                    </div>
+
+                            <div class="col-12">
+                                <label for="{{ form.bio.id_for_label }}" class="form-label">Bio</label>
+                                {{ form.bio }}
+                                {% if form.bio.errors %}
+                                    <div class="text-danger small mt-1">{{ form.bio.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.skills.id_for_label }}" class="form-label">Skills</label>
+                                {{ form.skills }}
+                                {% if form.skills.errors %}
+                                    <div class="text-danger small mt-1">{{ form.skills.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.education.id_for_label }}" class="form-label">Education</label>
+                                {{ form.education }}
+                                {% if form.education.errors %}
+                                    <div class="text-danger small mt-1">{{ form.education.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle me-2"></i>
+                                Save Changes
+                            </button>
+                            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-
-<style>
-.profile-form .form-control-minimal {
-    width: 100%;
-    padding: 0.875rem 1.25rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 0.95rem;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    transition: all 0.3s ease;
-}
-
-.profile-form .form-control-minimal:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-.form-label {
-    color: var(--text-secondary);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-}
-
-.info-box {
-    padding: 1rem;
-    background: rgba(59, 130, 246, 0.1);
-    border-left: 3px solid var(--info-color);
-    border-radius: 8px;
-    color: var(--text-secondary);
-}
-</style>
 {% endblock %}

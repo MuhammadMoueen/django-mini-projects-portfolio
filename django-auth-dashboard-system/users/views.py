@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, UserProfileForm, CustomPasswordChangeForm
+from .models import UserProfile
 
 def signup_view(request):
     if request.user.is_authenticated:
@@ -12,6 +13,7 @@ def signup_view(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            UserProfile.objects.create(user=user)
             login(request, user)
             messages.success(request, 'Account created successfully!')
             return redirect('dashboard')
@@ -50,7 +52,8 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request):
-    return render(request, 'users/dashboard.html')
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, 'users/dashboard.html', {'profile': profile})
 
 @login_required
 def profile_view(request):
@@ -58,19 +61,33 @@ def profile_view(request):
 
 @login_required
 def edit_profile_view(request):
-    if request.method == 'POST':
-        # Simple implementation - just update username and email
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        
-        if username and username != request.user.username:
-            request.user.username = username
-        if email and email != request.user.email:
-            request.user.email = email
-        
-        request.user.save()
-        messages.success(request, 'Profile updated successfully!')
-        return redirect('dashboard')
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
     
-    return render(request, 'users/edit_profile.html')
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile, user=request.user)
+        if form.is_valid():
+            request.user.first_name = form.cleaned_data.get('first_name', '')
+            request.user.last_name = form.cleaned_data.get('last_name', '')
+            request.user.save()
+            form.save()
+            messages.success(request, 'Profile updated successfully!')
+            return redirect('dashboard')
+    else:
+        form = UserProfileForm(instance=profile, user=request.user)
+    
+    return render(request, 'users/edit_profile.html', {'form': form})
+
+@login_required
+def change_password_view(request):
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Password changed successfully!')
+            return redirect('dashboard')
+    else:
+        form = CustomPasswordChangeForm(request.user)
+    
+    return render(request, 'users/change_password.html', {'form': form})
 

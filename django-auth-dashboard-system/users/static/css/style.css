@@ -1965,3 +1965,62 @@ body {
         padding: 0.9rem 1.5rem;
     }
 }
+
+.profile-avatar-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+.profile-avatar-placeholder {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+.profile-avatar-placeholder i {
+    font-size: 4rem;
+    color: white;
+}
+
+.profile-info-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-info-item:last-child {
+    border-bottom: none;
+}
+
+.profile-info-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.profile-info-value {
+    color: var(--text-primary);
+}
+
+.profile-bio {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
