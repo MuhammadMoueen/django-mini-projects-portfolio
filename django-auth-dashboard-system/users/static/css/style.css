@@ -67,25 +67,29 @@ body {
 .navbar-custom {
     background-color: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
-    padding: 1rem 0;
-    box-shadow: 0 2px 8px var(--shadow);
+    padding: 0.75rem 0;
+    box-shadow: none;
+    backdrop-filter: blur(10px);
 }
 
 .navbar-brand {
     color: var(--primary-color) !important;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .nav-link {
     color: var(--text-secondary) !important;
     font-weight: 500;
     padding: 0.5rem 1rem !important;
-    border-radius: 0.5rem;
+    border-radius: 8px;
     transition: all 0.3s ease;
+    font-size: 0.95rem;
 }
 
 .nav-link:hover {
-    color: var(--primary-color) !important;
+    color: var(--text-primary) !important;
     background-color: var(--bg-tertiary);
 }
 
@@ -93,7 +97,7 @@ body {
     background: linear-gradient(135deg, var(--danger-color), #dc2626) !important;
     color: white !important;
     font-weight: 600 !important;
-    border-radius: 0.5rem !important;
+    border-radius: 8px !important;
     padding: 0.5rem 1.25rem !important;
     transition: all 0.3s ease !important;
     will-change: transform, box-shadow;
