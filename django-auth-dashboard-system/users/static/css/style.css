@@ -341,7 +341,13 @@ body {
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--border-color);
     color: var(--text-muted);
-    margin-top: 3rem;
+    margin-top: 4rem;
+    backdrop-filter: blur(10px);
+}
+
+.footer .small {
+    font-size: 0.875rem;
+    opacity: 0.8;
 }
 
 .alert {
