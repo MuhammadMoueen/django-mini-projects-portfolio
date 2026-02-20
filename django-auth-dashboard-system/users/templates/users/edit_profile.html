@@ -143,11 +143,6 @@
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--border-color);
-    transition: transform 0.2s ease;
-}
-
-.avatar-preview:hover {
-    transform: scale(1.05);
 }
 
 .avatar-preview-empty {
@@ -166,6 +161,29 @@
     color: white;
 }
 
+body.cropper-active {
+    overflow: hidden;
+}
+
+body.cropper-active * {
+    pointer-events: none;
+}
+
+body.cropper-active .modal,
+body.cropper-active .modal * {
+    pointer-events: auto;
+}
+
+#cropperModal {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+}
+
+#cropperModal .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
 #imageCropper {
     width: 100%;
     height: 500px;
@@ -174,11 +192,15 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+    contain: layout style paint;
+    isolation: isolate;
 }
 
 .modal-content {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
 }
 
 .modal-header {
@@ -205,37 +227,50 @@
 
 .croppie-container {
     padding: 0 !important;
+    contain: layout style paint;
 }
 
 .croppie-container .cr-boundary {
     border-radius: 8px;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
 }
 
 .croppie-container .cr-slider-wrap {
     display: none;
 }
 
-.croppie-container .cr-viewport,
-.croppie-container canvas {
-    will-change: transform;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+.croppie-container .cr-viewport {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+}
+
+.croppie-container canvas {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .modal.show {
-    backdrop-filter: blur(4px);
+    backdrop-filter: none;
+}
+
+.modal-backdrop.show {
+    opacity: 0.8;
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     let croppieInstance = null;
-    let zoomAnimationFrame = null;
     let isProcessing = false;
-    let lastZoomUpdate = 0;
-    const THROTTLE_DELAY = 16;
     
     const elements = {
         imageInput: document.getElementById('imageInput'),
@@ -246,7 +281,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }),
         zoomSlider: document.getElementById('zoomSlider'),
         cropButton: document.getElementById('cropButton'),
-        currentAvatar: document.getElementById('currentAvatar')
+        currentAvatar: document.getElementById('currentAvatar'),
+        modalElement: document.getElementById('cropperModal')
     };
     
     const initializeCropper = () => {
@@ -263,17 +299,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 height: 500 
             },
             showZoomer: false,
-            enableOrientation: true,
+            enableOrientation: false,
             enableResize: false,
             mouseWheelZoom: false,
-            enableExif: false,
-            update: function() {
-                const now = Date.now();
-                if (now - lastZoomUpdate < THROTTLE_DELAY) {
-                    return;
-                }
-                lastZoomUpdate = now;
-            }
+            enableExif: false
         });
     };
     
@@ -286,11 +315,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             croppieInstance = null;
         }
-        if (zoomAnimationFrame) {
-            cancelAnimationFrame(zoomAnimationFrame);
-            zoomAnimationFrame = null;
-        }
-        lastZoomUpdate = 0;
     };
     
     const updateAvatar = (base64Image) => {
@@ -306,17 +330,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    const throttle = (func, delay) => {
-        let lastCall = 0;
-        return function(...args) {
-            const now = Date.now();
-            if (now - lastCall < delay) {
-                return;
-            }
-            lastCall = now;
-            return func.apply(this, args);
-        };
-    };
+    elements.modalElement.addEventListener('show.bs.modal', function() {
+        document.body.classList.add('cropper-active');
+    });
+    
+    elements.modalElement.addEventListener('hidden.bs.modal', function() {
+        document.body.classList.remove('cropper-active');
+        destroyCropper();
+        elements.imageInput.value = '';
+        isProcessing = false;
+    });
     
     elements.selectImageBtn.addEventListener('click', () => {
         if (!isProcessing) elements.imageInput.click();
@@ -356,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Cropper init error:', error);
                     isProcessing = false;
                 }
-            }, 150);
+            }, 200);
         };
         
         reader.onerror = () => {
@@ -367,26 +390,14 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.readAsDataURL(file);
     });
     
-    const handleZoom = throttle(function(value) {
+    elements.zoomSlider.addEventListener('input', function() {
         if (!croppieInstance || isProcessing) return;
         
-        if (zoomAnimationFrame) {
-            cancelAnimationFrame(zoomAnimationFrame);
+        try {
+            croppieInstance.setZoom(parseFloat(this.value));
+        } catch (e) {
+            console.error('Zoom error:', e);
         }
-        
-        zoomAnimationFrame = requestAnimationFrame(() => {
-            try {
-                if (croppieInstance) {
-                    croppieInstance.setZoom(value);
-                }
-            } catch (e) {
-                console.error('Zoom error:', e);
-            }
-        });
-    }, THROTTLE_DELAY);
-    
-    elements.zoomSlider.addEventListener('input', function() {
-        handleZoom(parseFloat(this.value));
     });
     
     elements.cropButton.addEventListener('click', function() {
@@ -412,12 +423,6 @@ document.addEventListener('DOMContentLoaded', function() {
             elements.cropButton.disabled = false;
             isProcessing = false;
         });
-    });
-    
-    document.getElementById('cropperModal').addEventListener('hidden.bs.modal', function() {
-        destroyCropper();
-        elements.imageInput.value = '';
-        isProcessing = false;
     });
 });
 </script>
