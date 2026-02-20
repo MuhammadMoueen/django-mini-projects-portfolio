@@ -171,6 +171,9 @@
     height: 500px;
     border-radius: 8px;
     overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 .modal-content {
@@ -207,6 +210,23 @@
 .croppie-container .cr-boundary {
     border-radius: 8px;
 }
+
+.croppie-container .cr-slider-wrap {
+    display: none;
+}
+
+.croppie-container .cr-viewport,
+.croppie-container canvas {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.modal.show {
+    backdrop-filter: blur(4px);
+}
 </style>
 
 <script>
@@ -214,6 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let croppieInstance = null;
     let zoomAnimationFrame = null;
     let isProcessing = false;
+    let lastZoomUpdate = 0;
+    const THROTTLE_DELAY = 16;
     
     const elements = {
         imageInput: document.getElementById('imageInput'),
@@ -227,28 +249,48 @@ document.addEventListener('DOMContentLoaded', function() {
         currentAvatar: document.getElementById('currentAvatar')
     };
     
-    const initializeCropper = (imageUrl) => {
+    const initializeCropper = () => {
         const cropperElement = document.getElementById('imageCropper');
         
         return new Croppie(cropperElement, {
-            viewport: { width: 300, height: 300, type: 'circle' },
-            boundary: { width: 500, height: 500 },
+            viewport: { 
+                width: 300, 
+                height: 300, 
+                type: 'circle' 
+            },
+            boundary: { 
+                width: 500, 
+                height: 500 
+            },
             showZoomer: false,
             enableOrientation: true,
             enableResize: false,
-            mouseWheelZoom: false
+            mouseWheelZoom: false,
+            enableExif: false,
+            update: function() {
+                const now = Date.now();
+                if (now - lastZoomUpdate < THROTTLE_DELAY) {
+                    return;
+                }
+                lastZoomUpdate = now;
+            }
         });
     };
     
     const destroyCropper = () => {
         if (croppieInstance) {
-            croppieInstance.destroy();
+            try {
+                croppieInstance.destroy();
+            } catch (e) {
+                console.error('Error destroying cropper:', e);
+            }
             croppieInstance = null;
         }
         if (zoomAnimationFrame) {
             cancelAnimationFrame(zoomAnimationFrame);
             zoomAnimationFrame = null;
         }
+        lastZoomUpdate = 0;
     };
     
     const updateAvatar = (base64Image) => {
@@ -264,6 +306,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
+    const throttle = (func, delay) => {
+        let lastCall = 0;
+        return function(...args) {
+            const now = Date.now();
+            if (now - lastCall < delay) {
+                return;
+            }
+            lastCall = now;
+            return func.apply(this, args);
+        };
+    };
+    
     elements.selectImageBtn.addEventListener('click', () => {
         if (!isProcessing) elements.imageInput.click();
     });
@@ -274,6 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!file.type.startsWith('image/')) {
             alert('Please select a valid image file.');
+            this.value = '';
             return;
         }
         
@@ -285,15 +340,23 @@ document.addEventListener('DOMContentLoaded', function() {
             elements.cropperModal.show();
             
             setTimeout(() => {
-                croppieInstance = initializeCropper();
-                croppieInstance.bind({
-                    url: event.target.result,
-                    zoom: 0
-                }).then(() => {
-                    elements.zoomSlider.value = 0;
+                try {
+                    croppieInstance = initializeCropper();
+                    croppieInstance.bind({
+                        url: event.target.result,
+                        zoom: 0
+                    }).then(() => {
+                        elements.zoomSlider.value = 0;
+                        isProcessing = false;
+                    }).catch(err => {
+                        console.error('Bind error:', err);
+                        isProcessing = false;
+                    });
+                } catch (error) {
+                    console.error('Cropper init error:', error);
                     isProcessing = false;
-                });
-            }, 200);
+                }
+            }, 150);
         };
         
         reader.onerror = () => {
@@ -304,19 +367,26 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.readAsDataURL(file);
     });
     
-    elements.zoomSlider.addEventListener('input', function() {
+    const handleZoom = throttle(function(value) {
         if (!croppieInstance || isProcessing) return;
         
         if (zoomAnimationFrame) {
             cancelAnimationFrame(zoomAnimationFrame);
         }
         
-        const zoomValue = parseFloat(this.value);
         zoomAnimationFrame = requestAnimationFrame(() => {
-            if (croppieInstance) {
-                croppieInstance.setZoom(zoomValue);
+            try {
+                if (croppieInstance) {
+                    croppieInstance.setZoom(value);
+                }
+            } catch (e) {
+                console.error('Zoom error:', e);
             }
         });
+    }, THROTTLE_DELAY);
+    
+    elements.zoomSlider.addEventListener('input', function() {
+        handleZoom(parseFloat(this.value));
     });
     
     elements.cropButton.addEventListener('click', function() {
