@@ -1037,16 +1037,19 @@ body {
     transition: all 0.3s ease;
     background: var(--bg-primary);
     color: var(--text-primary);
+    font-family: inherit;
 }
 
 .auth-input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(95, 77, 238, 0.1);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    background: var(--auth-panel-bg);
 }
 
 .auth-input::placeholder {
     color: var(--text-muted);
+    font-size: 0.9rem;
 }
 
 .forgot-password {
