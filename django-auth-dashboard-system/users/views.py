@@ -64,18 +64,21 @@ def edit_profile_view(request):
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=profile, user=request.user)
         
-        cropped_image = request.POST.get('cropped_image')
-        if cropped_image:
-            format, imgstr = cropped_image.split(';base64,')
-            ext = format.split('/')[-1]
-            data = ContentFile(base64.b64decode(imgstr), name=f'avatar_{request.user.id}.{ext}')
-            profile.profile_picture = data
-        
         if form.is_valid():
             request.user.first_name = form.cleaned_data.get('first_name', '')
             request.user.last_name = form.cleaned_data.get('last_name', '')
             request.user.save()
-            form.save()
+            
+            profile = form.save(commit=False)
+            
+            cropped_image = request.POST.get('cropped_image')
+            if cropped_image:
+                format, imgstr = cropped_image.split(';base64,')
+                ext = format.split('/')[-1]
+                data = ContentFile(base64.b64decode(imgstr), name=f'avatar_{request.user.id}.{ext}')
+                profile.profile_picture = data
+            
+            profile.save()
             messages.success(request, 'Profile updated successfully!')
             return redirect('dashboard')
     else:
