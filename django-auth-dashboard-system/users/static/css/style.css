@@ -1688,16 +1688,17 @@ body {
 .info-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 2px 8px var(--shadow);
+    box-shadow: 0 4px 12px var(--shadow);
     transition: all 0.3s ease;
     height: 100%;
 }
 
 .info-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px var(--shadow);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px var(--shadow);
+    border-color: rgba(99, 102, 241, 0.3);
 }
 
 .card-header-minimal {
