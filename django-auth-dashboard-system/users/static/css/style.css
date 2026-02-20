@@ -1784,13 +1784,14 @@ body {
 .btn-security {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
-    padding: 1rem 1.5rem;
+    padding: 1.1rem 1.75rem;
     border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid transparent;
 }
 
