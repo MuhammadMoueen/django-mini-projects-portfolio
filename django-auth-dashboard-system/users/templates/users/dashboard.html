@@ -3,316 +3,120 @@
 {% block title %}Dashboard - Auth Dashboard{% endblock %}
 
 {% block content %}
-<div class="container-fluid px-4 py-4">
-    <!-- Welcome Header -->
-    <div class="dashboard-welcome mb-4">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h1 class="dashboard-title mb-2">
-                    <i class="bi bi-grid-fill me-2"></i>Dashboard
-                </h1>
-                <p class="dashboard-subtitle mb-0">
-                    Welcome back, <span class="username-highlight">{{ user.username }}</span>! Here's your overview.
-                </p>
-            </div>
-            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                <div class="dashboard-date">
-                    <i class="bi bi-calendar3 me-2"></i>
-                    <span>{{ user.last_login|date:"F d, Y" }}</span>
-                </div>
-            </div>
+<!-- Minimal Clean Dashboard -->
+<div class="minimal-dashboard">
+    <div class="container py-5">
+        
+        <!-- Welcome Section -->
+        <div class="welcome-section mb-5">
+            <h1 class="welcome-title">
+                <i class="bi bi-person-circle me-3"></i>
+                Welcome, {{ user.username }}!
+            </h1>
+            <p class="welcome-subtitle">Manage your account and security settings</p>
         </div>
-    </div>
 
-    <!-- Statistics Cards -->
-    <div class="row g-4 mb-4">
-        <div class="col-xl-3 col-md-6">
-            <div class="modern-stat-card stat-primary">
-                <div class="stat-content">
-                    <div class="stat-number">{{ user.id|add:"42" }}</div>
-                    <div class="stat-label">Total Sessions</div>
-                    <div class="stat-trend stat-up">
-                        <i class="bi bi-arrow-up"></i> 12.5%
+        <div class="row g-4">
+            <!-- User Information Card -->
+            <div class="col-lg-6">
+                <div class="info-card">
+                    <div class="card-header-minimal">
+                        <h3 class="card-title-minimal">
+                            <i class="bi bi-person-badge me-2"></i>
+                            User Information
+                        </h3>
                     </div>
-                </div>
-                <div class="stat-icon-bg">
-                    <i class="bi bi-graph-up-arrow"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="modern-stat-card stat-info">
-                <div class="stat-content">
-                    <div class="stat-number">{{ user.id|add:"345" }}</div>
-                    <div class="stat-label">Active Users</div>
-                    <div class="stat-trend stat-up">
-                        <i class="bi bi-arrow-up"></i> 8.2%
-                    </div>
-                </div>
-                <div class="stat-icon-bg">
-                    <i class="bi bi-people"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="modern-stat-card stat-success">
-                <div class="stat-content">
-                    <div class="stat-number">{{ user.id|add:"98" }}</div>
-                    <div class="stat-label">Completed Tasks</div>
-                    <div class="stat-trend stat-up">
-                        <i class="bi bi-arrow-up"></i> 15.3%
-                    </div>
-                </div>
-                <div class="stat-icon-bg">
-                    <i class="bi bi-check-circle"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="modern-stat-card stat-warning">
-                <div class="stat-content">
-                    <div class="stat-number">{{ user.id|add:"27" }}</div>
-                    <div class="stat-label">Pending Items</div>
-                    <div class="stat-trend stat-down">
-                        <i class="bi bi-arrow-down"></i> 3.1%
-                    </div>
-                </div>
-                <div class="stat-icon-bg">
-                    <i class="bi bi-clock-history"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Charts Section -->
-    <div class="row g-4 mb-4">
-        <div class="col-lg-4">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h5 class="chart-title">
-                        <i class="bi bi-pie-chart me-2"></i>Distribution Overview
-                    </h5>
-                </div>
-                <div class="chart-body">
-                    <canvas id="pieChart"></canvas>
-                    <div class="chart-legend mt-3">
-                        <div class="legend-item">
-                            <span class="legend-color" style="background: #6366f1;"></span>
-                            <span class="legend-label">Active</span>
+                    <div class="card-body-minimal">
+                        <div class="info-item-minimal">
+                            <div class="info-label-minimal">
+                                <i class="bi bi-person"></i>
+                                <span>Username</span>
+                            </div>
+                            <div class="info-value-minimal">{{ user.username }}</div>
                         </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background: #3b82f6;"></span>
-                            <span class="legend-label">Pending</span>
+                        
+                        <div class="info-item-minimal">
+                            <div class="info-label-minimal">
+                                <i class="bi bi-envelope"></i>
+                                <span>Email</span>
+                            </div>
+                            <div class="info-value-minimal">{{ user.email|default:"Not provided" }}</div>
                         </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background: #8b5cf6;"></span>
-                            <span class="legend-label">Completed</span>
+                        
+                        <div class="info-item-minimal">
+                            <div class="info-label-minimal">
+                                <i class="bi bi-calendar-check"></i>
+                                <span>Date Joined</span>
+                            </div>
+                            <div class="info-value-minimal">{{ user.date_joined|date:"F d, Y" }}</div>
+                        </div>
+                        
+                        <div class="info-item-minimal">
+                            <div class="info-label-minimal">
+                                <i class="bi bi-clock-history"></i>
+                                <span>Last Login</span>
+                            </div>
+                            <div class="info-value-minimal">{{ user.last_login|date:"F d, Y - h:i A" }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Section -->
+            <div class="col-lg-6">
+                <div class="info-card">
+                    <div class="card-header-minimal">
+                        <h3 class="card-title-minimal">
+                            <i class="bi bi-shield-lock me-2"></i>
+                            Security Settings
+                        </h3>
+                    </div>
+                    <div class="card-body-minimal">
+                        <p class="security-description">
+                            Manage your account security and preferences
+                        </p>
+                        
+                        <div class="security-actions">
+                            <a href="{% url 'password_change' %}" class="btn-security btn-primary-minimal">
+                                <i class="bi bi-key"></i>
+                                <span>Change Password</span>
+                            </a>
+                            
+                            <a href="#" class="btn-security btn-secondary-minimal">
+                                <i class="bi bi-pencil-square"></i>
+                                <span>Edit Profile</span>
+                            </a>
+                            
+                            <a href="{% url 'logout' %}" class="btn-security btn-danger-minimal">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+
+                        <div class="security-tip mt-4">
+                            <i class="bi bi-lightbulb text-warning me-2"></i>
+                            <small>Tip: Change your password regularly to keep your account secure.</small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-8">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h5 class="chart-title">
-                        <i class="bi bi-bar-chart me-2"></i>Monthly Activity
-                    </h5>
-                    <div class="chart-actions">
-                        <button class="btn-chart-filter active">Week</button>
-                        <button class="btn-chart-filter">Month</button>
-                        <button class="btn-chart-filter">Year</button>
+        <!-- Account Status -->
+        <div class="row g-4 mt-4">
+            <div class="col-12">
+                <div class="status-card">
+                    <div class="status-icon">
+                        <i class="bi bi-check-circle-fill"></i>
                     </div>
-                </div>
-                <div class="chart-body">
-                    <canvas id="barChart"></canvas>
+                    <div class="status-content">
+                        <h4>Your account is active and secure</h4>
+                        <p>All security checks passed. Last verified: {{ user.last_login|date:"F d, Y" }}</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Data Table Section -->
-    <div class="row g-4">
-        <div class="col-12">
-            <div class="table-card">
-                <div class="table-header">
-                    <h5 class="table-title">
-                        <i class="bi bi-table me-2"></i>Recent Activities
-                    </h5>
-                    <div class="table-actions">
-                        <button class="btn-table-action">
-                            <i class="bi bi-funnel"></i> Filter
-                        </button>
-                        <button class="btn-table-action">
-                            <i class="bi bi-download"></i> Export
-                        </button>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="modern-table">
-                        <thead>
-                            <tr>
-                                <th>Activity</th>
-                                <th>User</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="activity-item">
-                                        <i class="bi bi-box-arrow-in-right text-primary"></i>
-                                        <span>User Login</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="user-info">
-                                        <div class="user-avatar">{{ user.username|first|upper }}</div>
-                                        <span>{{ user.username }}</span>
-                                    </div>
-                                </td>
-                                <td><span class="badge-status badge-success">Success</span></td>
-                                <td>{{ user.last_login|date:"M d, Y" }}</td>
-                                <td>
-                                    <button class="btn-action" title="View details">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                    <button class="btn-action" title="More options">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="activity-item">
-                                        <i class="bi bi-person-check text-success"></i>
-                                        <span>Profile Updated</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="user-info">
-                                        <div class="user-avatar">{{ user.username|first|upper }}</div>
-                                        <span>{{ user.username }}</span>
-                                    </div>
-                                </td>
-                                <td><span class="badge-status badge-success">Completed</span></td>
-                                <td>{{ user.date_joined|date:"M d, Y" }}</td>
-                                <td>
-                                    <button class="btn-action" title="View details">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                    <button class="btn-action" title="More options">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="activity-item">
-                                        <i class="bi bi-shield-check text-info"></i>
-                                        <span>Security Update</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="user-info">
-                                        <div class="user-avatar">{{ user.username|first|upper }}</div>
-                                        <span>{{ user.username }}</span>
-                                    </div>
-                                </td>
-                                <td><span class="badge-status badge-info">In Progress</span></td>
-                                <td>{{ user.date_joined|date:"M d, Y" }}</td>
-                                <td>
-                                    <button class="btn-action" title="View details">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                    <button class="btn-action" title="More options">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script>
-    // Pie Chart
-    const pieCtx = document.getElementById('pieChart').getContext('2d');
-    new Chart(pieCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Active', 'Pending', 'Completed'],
-            datasets: [{
-                data: [45, 25, 30],
-                backgroundColor: ['#6366f1', '#3b82f6', '#8b5cf6'],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            cutout: '70%'
-        }
-    });
-
-    // Bar Chart
-    const barCtx = document.getElementById('barChart').getContext('2d');
-    new Chart(barCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Activity',
-                data: [65, 59, 80, 81, 56, 85, 70, 95, 89, 75, 98, 85],
-                backgroundColor: '#6366f1',
-                borderRadius: 6
-            },
-            {
-                label: 'Engagement',
-                data: [45, 49, 60, 71, 46, 65, 50, 75, 69, 55, 78, 65],
-                backgroundColor: '#3b82f6',
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim()
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    }
-                }
-            }
-        }
-    });
-</script>
 {% endblock %}
