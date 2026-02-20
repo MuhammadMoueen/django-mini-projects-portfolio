@@ -3,22 +3,50 @@
 {% block title %}Sign Up - Auth Dashboard{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center align-items-center min-vh-80">
-        <div class="col-md-6 col-lg-5">
-            <div class="auth-card">
-                <div class="text-center mb-4">
-                    <div class="auth-icon">
-                        <i class="bi bi-person-plus-fill"></i>
-                    </div>
-                    <h2 class="fw-bold">Create Account</h2>
-                    <p class="text-muted">Join us today and get started</p>
-                    <div class="alert alert-success py-2 px-3 mt-3 mb-0">
-                        <i class="bi bi-check-circle"></i> Free registration
-                    </div>
+<!-- Theme Toggle Button for Auth Pages -->
+<button class="theme-toggle-floating" id="themeToggle" aria-label="Toggle theme">
+    <i class="bi bi-moon-stars" id="themeIcon"></i>
+</button>
+
+<div class="auth-container">
+    <div class="auth-split-layout">
+        <!-- Left Panel - Welcome Section -->
+        <div class="auth-left-panel">
+            <div class="auth-welcome-content">
+                <h1 class="welcome-title">Welcome Back!</h1>
+                <p class="welcome-subtitle">Enter your personal details to use all of site features</p>
+                <a href="{% url 'login' %}" class="btn-auth-switch">
+                    <span>SIGN IN</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Panel - Signup Form -->
+        <div class="auth-right-panel">
+            <div class="auth-form-container">
+                <h2 class="auth-form-title">Create Account</h2>
+                
+                <!-- Social Login Buttons -->
+                <div class="social-login-buttons">
+                    <button class="social-btn" type="button" aria-label="Sign up with Google">
+                        <i class="bi bi-google"></i>
+                    </button>
+                    <button class="social-btn" type="button" aria-label="Sign up with Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </button>
+                    <button class="social-btn" type="button" aria-label="Sign up with GitHub">
+                        <i class="bi bi-github"></i>
+                    </button>
+                    <button class="social-btn" type="button" aria-label="Sign up with LinkedIn">
+                        <i class="bi bi-linkedin"></i>
+                    </button>
                 </div>
 
-                <form method="post" novalidate>
+                <div class="auth-divider">
+                    <span>or use your email for registration</span>
+                </div>
+
+                <form method="post" novalidate class="auth-form">
                     {% csrf_token %}
                     
                     {% if form.non_field_errors %}
@@ -27,9 +55,9 @@
                         </div>
                     {% endif %}
 
-                    <div class="mb-3">
-                        <label class="form-label">Username</label>
-                        {{ form.username }}
+                    <div class="form-group">
+                        <input type="text" name="username" placeholder="Username" class="auth-input" 
+                               value="{{ form.username.value|default:'' }}" required>
                         {% if form.username.errors %}
                             <div class="text-danger small mt-1">
                                 {{ form.username.errors }}
@@ -37,9 +65,9 @@
                         {% endif %}
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        {{ form.email }}
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email" class="auth-input" 
+                               value="{{ form.email.value|default:'' }}" required>
                         {% if form.email.errors %}
                             <div class="text-danger small mt-1">
                                 {{ form.email.errors }}
@@ -47,9 +75,8 @@
                         {% endif %}
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        {{ form.password1 }}
+                    <div class="form-group">
+                        <input type="password" name="password1" placeholder="Password" class="auth-input" required>
                         {% if form.password1.errors %}
                             <div class="text-danger small mt-1">
                                 {{ form.password1.errors }}
@@ -57,9 +84,8 @@
                         {% endif %}
                     </div>
 
-                    <div class="mb-4">
-                        <label class="form-label">Confirm Password</label>
-                        {{ form.password2 }}
+                    <div class="form-group">
+                        <input type="password" name="password2" placeholder="Confirm Password" class="auth-input" required>
                         {% if form.password2.errors %}
                             <div class="text-danger small mt-1">
                                 {{ form.password2.errors }}
@@ -67,15 +93,9 @@
                         {% endif %}
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100 mb-3">
-                        <i class="bi bi-person-check"></i> Sign Up
+                    <button type="submit" class="btn-auth-submit">
+                        SIGN UP
                     </button>
-
-                    <div class="text-center">
-                        <p class="mb-0">Already have an account? 
-                            <a href="{% url 'login' %}" class="text-decoration-none">Login here</a>
-                        </p>
-                    </div>
                 </form>
             </div>
         </div>
