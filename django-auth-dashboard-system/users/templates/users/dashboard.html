@@ -4,33 +4,30 @@
 
 {% block content %}
 <div class="container py-5">
-    <!-- Profile Header with Avatar -->
     <div class="text-center mb-5">
-        <div class="profile-avatar-container">
-            {% if profile.profile_picture %}
-                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-avatar">
-            {% else %}
-                <div class="profile-avatar-placeholder">
-                    <i class="bi bi-person-fill"></i>
+        <div class="profile-avatar-wrapper">
+            <a href="{% url 'edit_profile' %}" class="avatar-link">
+                {% if profile.profile_picture %}
+                    <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-avatar-large">
+                {% else %}
+                    <div class="profile-avatar-large profile-avatar-empty">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                {% endif %}
+                <div class="avatar-overlay">
+                    <i class="bi bi-camera-fill"></i>
                 </div>
-            {% endif %}
-        </div>
-        <h2 class="mt-4 mb-2">{{ user.get_full_name|default:user.username }}</h2>
-        <p class="text-muted">@{{ user.username }}</p>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="row g-3 mb-5">
-        <div class="col-md-6">
-            <a href="{% url 'edit_profile' %}" class="btn btn-primary w-100 py-3">
-                <i class="bi bi-pencil-square me-2"></i>
-                Edit Profile
             </a>
         </div>
-        <div class="col-md-6">
-            <a href="{% url 'change_password' %}" class="btn btn-outline-primary w-100 py-3">
-                <i class="bi bi-shield-lock me-2"></i>
-                Change Password
+        <h2 class="mt-4 mb-1">{{ user.get_full_name|default:user.username }}</h2>
+        <p class="text-muted mb-4">@{{ user.username }}</p>
+        
+        <div class="profile-actions">
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-action">
+                <i class="bi bi-pencil-square me-2"></i>Edit Profile
+            </a>
+            <a href="{% url 'change_password' %}" class="btn btn-outline-primary btn-action">
+                <i class="bi bi-shield-lock me-2"></i>Change Password
             </a>
         </div>
     </div>
@@ -100,33 +97,6 @@
                         Bio
                     </h5>
                     <p class="profile-bio">{{ profile.bio|default:"Not provided yet" }}</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Account Info -->
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title mb-4">
-                        <i class="bi bi-info-circle me-2"></i>
-                        Account Information
-                    </h5>
-                    
-                    <div class="profile-info-item">
-                        <span class="profile-info-label">Username</span>
-                        <span class="profile-info-value">{{ user.username }}</span>
-                    </div>
-                    
-                    <div class="profile-info-item">
-                        <span class="profile-info-label">Date Joined</span>
-                        <span class="profile-info-value">{{ user.date_joined|date:"F d, Y" }}</span>
-                    </div>
-                    
-                    <div class="profile-info-item">
-                        <span class="profile-info-label">Last Login</span>
-                        <span class="profile-info-value">{{ user.last_login|date:"F d, Y - h:i A" }}</span>
-                    </div>
                 </div>
             </div>
         </div>
