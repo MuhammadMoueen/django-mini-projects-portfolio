@@ -207,6 +207,11 @@ body {
     transition: all 0.3s ease;
 }
 
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px var(--shadow);
+}
+
 .card-body {
     padding: 1.5rem;
 }
@@ -436,10 +441,22 @@ body {
         padding: 1.5rem;
     }
     
-    .profile-avatar {
-        width: 80px;
-        height: 80px;
-        font-size: 3rem;
+    .profile-avatar-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .profile-avatar-large {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .profile-avatar-empty i {
+        font-size: 4rem;
+    }
+    
+    .profile-actions {
+        max-width: 100%;
     }
 
     .metric-card {
