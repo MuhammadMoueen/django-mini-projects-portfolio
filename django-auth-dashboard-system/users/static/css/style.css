@@ -1767,6 +1767,11 @@ body {
 .info-label-minimal i {
     font-size: 1.1rem;
     color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.info-item-minimal:hover .info-label-minimal i {
+    transform: scale(1.2) rotate(5deg);
 }
 
 .info-value-minimal {
