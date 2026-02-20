@@ -1806,6 +1806,11 @@ body {
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
 }
 
+.btn-primary-minimal:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3);
+}
+
 .btn-secondary-minimal {
     background: var(--bg-tertiary);
     color: var(--text-primary);
@@ -1819,6 +1824,11 @@ body {
     transform: translateX(5px);
 }
 
+.btn-secondary-minimal:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
 .btn-danger-minimal {
     background: linear-gradient(135deg, #ef4444, #dc2626);
     color: white;
@@ -1828,6 +1838,11 @@ body {
     background: linear-gradient(135deg, #dc2626, #b91c1c);
     transform: translateX(5px);
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.btn-danger-minimal:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3);
 }
 
 .security-tip {
