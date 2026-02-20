@@ -1577,4 +1577,48 @@ body {
     .chart-body {
         padding: 1.5rem 1rem;
     }
+    
+    .auth-container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .auth-split-layout {
+        border-radius: 15px;
+    }
+    
+    .auth-form-title {
+        font-size: 1.5rem;
+    }
+    
+    .social-login-buttons {
+        gap: 0.75rem;
+    }
+}
+
+/* Floating Theme Toggle for Auth Pages */
+.theme-toggle-floating {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 12px var(--shadow);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+}
+
+.theme-toggle-floating:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: rotate(15deg) scale(1.1);
 }
