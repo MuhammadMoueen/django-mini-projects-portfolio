@@ -977,6 +977,7 @@ body {
     transition: all 0.3s ease;
     color: var(--text-secondary);
     font-size: 1.1rem;
+    text-decoration: none;
 }
 
 .social-btn:hover {
