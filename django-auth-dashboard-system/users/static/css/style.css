@@ -362,6 +362,32 @@ body {
     border-left: 4px solid var(--info-color);
 }
 
+.message-alert {
+    animation: slideInRight 0.4s ease-out;
+    box-shadow: 0 4px 15px var(--shadow);
+    font-weight: 500;
+}
+
+.message-alert.fade {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.message-alert.fade:not(.show) {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .text-muted {
     color: var(--text-muted) !important;
 }
