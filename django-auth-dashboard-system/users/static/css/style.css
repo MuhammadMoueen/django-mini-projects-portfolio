@@ -908,6 +908,7 @@ body {
     margin-bottom: 1rem;
     color: white;
     letter-spacing: -0.5px;
+    line-height: 1.2;
 }
 
 .welcome-subtitle {
@@ -966,6 +967,8 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     color: var(--text-primary);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
 }
 
 /* Social Login Buttons */
@@ -1070,10 +1073,12 @@ body {
     color: var(--text-muted);
     text-decoration: none;
     margin-bottom: 0.5rem;
-    display: block;
-    transition: color 0.3s ease;
+    font-weight: 500;
 }
 
+.forgot-password:hover {
+    color: var(--primary-color);
+    text-decoration: underline
 .forgot-password:hover {
     color: var(--primary-color);
 }
