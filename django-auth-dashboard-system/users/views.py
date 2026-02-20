@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.forms import UserChangeForm
 from .forms import SignUpForm, LoginForm
 
 def signup_view(request):
@@ -55,4 +56,22 @@ def dashboard_view(request):
 @login_required
 def profile_view(request):
     return render(request, 'users/profile.html')
+
+@login_required
+def edit_profile_view(request):
+    if request.method == 'POST':
+        # Simple implementation - just update username and email
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        
+        if username and username != request.user.username:
+            request.user.username = username
+        if email and email != request.user.email:
+            request.user.email = email
+        
+        request.user.save()
+        messages.success(request, 'Profile updated successfully!')
+        return redirect('dashboard')
+    
+    return render(request, 'users/edit_profile.html')
 
