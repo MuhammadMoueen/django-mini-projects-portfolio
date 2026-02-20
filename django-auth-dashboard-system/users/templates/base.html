@@ -92,18 +92,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     {% load static %}
     <script src="{% static 'js/theme.js' %}"></script>
-    <script>
-        // Auto-dismiss messages after 1 second
-        document.addEventListener('DOMContentLoaded', function() {
-            const alerts = document.querySelectorAll('.message-alert[data-auto-dismiss="true"]');
-            alerts.forEach(function(alert) {
-                setTimeout(function() {
-                    const bsAlert = new bootstrap.Alert(alert);
-                    bsAlert.close();
-                }, 1000); // 1 second
-            });
-        });
-    </script>
+    <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

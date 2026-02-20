@@ -1,0 +1,142 @@
+/* Profile Image Cropper Styles */
+
+.profile-image-upload {
+    text-align: center;
+}
+
+.current-avatar {
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--border-color);
+}
+
+.avatar-preview-empty {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--border-color);
+}
+
+.avatar-preview-empty i {
+    font-size: 3rem;
+    color: white;
+}
+
+/* Cropper Modal Isolation */
+body.cropper-active {
+    overflow: hidden;
+}
+
+body.cropper-active * {
+    pointer-events: none;
+}
+
+body.cropper-active .modal,
+body.cropper-active .modal * {
+    pointer-events: auto;
+}
+
+/* Cropper Modal Styles */
+#cropperModal {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+}
+
+#cropperModal .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#imageCropper {
+    width: 100%;
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    contain: layout style paint;
+    isolation: isolate;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-lg {
+    max-width: 650px;
+}
+
+.cropper-controls {
+    background: var(--bg-tertiary);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.form-range {
+    cursor: pointer;
+}
+
+/* Croppie Library Overrides */
+.croppie-container {
+    padding: 0 !important;
+    contain: layout style paint;
+}
+
+.croppie-container .cr-boundary {
+    border-radius: 8px;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+.croppie-container .cr-slider-wrap {
+    display: none;
+}
+
+.croppie-container .cr-viewport {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+}
+
+.croppie-container canvas {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.modal.show {
+    backdrop-filter: none;
+}
+
+.modal-backdrop.show {
+    opacity: 0.8;
+}
