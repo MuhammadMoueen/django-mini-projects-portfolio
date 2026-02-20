@@ -1842,18 +1842,26 @@ body {
 }
 
 .status-card {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-radius: 16px;
-    padding: 2rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    border: 2px solid rgba(16, 185, 129, 0.4);
+    border-radius: 20px;
+    padding: 2.5rem;
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.1);
+    transition: all 0.3s ease;
+}
+
+.status-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
 }
 
 .status-icon {
-    font-size: 3rem;
+    font-size: 3.5rem;
     color: var(--success-color);
+    animation: pulse 2s infinite;
 }
 
 .status-content h4 {
