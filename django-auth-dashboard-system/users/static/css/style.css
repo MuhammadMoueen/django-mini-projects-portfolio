@@ -981,16 +981,20 @@ body {
     color: white;
     letter-spacing: -0.5px;
     line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    opacity: 1;
 }
 
 .welcome-subtitle {
     font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 2rem;
-    opacity: 0.95;
+    opacity: 1;
     max-width: 300px;
     margin-left: auto;
     margin-right: auto;
+    color: white;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .btn-auth-switch {
@@ -998,6 +1002,8 @@ body {
     padding: 0.875rem 2.5rem;
     background: transparent;
     color: white;
+    opacity: 1;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     border: 2px solid white;
     border-radius: 50px;
     text-decoration: none;
