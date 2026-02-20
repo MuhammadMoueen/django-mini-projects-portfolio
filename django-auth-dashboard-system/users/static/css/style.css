@@ -1875,15 +1875,22 @@ body {
 }
 
 .security-tip {
-    padding: 1rem;
+    padding: 1.25rem;
     background: rgba(245, 158, 11, 0.1);
-    border-left: 3px solid var(--warning-color);
-    border-radius: 8px;
+    border-left: 4px solid var(--warning-color);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.security-tip:hover {
+    background: rgba(245, 158, 11, 0.15);
+    transform: translateX(5px);
 }
 
 .security-tip small {
     color: var(--text-secondary);
     font-size: 0.85rem;
+    line-height: 1.6;
 }
 
 .status-card {
