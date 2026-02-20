@@ -1668,6 +1668,24 @@ body {
 .minimal-dashboard {
     min-height: 80vh;
     background: var(--bg-primary);
+    position: relative;
+}
+
+.minimal-dashboard::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.1), transparent);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.minimal-dashboard .container {
+    position: relative;
+    z-index: 1;
 }
 
 .welcome-section {
