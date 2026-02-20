@@ -969,7 +969,7 @@ body {
 
 .auth-welcome-content {
     text-align: center;
-    color: white;
+    color: #1a1a1a;
     z-index: 1;
     position: relative;
 }
@@ -978,10 +978,10 @@ body {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: white;
+    color: #1a1a1a;
     letter-spacing: -0.5px;
     line-height: 1.2;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
     opacity: 1;
 }
 
@@ -993,17 +993,17 @@ body {
     max-width: 300px;
     margin-left: auto;
     margin-right: auto;
-    color: white;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    color: #1a1a1a;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4);
 }
 
 .btn-auth-switch {
     display: inline-block;
     padding: 0.875rem 2.5rem;
     background: transparent;
-    color: white;
+    color: #1a1a1a;
     opacity: 1;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
     border: 2px solid white;
     border-radius: 50px;
     text-decoration: none;
