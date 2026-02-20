@@ -68,21 +68,16 @@
                     <div class="card-header-minimal">
                         <h3 class="card-title-minimal">
                             <i class="bi bi-shield-lock me-2"></i>
-                            Security Settings
+                            Account Actions
                         </h3>
                     </div>
                     <div class="card-body-minimal">
                         <p class="security-description">
-                            Manage your account security and preferences
+                            Manage your account information and session
                         </p>
                         
                         <div class="security-actions">
-                            <a href="{% url 'password_change' %}" class="btn-security btn-primary-minimal">
-                                <i class="bi bi-key"></i>
-                                <span>Change Password</span>
-                            </a>
-                            
-                            <a href="{% url 'edit_profile' %}" class="btn-security btn-secondary-minimal">
+                            <a href="{% url 'edit_profile' %}" class="btn-security btn-primary-minimal">
                                 <i class="bi bi-pencil-square"></i>
                                 <span>Edit Profile</span>
                             </a>
@@ -95,7 +90,7 @@
 
                         <div class="security-tip mt-4">
                             <i class="bi bi-lightbulb text-warning me-2"></i>
-                            <small>Tip: Change your password regularly to keep your account secure.</small>
+                            <small>Tip: Keep your email address updated to receive important account notifications.</small>
                         </div>
                     </div>
                 </div>
