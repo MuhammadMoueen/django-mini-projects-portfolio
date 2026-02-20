@@ -1666,7 +1666,20 @@ body {
 
 .welcome-section {
     text-align: center;
-    padding: 2rem 0;
+    padding: 3rem 0 2rem;
+    position: relative;
+}
+
+.welcome-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    border-radius: 2px;
 }
 
 .welcome-title {
@@ -1678,12 +1691,14 @@ body {
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    letter-spacing: -1px;
 }
 
 .welcome-subtitle {
     font-size: 1.1rem;
     color: var(--text-muted);
     font-weight: 400;
+    margin-top: 1rem;
 }
 
 .info-card {
