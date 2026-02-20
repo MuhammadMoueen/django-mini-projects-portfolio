@@ -1724,7 +1724,7 @@ body {
 }
 
 .card-header-minimal {
-    background: var(--bg-tertiary);
+    background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
     padding: 1.5rem;
     border-bottom: 1px solid var(--border-color);
 }
