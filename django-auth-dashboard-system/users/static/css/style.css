@@ -1896,6 +1896,12 @@ body {
 @media (max-width: 768px) {
     .welcome-title {
         font-size: 1.75rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .welcome-title i {
+        font-size: 2rem;
     }
 
     .welcome-subtitle {
@@ -1906,10 +1912,20 @@ body {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
+        padding: 1rem 0;
     }
 
     .status-card {
         flex-direction: column;
         text-align: center;
+        padding: 2rem;
+    }
+    
+    .card-body-minimal {
+        padding: 1.5rem;
+    }
+    
+    .btn-security {
+        padding: 0.9rem 1.5rem;
     }
 }
