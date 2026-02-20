@@ -1078,9 +1078,7 @@ body {
 
 .forgot-password:hover {
     color: var(--primary-color);
-    text-decoration: underline
-.forgot-password:hover {
-    color: var(--primary-color);
+    text-decoration: underline;
 }
 
 .btn-auth-submit {
