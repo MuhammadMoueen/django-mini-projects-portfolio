@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Education - Profile Manager{% endblock %}
+
+{% block content %}
+<div class="container dashboard-container">
+    <div class="list-header">
+        <h2 class="list-title">
+            <i class="bi bi-mortarboard-fill"></i> Education
+        </h2>
+        <a href="{% url 'education_add' %}" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> Add Education
+        </a>
+    </div>
+
+    {% if education_items %}
+        {% for education in education_items %}
+        <div class="list-item">
+            <div class="list-item-header">
+                <div>
+                    <h4 class="list-item-title">{{ education.degree }}</h4>
+                    <p class="list-item-subtitle"><i class="bi bi-building"></i> {{ education.university_name }}</p>
+                    {% if education.cgpa %}
+                    <p class="text-muted small"><i class="bi bi-star-fill text-warning"></i> CGPA: {{ education.cgpa }}</p>
+                    {% endif %}
+                    {% if education.start_date or education.end_date %}
+                    <p class="text-muted small">
+                        <i class="bi bi-calendar-event"></i>
+                        {% if education.start_date %}{{ education.start_date|date:"M Y" }}{% endif %}
+                        {% if education.end_date %} - {{ education.end_date|date:"M Y" }}{% else %} - Present{% endif %}
+                    </p>
+                    {% endif %}
+                </div>
+                <div class="list-item-actions">
+                    <a href="{% url 'education_edit' education.pk %}" class="btn-icon btn-edit" title="Edit">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="{% url 'education_delete' education.pk %}" class="btn-icon btn-delete" title="Delete">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
+            </div>
+            {% if education.description %}
+            <p class="text-muted mt-2">{{ education.description }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="bi bi-mortarboard"></i>
+            </div>
+            <p class="empty-state-text">No education entries yet</p>
+            <a href="{% url 'education_add' %}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Add Your First Education
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary-section">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}
