@@ -357,10 +357,12 @@ body {
     border: none;
 }
 
+/* Primary button with gradient and smooth transitions */
 .btn-primary {
     background: linear-gradient(135deg, var(--coral-accent) 0%, #FF8FA0 100%) !important;
     color: var(--text-white) !important;
     box-shadow: 0 10px 30px rgba(255, 107, 138, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-primary:hover {
