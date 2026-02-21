@@ -1,87 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% endblock %}</div>    </div>        </form>            </div>                </a>                    <i class="bi bi-x-lg"></i> Cancel                <a href="{% url 'dashboard' %}" class="btn btn-secondary-section">                </button>                    <i class="bi bi-check-lg"></i> Save Changes                <button type="submit" class="btn btn-primary">            <div class="form-actions">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.address.errors }}</div>                {% if form.address.errors %}                {{ form.address }}                <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.phone.errors }}</div>                {% if form.phone.errors %}                {{ form.phone }}                <label for="{{ form.phone.id_for_label }}" class="form-label">Phone Number</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.date_of_birth.errors }}</div>                {% if form.date_of_birth.errors %}                {{ form.date_of_birth }}                <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.father_name.errors }}</div>                {% if form.father_name.errors %}                {{ form.father_name }}                <label for="{{ form.father_name.id_for_label }}" class="form-label">Father Name</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.full_name.errors }}</div>                {% if form.full_name.errors %}                {{ form.full_name }}                <label for="{{ form.full_name.id_for_label }}" class="form-label">Full Name</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.profile_picture.errors }}</div>                {% if form.profile_picture.errors %}                {% endif %}                    </div>                        <img src="{{ profile.profile_picture.url }}" alt="Current" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">                    <div class="mt-2">                {% if profile.profile_picture %}                {{ form.profile_picture }}                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>            <div class="mb-3">                        {% csrf_token %}        <form method="post" enctype="multipart/form-data">        </div>            <p class="form-subtitle">Update your personal details and contact information</p>            </h2>                <i class="bi bi-person-fill"></i> Personal Information            <h2 class="form-title">        <div class="form-header">    <div class="form-card"><div class="form-page">{% block content %}{% block title %}Personal Information - Profile Manager{% endblock %}
 {% block title %}Dashboard - Profile Manager{% endblock %}
 
 {% block content %}
@@ -97,7 +16,13 @@
                 </div>
             {% endif %}
         </div>
-        <h1 class="profile-name">{{ profile.get_full_name }}</h1>
+        <h1 class="profile-name">
+            {% if profile.full_name %}
+                {{ profile.full_name }}
+            {% else %}
+                {{ user.username }}
+            {% endif %}
+        </h1>
         <p class="profile-username">@{{ user.username }}</p>
         
         <!-- Profile Completion Progress -->

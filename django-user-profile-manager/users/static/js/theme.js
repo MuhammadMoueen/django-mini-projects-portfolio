@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Profile Manager loaded successfully');
+    // Auto-dismiss alerts after 5 seconds
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(alert => {
         setTimeout(() => {
@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
+    // Profile picture preview on file selection
     const profilePictureInput = document.querySelector('input[type="file"]');
     if (profilePictureInput) {
         profilePictureInput.addEventListener('change', function(e) {
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Disable submit button to prevent double submission
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -44,4 +46,26 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+
+    // Smooth dropdown animation for profile menu
+    const profileDropdown = document.getElementById('profileDropdown');
+    if (profileDropdown) {
+        profileDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            const dropdownMenu = this.nextElementSibling;
+            if (dropdownMenu.classList.contains('show')) {
+                dropdownMenu.classList.remove('show');
+            } else {
+                dropdownMenu.classList.add('show');
+            }
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!profileDropdown.contains(e.target)) {
+                const dropdownMenu = profileDropdown.nextElementSibling;
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    }
 });
