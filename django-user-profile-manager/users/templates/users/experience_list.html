@@ -3,6 +3,12 @@
 {% block title %}Work Experience - Profile Manager{% endblock %}
 
 {% block content %}
+<!-- Floating decorative circles -->
+<div class="floating-circle circle-1"></div>
+<div class="floating-circle circle-2"></div>
+<div class="floating-circle circle-3"></div>
+<div class="floating-circle circle-4"></div>
+
 <!-- Animated Background Bubbles -->
 <div class="animated-background">
     <div class="bubble bubble-1"></div>
@@ -70,11 +76,5 @@
             </a>
         </div>
     {% endif %}
-
-    <div class="mt-4">
-        <a href="{% url 'dashboard' %}" class="btn btn-secondary-section">
-            <i class="bi bi-arrow-left"></i> Back to Dashboard
-        </a>
-    </div>
 </div>
 {% endblock %}
