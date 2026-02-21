@@ -1,125 +1,231 @@
 {% extends 'base.html' %}
+{% load static %}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}</div>    </div>        </form>            </div>                </a>                    <i class="bi bi-x-lg"></i> Cancel                <a href="{% url 'dashboard' %}" class="btn btn-secondary-section">                </button>                    <i class="bi bi-check-lg"></i> Save Changes                <button type="submit" class="btn btn-primary">            <div class="form-actions">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.address.errors }}</div>                {% if form.address.errors %}                {{ form.address }}                <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.phone.errors }}</div>                {% if form.phone.errors %}                {{ form.phone }}                <label for="{{ form.phone.id_for_label }}" class="form-label">Phone Number</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.date_of_birth.errors }}</div>                {% if form.date_of_birth.errors %}                {{ form.date_of_birth }}                <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.father_name.errors }}</div>                {% if form.father_name.errors %}                {{ form.father_name }}                <label for="{{ form.father_name.id_for_label }}" class="form-label">Father Name</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.full_name.errors }}</div>                {% if form.full_name.errors %}                {{ form.full_name }}                <label for="{{ form.full_name.id_for_label }}" class="form-label">Full Name</label>            <div class="mb-3">            </div>                {% endif %}                    <div class="text-danger small mt-1">{{ form.profile_picture.errors }}</div>                {% if form.profile_picture.errors %}                {% endif %}                    </div>                        <img src="{{ profile.profile_picture.url }}" alt="Current" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">                    <div class="mt-2">                {% if profile.profile_picture %}                {{ form.profile_picture }}                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>            <div class="mb-3">                        {% csrf_token %}        <form method="post" enctype="multipart/form-data">        </div>            <p class="form-subtitle">Update your personal details and contact information</p>            </h2>                <i class="bi bi-person-fill"></i> Personal Information            <h2 class="form-title">        <div class="form-header">    <div class="form-card"><div class="form-page">{% block content %}{% block title %}Personal Information - Profile Manager{% endblock %}
 {% block title %}Dashboard - Profile Manager{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <h2 class="mb-4">
-            <i class="bi bi-speedometer2"></i> Dashboard
-        </h2>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-4 mb-4">
-        <div class="card stat-card">
-            <div class="card-body text-center">
-                <i class="bi bi-people stat-icon"></i>
-                <h3>{{ total_users }}</h3>
-                <p class="text-muted">Total Users</p>
-            </div>
+<div class="dashboard-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-image-wrapper">
+            {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Profile" class="profile-pic-large">
+            {% else %}
+                <div class="profile-pic-placeholder">
+                    <i class="bi bi-person-circle"></i>
+                </div>
+            {% endif %}
         </div>
-    </div>
-
-    <div class="col-md-4 mb-4">
-        <div class="card stat-card">
-            <div class="card-body text-center">
-                <i class="bi bi-person-plus stat-icon"></i>
-                <h3>{{ recent_users }}</h3>
-                <p class="text-muted">New (30 days)</p>
+        <h1 class="profile-name">{{ profile.get_full_name }}</h1>
+        <p class="profile-username">@{{ user.username }}</p>
+        
+        <!-- Profile Completion Progress -->
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Profile Completion</span>
+                <span><strong>{{ completion_percentage }}%</strong></span>
             </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-4">
-        <div class="card stat-card">
-            <div class="card-body text-center">
-                <i class="bi bi-check-circle stat-icon"></i>
-                <h3>{{ completion_percentage }}%</h3>
-                <p class="text-muted">Profile Complete</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-4">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="bi bi-info-circle"></i> Profile Information
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col-sm-4 fw-bold">Username:</div>
-                    <div class="col-sm-8">{{ user.username }}</div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-4 fw-bold">Email:</div>
-                    <div class="col-sm-8">{{ user.email }}</div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-4 fw-bold">Full Name:</div>
-                    <div class="col-sm-8">{{ profile.full_name|default:"Not set" }}</div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-4 fw-bold">Phone:</div>
-                    <div class="col-sm-8">{{ profile.phone|default:"Not set" }}</div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-4 fw-bold">Location:</div>
-                    <div class="col-sm-8">{{ profile.location|default:"Not set" }}</div>
-                </div>
-                <hr>
-                <div class="d-grid gap-2">
-                    <a href="{% url 'profile_edit' %}" class="btn btn-primary">
-                        <i class="bi bi-pencil"></i> Edit Profile
-                    </a>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: {{ completion_percentage }}%;" 
+                     aria-valuenow="{{ completion_percentage }}" aria-valuemin="0" aria-valuemax="100">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="bi bi-image"></i> Profile Picture
-                </h5>
-            </div>
-            <div class="card-body text-center">
-                {% if profile.profile_picture %}
-                    <img src="{{ profile.profile_picture.url }}" alt="Profile" class="profile-image-large mb-3">
-                {% else %}
-                    <div class="profile-placeholder-large mb-3">
-                        <i class="bi bi-person-circle"></i>
+    <!-- Section Cards -->
+    <div class="container">
+        <div class="row">
+            <!-- Personal Information -->
+            <div class="col-md-6 mb-4">
+                <div class="section-card">
+                    <div class="section-icon">
+                        <i class="bi bi-person-fill"></i>
                     </div>
-                {% endif %}
-                <a href="{% url 'profile_edit' %}" class="btn btn-sm btn-outline-primary">
-                    <i class="bi bi-upload"></i> Change Picture
-                </a>
+                    <h3 class="section-title">Personal Information</h3>
+                    <p class="section-description">Manage your personal details, contact information, and profile picture</p>
+                    <div class="section-status {% if profile.full_name and profile.father_name and profile.phone %}status-complete{% else %}status-incomplete{% endif %}">
+                        <i class="bi {% if profile.full_name and profile.father_name and profile.phone %}bi-check-circle-fill{% else %}bi-exclamation-circle-fill{% endif %}"></i>
+                        <span>{% if profile.full_name and profile.father_name and profile.phone %}Completed{% else %}Incomplete{% endif %}</span>
+                    </div>
+                    <div class="section-actions">
+                        <a href="{% url 'personal_info' %}" class="btn-section btn-primary-section">
+                            <i class="bi bi-pencil"></i> Edit Info
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="card mt-3">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="bi bi-gear"></i> Quick Actions
-                </h5>
+            <!-- Education -->
+            <div class="col-md-6 mb-4">
+                <div class="section-card">
+                    <div class="section-icon">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <h3 class="section-title">Education</h3>
+                    <p class="section-description">Add your educational qualifications, degrees, and academic achievements</p>
+                    <div class="section-status {% if education_count > 0 %}status-complete{% else %}status-incomplete{% endif %}">
+                        <i class="bi {% if education_count > 0 %}bi-check-circle-fill{% else %}bi-exclamation-circle-fill{% endif %}"></i>
+                        <span>{{ education_count }} {% if education_count == 1 %}entry{% else %}entries{% endif %}</span>
+                    </div>
+                    <div class="section-actions">
+                        <a href="{% url 'education_list' %}" class="btn-section btn-primary-section">
+                            <i class="bi bi-eye"></i> View All
+                        </a>
+                        <a href="{% url 'education_add' %}" class="btn-section btn-secondary-section">
+                            <i class="bi bi-plus-lg"></i> Add New
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="d-grid gap-2">
-                    <a href="{% url 'profile' %}" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-eye"></i> View My Profile
-                    </a>
-                    <a href="{% url 'change_password' %}" class="btn btn-outline-warning btn-sm">
-                        <i class="bi bi-key"></i> Change Password
-                    </a>
-                    <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
+
+            <!-- Skills & Certifications -->
+            <div class="col-md-6 mb-4">
+                <div class="section-card">
+                    <div class="section-icon">
+                        <i class="bi bi-award-fill"></i>
+                    </div>
+                    <h3 class="section-title">Skills & Certifications</h3>
+                    <p class="section-description">Showcase your technical skills, expertise levels, and professional certifications</p>
+                    <div class="section-status {% if skills_count > 0 %}status-complete{% else %}status-incomplete{% endif %}">
+                        <i class="bi {% if skills_count > 0 %}bi-check-circle-fill{% else %}bi-exclamation-circle-fill{% endif %}"></i>
+                        <span>{{ skills_count }} {% if skills_count == 1 %}skill{% else %}skills{% endif %}</span>
+                    </div>
+                    <div class="section-actions">
+                        <a href="{% url 'skills_list' %}" class="btn-section btn-primary-section">
+                            <i class="bi bi-eye"></i> View All
+                        </a>
+                        <a href="{% url 'skill_add' %}" class="btn-section btn-secondary-section">
+                            <i class="bi bi-plus-lg"></i> Add New
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience -->
+            <div class="col-md-6 mb-4">
+                <div class="section-card">
+                    <div class="section-icon">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <h3 class="section-title">Work Experience</h3>
+                    <p class="section-description">Document your professional journey, roles, and career achievements</p>
+                    <div class="section-status {% if experience_count > 0 %}status-complete{% else %}status-incomplete{% endif %}">
+                        <i class="bi {% if experience_count > 0 %}bi-check-circle-fill{% else %}bi-exclamation-circle-fill{% endif %}"></i>
+                        <span>{{ experience_count }} {% if experience_count == 1 %}position{% else %}positions{% endif %}</span>
+                    </div>
+                    <div class="section-actions">
+                        <a href="{% url 'experience_list' %}" class="btn-section btn-primary-section">
+                            <i class="bi bi-eye"></i> View All
+                        </a>
+                        <a href="{% url 'experience_add' %}" class="btn-section btn-secondary-section">
+                            <i class="bi bi-plus-lg"></i> Add New
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio & Projects -->
+            <div class="col-md-12 mb-4">
+                <div class="section-card">
+                    <div class="section-icon">
+                        <i class="bi bi-folder-fill"></i>
+                    </div>
+                    <h3 class="section-title">Portfolio & Projects</h3>
+                    <p class="section-description">Display your best work, projects, and development portfolio with live demos</p>
+                    <div class="section-status {% if projects_count > 0 %}status-complete{% else %}status-incomplete{% endif %}">
+                        <i class="bi {% if projects_count > 0 %}bi-check-circle-fill{% else %}bi-exclamation-circle-fill{% endif %}"></i>
+                        <span>{{ projects_count }} {% if projects_count == 1 %}project{% else %}projects{% endif %}</span>
+                    </div>
+                    <div class="section-actions">
+                        <a href="{% url 'projects_list' %}" class="btn-section btn-primary-section">
+                            <i class="bi bi-eye"></i> View All
+                        </a>
+                        <a href="{% url 'project_add' %}" class="btn-section btn-secondary-section">
+                            <i class="bi bi-plus-lg"></i> Add New
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
