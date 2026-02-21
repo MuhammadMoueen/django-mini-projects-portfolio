@@ -33,12 +33,12 @@
             <p class="text-muted mt-2">{{ project.description }}</p>
             <div class="mt-2">
                 {% if project.live_link %}
-                <a href="{{ project.live_link }}" target="_blank" class="btn-section btn-secondary-section" style="display: inline-flex; width: auto; padding: 0.5rem 1rem; font-size: 0.85rem;">
+                <a href="{{ project.live_link }}" target="_blank" class="btn-section btn-secondary-section project-link-btn">
                     <i class="bi bi-globe"></i> Live Demo
                 </a>
                 {% endif %}
                 {% if project.github_link %}
-                <a href="{{ project.github_link }}" target="_blank" class="btn-section btn-secondary-section" style="display: inline-flex; width: auto; padding: 0.5rem 1rem; font-size: 0.85rem;">
+                <a href="{{ project.github_link }}" target="_blank" class="btn-section btn-secondary-section project-link-btn">
                     <i class="bi bi-github"></i> GitHub
                 </a>
                 {% endif %}

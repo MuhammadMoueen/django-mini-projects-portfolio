@@ -1158,6 +1158,54 @@ a:hover {
     margin: 0.5rem 0 !important;
 }
 
+/* Brand and Utilities */
+.brand-yellow {
+    color: var(--yellow-accent);
+}
+
+.brand-coral {
+    color: var(--coral-accent);
+}
+
+.register-btn {
+    margin-left: 0.5rem;
+}
+
+.profile-image-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 0.5rem;
+}
+
+.profile-image-small {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.form-check-custom-label {
+    text-transform: none;
+    font-size: 0.875rem;
+}
+
+.project-link-btn {
+    display: inline-flex;
+    width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+.delete-danger-btn {
+    background: linear-gradient(135deg, var(--danger) 0%, #DC2626 100%);
+}
+
+.error-icon-large {
+    font-size: 5rem;
+}
+
 /* Responsive adjustments for neumorphic cards */
 @media (max-width: 768px) {
     .section-card {
