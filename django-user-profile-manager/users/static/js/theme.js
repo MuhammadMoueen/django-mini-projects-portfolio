@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Auto-dismiss alerts after 5 seconds
+    // Auto-dismiss alerts after 1 second
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(alert => {
         setTimeout(() => {
             alert.style.transition = 'opacity 0.5s ease';
             alert.style.opacity = '0';
             setTimeout(() => alert.remove(), 500);
-        }, 5000);
+        }, 1000);
     });
 
     // Profile picture preview on file selection

@@ -419,9 +419,13 @@ a:hover {
 
 .alert {
     border: none !important;
-    border-radius: 12px !important;
-    padding: 1rem 1.25rem !important;
+    border-radius: 16px !important;
+    padding: 1.25rem 1.5rem !important;
     animation: slideInDown 0.5s ease-out;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    font-weight: 500;
 }
 
 @keyframes slideInDown {
@@ -436,23 +440,63 @@ a:hover {
 }
 
 .alert-success {
-    background: linear-gradient(135deg, var(--success) 0%, #059669 100%) !important;
-    color: white !important;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.3) 100%) !important;
+    border: 1px solid rgba(16, 185, 129, 0.4) !important;
+    color: #6EE7B7 !important;
+}
+
+.alert-success::before {
+    content: '✓';
+    display: inline-block;
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #10B981;
 }
 
 .alert-danger {
-    background: linear-gradient(135deg, var(--danger) 0%, #DC2626 100%) !important;
-    color: white !important;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.3) 100%) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    color: #FCA5A5 !important;
+}
+
+.alert-danger::before {
+    content: '✕';
+    display: inline-block;
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #EF4444;
 }
 
 .alert-warning {
-    background: linear-gradient(135deg, var(--warning) 0%, #D97706 100%) !important;
-    color: white !important;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.3) 100%) !important;
+    border: 1px solid rgba(245, 158, 11, 0.4) !important;
+    color: #FCD34D !important;
+}
+
+.alert-warning::before {
+    content: '⚠';
+    display: inline-block;
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #F59E0B;
 }
 
 .alert-info {
-    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%) !important;
-    color: white !important;
+    background: linear-gradient(135deg, rgba(74, 86, 226, 0.2) 0%, rgba(91, 127, 255, 0.3) 100%) !important;
+    border: 1px solid rgba(74, 86, 226, 0.4) !important;
+    color: #A5B4FC !important;
+}
+
+.alert-info::before {
+    content: 'ℹ';
+    display: inline-block;
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #5B7FFF;
 }
 
 .btn-close {
