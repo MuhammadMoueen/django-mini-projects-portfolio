@@ -64,13 +64,13 @@ body {
 }
 
 .card {
-    background: var(--card-bg);
-    border: none;
-    border-radius: 20px;
+    background: var(--card-bg) !important;
+    border: none !important;
+    border-radius: 20px !important;
     overflow: hidden;
     transition: all 0.3s ease;
     margin-bottom: 1.5rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
     position: relative;
 }
 
@@ -89,14 +89,14 @@ body {
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4) !important;
 }
 
 .card-header {
-    background: transparent;
-    color: var(--text-light);
+    background: transparent !important;
+    color: var(--text-light) !important;
     padding: 1.5rem;
-    border: none;
+    border: none !important;
     font-weight: 700;
     position: relative;
     z-index: 1;
@@ -106,15 +106,16 @@ body {
     padding: 2rem;
     position: relative;
     z-index: 1;
+    background: transparent !important;
 }
 
 .card-footer {
-    background: rgba(255, 255, 255, 0.05);
-    border-top: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-top: 1px solid var(--border-color) !important;
     padding: 1rem;
     position: relative;
     z-index: 1;
-    color: var(--text-muted);
+    color: var(--text-muted) !important;
 }
 
 .stat-card {
@@ -208,28 +209,28 @@ body {
 }
 
 .form-control {
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    padding: 0.75rem 1rem !important;
     transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-light) !important;
 }
 
 .form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 95, 221, 0.2);
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--text-light);
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 3px rgba(74, 95, 221, 0.2) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--text-light) !important;
 }
 
 .form-control::placeholder {
-    color: var(--text-muted);
+    color: var(--text-muted) !important;
 }
 
 .form-label {
     font-weight: 500;
-    color: var(--text-light);
+    color: var(--text-light) !important;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     font-size: 0.75rem;
@@ -284,15 +285,15 @@ body {
 }
 
 .shadow {
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
 }
 
 .text-muted {
-    color: #6c757d !important;
+    color: var(--text-muted) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: var(--text-light);
+    color: var(--text-light) !important;
     font-weight: 700;
 }
 
@@ -306,6 +307,14 @@ a {
 a:hover {
     color: var(--accent-yellow);
     text-decoration: underline;
+}
+
+.small, small {
+    color: var(--text-muted) !important;
+}
+
+.text-danger {
+    color: #ff6b6b !important;
 }
 
 @media (max-width: 768px) {
