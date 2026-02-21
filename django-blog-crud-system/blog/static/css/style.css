@@ -1,14 +1,17 @@
 :root {
-    --primary-color: #2563eb;
-    --secondary-color: #64748b;
-    --dark-bg: #0f172a;
-    --card-bg: #1e293b;
-    --text-light: #f1f5f9;
-    --text-muted: #94a3b8;
-    --border-color: #334155;
+    --primary-color: #4A5FDD;
+    --secondary-color: #2E3A59;
+    --dark-bg: #1E2841;
+    --card-bg: #2E3A59;
+    --text-light: #ffffff;
+    --text-muted: #8B98B5;
+    --border-color: #3D4968;
     --success: #10b981;
     --warning: #f59e0b;
     --danger: #ef4444;
+    --accent-coral: #FF6B8A;
+    --accent-yellow: #FFD166;
+    --accent-blue: #5B7FFF;
 }
 
 * {
@@ -23,10 +26,12 @@ html {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1E2841 0%, #2E3A59 50%, #4A5FDD 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
 }
 
 main {
@@ -130,32 +135,61 @@ main {
 
 .auth-card {
     border: none;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    background: var(--card-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: var(--accent-yellow);
+    border-radius: 50%;
+    opacity: 0.15;
 }
 
 .auth-card h2 {
-    color: #1e293b;
+    color: var(--text-light);
     font-weight: 700;
+}
+
+.auth-card p {
+    color: var(--text-muted);
 }
 
 .form-label {
     font-weight: 500;
-    color: #334155;
+    color: var(--text-light);
     margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
 }
 
 .form-control {
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     padding: 0.75rem 1rem;
     transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
 }
 
 .form-control:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(74, 95, 221, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-light);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
 }
 
 .form-control.is-invalid {
@@ -173,20 +207,24 @@ main {
 
 .btn {
     padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 500;
+    border-radius: 12px;
+    font-weight: 600;
     transition: all 0.3s ease;
     border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.875rem;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF6B8A 0%, #FF8FA0 100%);
     color: white;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 20px rgba(255, 107, 138, 0.4);
+    background: linear-gradient(135deg, #FF5A79 0%, #FF7E8F 100%);
 }
 
 .btn-outline-primary {
@@ -495,4 +533,169 @@ textarea.form-control {
     .search-box .btn {
         padding: 0.75rem 1.25rem;
     }
+}
+/* Decorative floating circles */
+.auth-wrapper {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-circle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.circle-1 {
+    width: 150px;
+    height: 150px;
+    background: var(--accent-yellow);
+    opacity: 0.2;
+    top: 10%;
+    left: 5%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.circle-2 {
+    width: 100px;
+    height: 100px;
+    background: var(--accent-coral);
+    opacity: 0.25;
+    top: 60%;
+    left: 10%;
+    animation: float 8s ease-in-out infinite 1s;
+}
+
+.circle-3 {
+    width: 200px;
+    height: 200px;
+    background: var(--accent-blue);
+    opacity: 0.15;
+    bottom: 10%;
+    right: 5%;
+    animation: float 7s ease-in-out infinite 2s;
+}
+
+.circle-4 {
+    width: 120px;
+    height: 120px;
+    background: var(--accent-yellow);
+    opacity: 0.2;
+    top: 20%;
+    right: 15%;
+    animation: float 9s ease-in-out infinite 1.5s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(-20px) translateX(10px);
+    }
+    50% {
+        transform: translateY(-10px) translateX(-10px);
+    }
+    75% {
+        transform: translateY(-30px) translateX(5px);
+    }
+}
+
+.auth-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Profile icon styling */
+.profile-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-coral), var(--accent-blue));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.profile-icon::after {
+    content: '👤';
+    font-size: 2.5rem;
+    filter: brightness(0) invert(1);
+}
+
+.profile-icon-accent {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 3px solid var(--card-bg);
+}
+
+.accent-top-right {
+    background: var(--accent-blue);
+    top: 5px;
+    right: 5px;
+}
+
+.accent-bottom-left {
+    background: var(--accent-yellow);
+    bottom: 10px;
+    left: -5px;
+}
+
+.accent-bottom-right {
+    background: var(--accent-coral);
+    bottom: 0;
+    right: 15px;
+}
+
+/* Link styling */
+.auth-card a {
+    color: var(--accent-coral);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.auth-card a:hover {
+    color: var(--accent-yellow);
+    text-decoration: underline;
+}
+
+/* Alternative login section */
+.social-login {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.social-login p {
+    font-size: 0.875rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-coral);
 }
