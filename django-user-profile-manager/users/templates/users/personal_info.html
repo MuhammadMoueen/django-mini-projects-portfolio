@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Personal Information - Profile Manager{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="form-card">
+        <div class="form-header">
+            <h2 class="form-title">
+                <i class="bi bi-person-fill"></i> Personal Information
+            </h2>
+            <p class="form-subtitle">Update your personal details and contact information</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>
+                {{ form.profile_picture }}
+                {% if profile.profile_picture %}
+                    <div class="mt-2">
+                        <img src="{{ profile.profile_picture.url }}" alt="Current" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+                    </div>
+                {% endif %}
+                {% if form.profile_picture.errors %}
+                    <div class="text-danger small mt-1">{{ form.profile_picture.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.full_name.id_for_label }}" class="form-label">Full Name</label>
+                {{ form.full_name }}
+                {% if form.full_name.errors %}
+                    <div class="text-danger small mt-1">{{ form.full_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.father_name.id_for_label }}" class="form-label">Father Name</label>
+                {{ form.father_name }}
+                {% if form.father_name.errors %}
+                    <div class="text-danger small mt-1">{{ form.father_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth</label>
+                {{ form.date_of_birth }}
+                {% if form.date_of_birth.errors %}
+                    <div class="text-danger small mt-1">{{ form.date_of_birth.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.phone.id_for_label }}" class="form-label">Phone Number</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                    <div class="text-danger small mt-1">{{ form.phone.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                {{ form.address }}
+                {% if form.address.errors %}
+                    <div class="text-danger small mt-1">{{ form.address.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> Save Changes
+                </button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary-section">
+                    <i class="bi bi-x-lg"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
