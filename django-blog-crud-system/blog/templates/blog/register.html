@@ -3,66 +3,103 @@
 {% block title %}Register - Blog System{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
-        <div class="card auth-card">
-            <div class="card-body p-5">
-                <h2 class="text-center mb-4">Create Account</h2>
-                <p class="text-center text-muted mb-4">Join our community today</p>
-                
-                <form method="post">
-                    {% csrf_token %}
-                    
-                    {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {{ form.non_field_errors }}
+<div class="auth-wrapper">
+    <!-- Floating decorative circles -->
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+    <div class="floating-circle circle-4"></div>
+
+    <div class="row justify-content-center auth-content w-100">
+        <div class="col-md-6 col-lg-5">
+            <div class="card auth-card">
+                <div class="card-body p-5">
+                    <!-- Profile Icon -->
+                    <div class="profile-icon">
+                        <div class="profile-icon-accent accent-top-right"></div>
+                        <div class="profile-icon-accent accent-bottom-left"></div>
+                        <div class="profile-icon-accent accent-bottom-right"></div>
                     </div>
-                    {% endif %}
+
+                    <h2 class="text-center mb-2">Create Account</h2>
+                    <p class="text-center text-muted mb-4">Join our community today</p>
                     
-                    <div class="mb-3">
-                        <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
-                        {{ form.username }}
-                        {% if form.username.errors %}
-                        <div class="text-danger mt-1">{{ form.username.errors }}</div>
-                        {% else %}
-                        <small class="text-muted">Required. 150 characters or fewer.</small>
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
                         {% endif %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                            <div class="text-danger mt-1">{{ form.username.errors }}</div>
+                            {% else %}
+                            <small class="text-muted" style="font-size: 0.75rem;">Required. 150 characters or fewer.</small>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                            <div class="text-danger mt-1">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                            {{ form.password1 }}
+                            {% if form.password1.errors %}
+                            <div class="text-danger mt-1">{{ form.password1.errors }}</div>
+                            {% else %}
+                            <small class="text-muted" style="font-size: 0.75rem;">
+                                Your password must contain at least 8 characters.
+                            </small>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+                            {{ form.password2 }}
+                            {% if form.password2.errors %}
+                            <div class="text-danger mt-1">{{ form.password2.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                            <label class="form-check-label text-muted" for="termsCheck" style="text-transform: none; font-size: 0.875rem;">
+                                I agree to the terms and conditions
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Create Account</button>
+                        
+                        <p class="text-center mb-0">
+                            Already have an account? <a href="{% url 'login' %}">Login here</a>
+                        </p>
+                    </form>
+
+                    <div class="social-login">
+                        <p class="text-muted">Or register with</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-outline-light btn-sm" disabled>
+                                <span style="font-size: 1.2rem;">f</span>
+                            </button>
+                            <button class="btn btn-outline-light btn-sm" disabled>
+                                <span style="font-size: 1.2rem;">G</span>
+                            </button>
+                            <button class="btn btn-outline-light btn-sm" disabled>
+                                <span style="font-size: 1.2rem;">🔗</span>
+                            </button>
+                        </div>
                     </div>
-                    
-                    <div class="mb-3">
-                        <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                        <div class="text-danger mt-1">{{ form.email.errors }}</div>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
-                        {{ form.password1 }}
-                        {% if form.password1.errors %}
-                        <div class="text-danger mt-1">{{ form.password1.errors }}</div>
-                        {% else %}
-                        <small class="text-muted">
-                            Your password must contain at least 8 characters.
-                        </small>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
-                        {{ form.password2 }}
-                        {% if form.password2.errors %}
-                        <div class="text-danger mt-1">{{ form.password2.errors }}</div>
-                        {% endif %}
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary w-100 mb-3">Create Account</button>
-                    
-                    <p class="text-center mb-0">
-                        Already have an account? <a href="{% url 'login' %}">Login here</a>
-                    </p>
-                </form>
+                </div>
             </div>
         </div>
     </div>
