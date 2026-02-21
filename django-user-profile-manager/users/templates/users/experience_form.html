@@ -3,6 +3,23 @@
 {% block title %}{{ title }} - Profile Manager{% endblock %}
 
 {% block content %}
+<!-- Animated Background Bubbles -->
+<div class="animated-background">
+    <div class="bubble bubble-1"></div>
+    <div class="bubble bubble-2"></div>
+    <div class="bubble bubble-3"></div>
+    <div class="bubble bubble-4"></div>
+    <div class="bubble bubble-5"></div>
+    <div class="bubble bubble-6"></div>
+</div>
+
+<!-- Back to Dashboard Button - Top -->
+<div class="back-to-dashboard-top container">
+    <a href="{% url 'dashboard' %}" class="btn-back-dashboard">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
 <div class="form-page">
     <div class="form-card">
         <div class="form-header">
