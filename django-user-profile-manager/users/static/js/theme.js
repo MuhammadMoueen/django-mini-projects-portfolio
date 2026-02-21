@@ -40,7 +40,20 @@ document.addEventListener('DOMContentLoaded', function() {
     forms.forEach(form => {
         const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) {
-            form.addEventListener('submit', function() {
+            let isSubmitting = false;
+            form.addEventListener('submit', function(e) {
+                // Prevent double submission
+                if (isSubmitting) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Check if form has HTML5 validation errors
+                if (form.checkValidity && !form.checkValidity()) {
+                    return true;
+                }
+                
+                isSubmitting = true;
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
             });
