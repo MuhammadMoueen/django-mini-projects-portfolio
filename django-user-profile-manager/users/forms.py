@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from .models import UserProfile, Education, Skill, Experience, Project
 
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
     
@@ -12,19 +13,24 @@ class UserRegisterForm(UserCreationForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
-        
-        self.fields['username'].widget.attrs['placeholder'] = 'Choose a username'
-        self.fields['email'].widget.attrs['placeholder'] = 'your.email@example.com'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Create a strong password'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm your password'
+        placeholders = {
+            'username': 'Choose a username',
+            'email': 'your.email@example.com',
+            'password1': 'Create a strong password',
+            'password2': 'Confirm your password'
+        }
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control',
+                'placeholder': placeholders.get(field_name, '')
+            })
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('This email address is already in use.')
         return email
+
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -35,10 +41,9 @@ class UserUpdateForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
-        self.fields['username'].help_text = 'Required. 150 characters or fewer.'
-        self.fields['email'].help_text = 'Enter a valid email address.'
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
 
 class PersonalInfoForm(forms.ModelForm):
     date_of_birth = forms.DateField(
@@ -57,32 +62,28 @@ class PersonalInfoForm(forms.ModelForm):
             'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Enter your complete address'}),
         }
 
+
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['profile_picture', 'full_name', 'bio', 'phone', 'location']
-        labels = {
-            'profile_picture': 'Profile Picture',
-            'full_name': 'Full Name',
-            'bio': 'About Me',
-            'phone': 'Phone Number',
-            'location': 'City/Location',
-        }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields:
-            if field == 'profile_picture':
-                self.fields[field].widget.attrs.update({'class': 'form-control-file'})
-            elif field == 'bio':
-                self.fields[field].widget.attrs.update({'class': 'form-control', 'rows': 4})
-            else:
-                self.fields[field].widget.attrs.update({'class': 'form-control'})
-        
-        self.fields['full_name'].widget.attrs['placeholder'] = 'Enter your full name'
-        self.fields['bio'].widget.attrs['placeholder'] = 'Tell us about yourself...'
-        self.fields['phone'].widget.attrs['placeholder'] = '+1 234 567 8900'
-        self.fields['location'].widget.attrs['placeholder'] = 'City, Country'
+        placeholders = {
+            'full_name': 'Enter your full name',
+            'bio': 'Tell us about yourself...',
+            'phone': '+1 234 567 8900',
+            'location': 'City, Country'
+        }
+        for field_name, field in self.fields.items():
+            attrs = {'class': 'form-control-file' if field_name == 'profile_picture' else 'form-control'}
+            if field_name == 'bio':
+                attrs['rows'] = 4
+            if field_name in placeholders:
+                attrs['placeholder'] = placeholders[field_name]
+            field.widget.attrs.update(attrs)
+
 
 class EducationForm(forms.ModelForm):
     start_date = forms.DateField(
@@ -99,21 +100,23 @@ class EducationForm(forms.ModelForm):
         fields = ['university_name', 'degree', 'cgpa', 'start_date', 'end_date', 'description']
         widgets = {
             'university_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'University Name'}),
-            'degree': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Bachelor of Science in Computer Science'}),
-            'cgpa': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '3.5', 'step': '0.01', 'min': '0', 'max': '4'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Describe your education details...'}),
+            'degree': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Bachelor of Science'}),
+            'cgpa': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '3.5', 'step': '0.01'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
+
 
 class SkillForm(forms.ModelForm):
     class Meta:
         model = Skill
         fields = ['skill_name', 'level', 'certificate_file', 'certificate_link']
         widgets = {
-            'skill_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g., Python, Django, React'}),
+            'skill_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g., Python, Django'}),
             'level': forms.Select(attrs={'class': 'form-control'}),
-            'certificate_file': forms.FileInput(attrs={'class': 'form-control', 'accept': '.pdf,.jpg,.png'}),
-            'certificate_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://certificate-url.com'}),
+            'certificate_file': forms.FileInput(attrs={'class': 'form-control'}),
+            'certificate_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://'}),
         }
+
 
 class ExperienceForm(forms.ModelForm):
     start_date = forms.DateField(
@@ -132,8 +135,9 @@ class ExperienceForm(forms.ModelForm):
             'job_title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Software Engineer'}),
             'company_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Company Name'}),
             'is_current': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Describe your role and responsibilities...'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
+
 
 class ProjectForm(forms.ModelForm):
     class Meta:
@@ -141,14 +145,15 @@ class ProjectForm(forms.ModelForm):
         fields = ['project_name', 'description', 'skills_used', 'live_link', 'github_link']
         widgets = {
             'project_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Project Name'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Describe your project...'}),
-            'skills_used': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Python, Django, PostgreSQL, Docker'}),
-            'live_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://live-demo.com'}),
-            'github_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://github.com/username/repo'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'skills_used': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Python, Django..'}),
+            'live_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://'}),
+            'github_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://github.com'}),
         }
+
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
