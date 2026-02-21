@@ -11,6 +11,8 @@ A professional Django application for comprehensive user profile management with
 ✅ Fully Responsive Layout
 ✅ Profile Completion Progress Bar
 ✅ Consistent Design Across All Pages
+✅ Profile Dropdown Menu with Avatar
+✅ Image Crop Tool Before Upload
 
 ### 🔐 Authentication
 ✅ User Registration & Login
@@ -19,7 +21,7 @@ A professional Django application for comprehensive user profile management with
 ✅ Protected Routes
 
 ### 👤 Personal Information
-✅ Profile Picture Upload
+✅ Profile Picture Upload with Image Cropping
 ✅ Full Name & Father Name
 ✅ Date of Birth
 ✅ Phone Number
@@ -120,10 +122,11 @@ django-user-profile-manager/
 
 ## Technology Stack
 
-- **Backend**: Django 5.0.14
+- **Backend**: Django 5.2.11
 - **Frontend**: Bootstrap 5.3 + Custom Neumorphic CSS
+- **Image Crop**: Cropper.js 1.6.1
 - **Database**: SQLite3
-- **Image Processing**: Pillow 10.2.0
+- **Image Processing**: Pillow 12.1.1
 - **Icons**: Bootstrap Icons
 - **Authentication**: Django Built-in Auth System
 
