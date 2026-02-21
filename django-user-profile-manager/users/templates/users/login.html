@@ -3,35 +3,59 @@
 {% block title %}Login - Profile Manager{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow">
-            <div class="card-header">
-                <h3 class="text-center mb-0">
-                    <i class="bi bi-box-arrow-in-right"></i> Login
-                </h3>
-            </div>
-            <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" name="username" class="form-control" id="username" required>
+<div class="auth-wrapper">
+    <!-- Floating decorative circles -->
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+    <div class="floating-circle circle-4"></div>
+
+    <div class="row justify-content-center auth-content">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <!-- Profile Icon -->
+                    <div class="profile-icon">
+                        <div class="profile-icon-accent accent-top-right"></div>
+                        <div class="profile-icon-accent accent-bottom-left"></div>
+                        <div class="profile-icon-accent accent-bottom-right"></div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" id="password" required>
-                    </div>
+                    <h3 class="text-center mb-2">
+                        <i class="bi bi-box-arrow-in-right"></i> Welcome back!
+                    </h3>
+                    <p class="text-center text-muted mb-4">Sign in to continue</p>
 
-                    <button type="submit" class="btn btn-primary w-100">
-                        <i class="bi bi-check-circle"></i> Login
-                    </button>
-                </form>
-            </div>
-            <div class="card-footer text-center">
-                Don't have an account? <a href="{% url 'register' %}">Register here</a>
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="username" 
+                                   placeholder="Enter your username" required autofocus>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="password" 
+                                   placeholder="••••••••" required>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe" style="text-transform: none; font-size: 0.875rem;">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-check-circle"></i> Login
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    Don't have an account? <a href="{% url 'register' %}">Register here</a>
+                </div>
             </div>
         </div>
     </div>
