@@ -10,4 +10,31 @@ urlpatterns = [
     path('profile/<str:username>/', views.profile_view, name='profile_view'),
     path('profile/edit/', views.profile_edit, name='profile_edit'),
     path('password/change/', views.change_password, name='change_password'),
+    
+    # Personal Information
+    path('personal-info/', views.personal_info, name='personal_info'),
+    
+    # Education
+    path('education/', views.education_list, name='education_list'),
+    path('education/add/', views.education_add, name='education_add'),
+    path('education/<int:pk>/edit/', views.education_edit, name='education_edit'),
+    path('education/<int:pk>/delete/', views.education_delete, name='education_delete'),
+    
+    # Skills
+    path('skills/', views.skills_list, name='skills_list'),
+    path('skills/add/', views.skill_add, name='skill_add'),
+    path('skills/<int:pk>/edit/', views.skill_edit, name='skill_edit'),
+    path('skills/<int:pk>/delete/', views.skill_delete, name='skill_delete'),
+    
+    # Experience
+    path('experience/', views.experience_list, name='experience_list'),
+    path('experience/add/', views.experience_add, name='experience_add'),
+    path('experience/<int:pk>/edit/', views.experience_edit, name='experience_edit'),
+    path('experience/<int:pk>/delete/', views.experience_delete, name='experience_delete'),
+    
+    # Projects
+    path('projects/', views.projects_list, name='projects_list'),
+    path('projects/add/', views.project_add, name='project_add'),
+    path('projects/<int:pk>/edit/', views.project_edit, name='project_edit'),
+    path('projects/<int:pk>/delete/', views.project_delete, name='project_delete'),
 ]
