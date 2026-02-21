@@ -3,32 +3,80 @@
 {% block title %}Login - Blog System{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
-        <div class="card auth-card">
-            <div class="card-body p-5">
-                <h2 class="text-center mb-4">Welcome Back</h2>
-                <p class="text-center text-muted mb-4">Sign in to continue</p>
-                
-                <form method="post">
-                    {% csrf_token %}
-                    
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" name="username" class="form-control" id="username" required>
+<div class="auth-wrapper">
+    <!-- Floating decorative circles -->
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+    <div class="floating-circle circle-4"></div>
+
+    <div class="row justify-content-center auth-content w-100">
+        <div class="col-md-6 col-lg-5">
+            <div class="card auth-card">
+                <div class="card-body p-5">
+                    <!-- Profile Icon -->
+                    <div class="profile-icon">
+                        <div class="profile-icon-accent accent-top-right"></div>
+                        <div class="profile-icon-accent accent-bottom-left"></div>
+                        <div class="profile-icon-accent accent-bottom-right"></div>
                     </div>
+
+                    <h2 class="text-center mb-2">Welcome back!</h2>
+                    <p class="text-center text-muted mb-4">Sign in to continue</p>
                     
-                    <div class="mb-4">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" id="password" required>
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="username" 
+                                   placeholder="Enter your username" required autofocus>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="password" 
+                                   placeholder="••••••••" required>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label text-muted" for="rememberMe" style="text-transform: none; font-size: 0.875rem;">
+                                Remember me
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+                        
+                        <p class="text-center mb-0">
+                            Don't have an account? <a href="{% url 'register' %}">Register here</a>
+                        </p>
+                    </form>
+
+                    <div class="social-login">
+                        <p class="text-muted">Or sign in with</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-outline-light btn-sm" disabled>
+                                <span style="font-size: 1.2rem;">f</span>
+                            </button>
+                            <button class="btn btn-outline-light btn-sm" disabled>
+                                <span style="font-size: 1.2rem;">G</span>
+                            </button>
+                            <button class="btn btn-outline-light btn-sm" disabled>
+                                <span style="font-size: 1.2rem;">🔗</span>
+                            </button>
+                        </div>
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
-                    
-                    <p class="text-center mb-0">
-                        Don't have an account? <a href="{% url 'register' %}">Register here</a>
-                    </p>
-                </form>
+                </div>
             </div>
         </div>
     </div>
