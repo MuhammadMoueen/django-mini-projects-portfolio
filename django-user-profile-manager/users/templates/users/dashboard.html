@@ -4,18 +4,41 @@
 {% block title %}Dashboard - Profile Manager{% endblock %}
 
 {% block content %}
+<!-- Animated Background Bubbles -->
+<div class="animated-background">
+    <div class="bubble bubble-1"></div>
+    <div class="bubble bubble-2"></div>
+    <div class="bubble bubble-3"></div>
+    <div class="bubble bubble-4"></div>
+    <div class="bubble bubble-5"></div>
+    <div class="bubble bubble-6"></div>
+</div>
+
 <div class="dashboard-container">
     <!-- Profile Header -->
     <div class="profile-header">
-        <div class="profile-image-wrapper">
+        <!-- Circular Progress Ring with Avatar -->
+        <div class="circular-progress-wrapper">
+            <svg class="progress-ring" viewBox="0 0 240 240">
+                <defs>
+                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FFB800;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#8A2BE2;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <circle class="progress-ring-bg" cx="120" cy="120" r="110"></circle>
+                <circle class="progress-ring-circle" cx="120" cy="120" r="110" data-percentage="{{ completion_percentage }}"></circle>
+            </svg>
             {% if profile.profile_picture %}
-                <img src="{{ profile.profile_picture.url }}" alt="Profile" class="profile-pic-large">
+                <img src="{{ profile.profile_picture.url }}" alt="Profile" class="profile-avatar-inner">
             {% else %}
-                <div class="profile-pic-placeholder">
+                <div class="profile-avatar-placeholder">
                     <i class="bi bi-person-circle"></i>
                 </div>
             {% endif %}
+            <span class="progress-percentage">{{ completion_percentage }}%</span>
         </div>
+
         <h1 class="profile-name">
             {% if profile.full_name %}
                 {{ profile.full_name }}
@@ -24,19 +47,6 @@
             {% endif %}
         </h1>
         <p class="profile-username">@{{ user.username }}</p>
-        
-        <!-- Profile Completion Progress -->
-        <div class="progress-container">
-            <div class="progress-label">
-                <span>Profile Completion</span>
-                <span><strong>{{ completion_percentage }}%</strong></span>
-            </div>
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: {{ completion_percentage }}%;" 
-                     aria-valuenow="{{ completion_percentage }}" aria-valuemin="0" aria-valuemax="100">
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Section Cards -->

@@ -825,6 +825,10 @@ a:hover {
         8px 8px 20px rgba(0, 0, 0, 0.4),
         -4px -4px 12px rgba(255, 255, 255, 0.05);
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 320px;
 }
 
 .section-card:hover {
@@ -883,6 +887,7 @@ a:hover {
 .section-actions {
     display: flex;
     gap: 0.75rem;
+    margin-top: auto;
 }
 
 .btn-section {
