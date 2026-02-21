@@ -16,13 +16,23 @@
             {% csrf_token %}
             
             <div class="mb-3">
-                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>
+                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">
+                    <i class="bi bi-camera-fill"></i> Profile Picture
+                </label>
                 {{ form.profile_picture }}
-                {% if profile.profile_picture %}
-                    <div class="mt-2">
-                        <img src="{{ profile.profile_picture.url }}" alt="Current" class="profile-image-preview">
-                    </div>
-                {% endif %}
+                <small class="form-text text-muted d-block mt-1">
+                    <i class="bi bi-info-circle"></i> Upload an image (max 5MB). You'll be able to crop it before saving.
+                </small>
+                <div class="mt-3">
+                    {% if profile.profile_picture %}
+                        <img id="image-preview" src="{{ profile.profile_picture.url }}" alt="Profile Preview" class="profile-image-preview">
+                    {% else %}
+                        <div class="profile-image-preview-placeholder">
+                            <i class="bi bi-person-circle"></i>
+                            <p>No profile picture yet</p>
+                        </div>
+                    {% endif %}
+                </div>
                 {% if form.profile_picture.errors %}
                     <div class="text-danger small mt-1">{{ form.profile_picture.errors }}</div>
                 {% endif %}

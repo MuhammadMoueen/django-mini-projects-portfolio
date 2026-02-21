@@ -80,9 +80,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 dataTransfer.items.add(file);
                 currentInput.files = dataTransfer.files;
 
-                const preview = currentInput.closest('.mb-3')?.querySelector('img');
+                const preview = document.getElementById('image-preview') || 
+                               currentInput.closest('.mb-3')?.querySelector('img');
+                
                 if (preview) {
                     preview.src = canvas.toDataURL('image/jpeg');
+                    preview.style.display = 'block';
+                } else {
+                    const placeholder = currentInput.closest('.mb-3')?.querySelector('.profile-image-preview-placeholder');
+                    if (placeholder) {
+                        const newImg = document.createElement('img');
+                        newImg.id = 'image-preview';
+                        newImg.className = 'profile-image-preview';
+                        newImg.src = canvas.toDataURL('image/jpeg');
+                        placeholder.parentNode.replaceChild(newImg, placeholder);
+                    }
                 }
 
                 modal.hide();
