@@ -1206,6 +1206,25 @@ a:hover {
     font-size: 5rem;
 }
 
+/* Image Cropper Modal */
+.crop-container {
+    max-height: 500px;
+    overflow: hidden;
+}
+
+#cropModal .modal-content {
+    background: var(--navy-dark);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#cropModal .modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#cropModal .modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* Responsive adjustments for neumorphic cards */
 @media (max-width: 768px) {
     .section-card {
