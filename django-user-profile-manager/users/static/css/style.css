@@ -736,6 +736,7 @@ a:hover {
 
 /* ===================================
    NEUMORPHIC DASHBOARD STYLES
+   Premium Card-Based Interface
    =================================== */
 
 .dashboard-container {
@@ -744,6 +745,7 @@ a:hover {
     z-index: 10;
 }
 
+/* Profile header with centered layout */
 .profile-header {
     display: flex;
     flex-direction: column;
