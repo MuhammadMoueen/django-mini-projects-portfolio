@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Work Experience - Profile Manager{% endblock %}
+
+{% block content %}
+<div class="container dashboard-container">
+    <div class="list-header">
+        <h2 class="list-title">
+            <i class="bi bi-briefcase-fill"></i> Work Experience
+        </h2>
+        <a href="{% url 'experience_add' %}" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> Add Experience
+        </a>
+    </div>
+
+    {% if experiences %}
+        {% for experience in experiences %}
+        <div class="list-item">
+            <div class="list-item-header">
+                <div>
+                    <h4 class="list-item-title">{{ experience.job_title }}</h4>
+                    <p class="list-item-subtitle"><i class="bi bi-building"></i> {{ experience.company_name }}</p>
+                    <p class="text-muted small">
+                        <i class="bi bi-calendar-event"></i>
+                        {{ experience.start_date|date:"M Y" }}
+                        {% if experience.is_current %}
+                            - <span class="badge-level badge-expert">Current</span>
+                        {% elif experience.end_date %}
+                            - {{ experience.end_date|date:"M Y" }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="list-item-actions">
+                    <a href="{% url 'experience_edit' experience.pk %}" class="btn-icon btn-edit" title="Edit">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="{% url 'experience_delete' experience.pk %}" class="btn-icon btn-delete" title="Delete">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
+            </div>
+            <p class="text-muted mt-2">{{ experience.description }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="bi bi-briefcase"></i>
+            </div>
+            <p class="empty-state-text">No work experience added yet</p>
+            <a href="{% url 'experience_add' %}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Add Your First Experience
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary-section">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}
