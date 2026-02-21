@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Profile Manager{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="form-card">
+        <div class="form-header">
+            <h2 class="form-title">
+                <i class="bi bi-award-fill"></i> {{ title }}
+            </h2>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="{{ form.skill_name.id_for_label }}" class="form-label">Skill Name</label>
+                {{ form.skill_name }}
+                {% if form.skill_name.errors %}
+                    <div class="text-danger small mt-1">{{ form.skill_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.level.id_for_label }}" class="form-label">Proficiency Level</label>
+                {{ form.level }}
+                {% if form.level.errors %}
+                    <div class="text-danger small mt-1">{{ form.level.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.certificate_file.id_for_label }}" class="form-label">Certificate File (Optional)</label>
+                {{ form.certificate_file }}
+                {% if form.certificate_file.errors %}
+                    <div class="text-danger small mt-1">{{ form.certificate_file.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.certificate_link.id_for_label }}" class="form-label">Certificate Link (Optional)</label>
+                {{ form.certificate_link }}
+                {% if form.certificate_link.errors %}
+                    <div class="text-danger small mt-1">{{ form.certificate_link.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> Save Skill
+                </button>
+                <a href="{% url 'skills_list' %}" class="btn btn-secondary-section">
+                    <i class="bi bi-x-lg"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

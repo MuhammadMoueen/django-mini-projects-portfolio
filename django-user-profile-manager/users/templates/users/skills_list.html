@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Skills & Certifications - Profile Manager{% endblock %}
+
+{% block content %}
+<div class="container dashboard-container">
+    <div class="list-header">
+        <h2 class="list-title">
+            <i class="bi bi-award-fill"></i> Skills & Certifications
+        </h2>
+        <a href="{% url 'skill_add' %}" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> Add Skill
+        </a>
+    </div>
+
+    {% if skills %}
+        <div class="row">
+            {% for skill in skills %}
+            <div class="col-md-6 mb-3">
+                <div class="list-item">
+                    <div class="list-item-header">
+                        <div>
+                            <h4 class="list-item-title">{{ skill.skill_name }}</h4>
+                            <span class="badge-level badge-{{ skill.level }}">{{ skill.get_level_display }}</span>
+                        </div>
+                        <div class="list-item-actions">
+                            <a href="{% url 'skill_edit' skill.pk %}" class="btn-icon btn-edit" title="Edit">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'skill_delete' skill.pk %}" class="btn-icon btn-delete" title="Delete">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% if skill.certificate_link or skill.certificate_file %}
+                    <div class="mt-2">
+                        {% if skill.certificate_link %}
+                        <a href="{{ skill.certificate_link }}" target="_blank" class="text-primary small">
+                            <i class="bi bi-link-45deg"></i> View Certificate
+                        </a>
+                        {% endif %}
+                        {% if skill.certificate_file %}
+                        <a href="{{ skill.certificate_file.url }}" target="_blank" class="text-primary small">
+                            <i class="bi bi-file-earmark-pdf"></i> Download Certificate
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="bi bi-award"></i>
+            </div>
+            <p class="empty-state-text">No skills added yet</p>
+            <a href="{% url 'skill_add' %}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Add Your First Skill
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary-section">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}
