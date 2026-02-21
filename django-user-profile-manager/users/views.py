@@ -9,36 +9,35 @@ from .forms import (
 )
 from .models import UserProfile, Education, Skill, Experience, Project
 
+
 def register(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
     
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}! You can now login.')
-            return redirect('login')
-    else:
-        form = UserRegisterForm()
+    form = UserRegisterForm(request.POST or None)
+    if form.is_valid():
+        user = form.save()
+        messages.success(request, f'Account created for {user.username}! You can now login.')
+        return redirect('login')
     return render(request, 'users/register.html', {'form': form})
+
 
 def user_login(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
     
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
+        user = authenticate(
+            request,
+            username=request.POST.get('username'),
+            password=request.POST.get('password')
+        )
+        if user:
             login(request, user)
-            next_page = request.GET.get('next', 'dashboard')
-            return redirect(next_page)
-        else:
-            messages.error(request, 'Invalid username or password')
+            return redirect(request.GET.get('next', 'dashboard'))
+        messages.error(request, 'Invalid username or password')
     return render(request, 'users/login.html')
+
 
 @login_required
 def user_logout(request):
@@ -46,110 +45,103 @@ def user_logout(request):
     messages.success(request, 'You have been logged out successfully')
     return redirect('login')
 
+
 @login_required
 def dashboard(request):
     profile = request.user.profile
-    context = {
+    return render(request, 'users/dashboard.html', {
         'profile': profile,
         'completion_percentage': profile.profile_completion_percentage,
         'education_count': profile.education_set.count(),
         'skills_count': profile.skill_set.count(),
         'experience_count': profile.experience_set.count(),
         'projects_count': profile.project_set.count(),
-    }
-    return render(request, 'users/dashboard.html', context)
+    })
+
 
 @login_required
 def profile_view(request, username=None):
-    if username:
-        user = get_object_or_404(User, username=username)
-    else:
-        user = request.user
-    profile = user.profile
-    return render(request, 'users/profile.html', {'profile': profile, 'user_obj': user})
+    user = get_object_or_404(User, username=username) if username else request.user
+    return render(request, 'users/profile.html', {
+        'profile': user.profile,
+        'user_obj': user
+    })
+
 
 @login_required
 def profile_edit(request):
-    if request.method == 'POST':
-        user_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, 'Your profile has been updated successfully!')
-            return redirect('profile')
-    else:
-        user_form = UserUpdateForm(instance=request.user)
-        profile_form = ProfileUpdateForm(instance=request.user.profile)
+    user_form = UserUpdateForm(request.POST or None, instance=request.user)
+    profile_form = ProfileUpdateForm(
+        request.POST or None,
+        request.FILES or None,
+        instance=request.user.profile
+    )
     
-    context = {
+    if request.method == 'POST' and user_form.is_valid() and profile_form.is_valid():
+        user_form.save()
+        profile_form.save()
+        messages.success(request, 'Your profile has been updated successfully!')
+        return redirect('profile')
+    
+    return render(request, 'users/profile_edit.html', {
         'user_form': user_form,
         'profile_form': profile_form
-    }
-    return render(request, 'users/profile_edit.html', context)
+    })
+
 
 @login_required
 def change_password(request):
-    if request.method == 'POST':
-        form = CustomPasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('dashboard')
-        else:
-            messages.error(request, 'Please correct the errors below.')
-    else:
-        form = CustomPasswordChangeForm(request.user)
+    form = CustomPasswordChangeForm(request.user, request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        user = form.save()
+        update_session_auth_hash(request, user)
+        messages.success(request, 'Your password was successfully updated!')
+        return redirect('dashboard')
+    elif request.method == 'POST':
+        messages.error(request, 'Please correct the errors below.')
     return render(request, 'users/change_password.html', {'form': form})
 
-# ===== Personal Information =====
+
 @login_required
 def personal_info(request):
     profile = request.user.profile
-    if request.method == 'POST':
-        form = PersonalInfoForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Personal information updated successfully!')
-            return redirect('dashboard')
-    else:
-        form = PersonalInfoForm(instance=profile)
+    form = PersonalInfoForm(request.POST or None, request.FILES or None, instance=profile)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Personal information updated successfully!')
+        return redirect('dashboard')
     return render(request, 'users/personal_info.html', {'form': form, 'profile': profile})
 
-# ===== Education CRUD =====
+
 @login_required
 def education_list(request):
-    education_items = request.user.profile.education_set.all()
-    return render(request, 'users/education_list.html', {'education_items': education_items})
+    return render(request, 'users/education_list.html', {
+        'education_items': request.user.profile.education_set.all()
+    })
+
 
 @login_required
 def education_add(request):
-    if request.method == 'POST':
-        form = EducationForm(request.POST)
-        if form.is_valid():
-            education = form.save(commit=False)
-            education.profile = request.user.profile
-            education.save()
-            messages.success(request, 'Education entry added successfully!')
-            return redirect('education_list')
-    else:
-        form = EducationForm()
+    form = EducationForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        education = form.save(commit=False)
+        education.profile = request.user.profile
+        education.save()
+        messages.success(request, 'Education entry added successfully!')
+        return redirect('education_list')
     return render(request, 'users/education_form.html', {'form': form, 'title': 'Add Education'})
+
 
 @login_required
 def education_edit(request, pk):
     education = get_object_or_404(Education, pk=pk, profile=request.user.profile)
-    if request.method == 'POST':
-        form = EducationForm(request.POST, instance=education)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Education entry updated successfully!')
-            return redirect('education_list')
-    else:
-        form = EducationForm(instance=education)
+    form = EducationForm(request.POST or None, instance=education)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Education entry updated successfully!')
+        return redirect('education_list')
     return render(request, 'users/education_form.html', {'form': form, 'title': 'Edit Education'})
+
 
 @login_required
 def education_delete(request, pk):
@@ -160,38 +152,36 @@ def education_delete(request, pk):
         return redirect('education_list')
     return render(request, 'users/confirm_delete.html', {'object': education, 'type': 'Education'})
 
-# ===== Skills CRUD =====
+
 @login_required
 def skills_list(request):
-    skills = request.user.profile.skill_set.all()
-    return render(request, 'users/skills_list.html', {'skills': skills})
+    return render(request, 'users/skills_list.html', {
+        'skills': request.user.profile.skill_set.all()
+    })
+
 
 @login_required
 def skill_add(request):
-    if request.method == 'POST':
-        form = SkillForm(request.POST, request.FILES)
-        if form.is_valid():
-            skill = form.save(commit=False)
-            skill.profile = request.user.profile
-            skill.save()
-            messages.success(request, 'Skill added successfully!')
-            return redirect('skills_list')
-    else:
-        form = SkillForm()
+    form = SkillForm(request.POST or None, request.FILES or None)
+    if request.method == 'POST' and form.is_valid():
+        skill = form.save(commit=False)
+        skill.profile = request.user.profile
+        skill.save()
+        messages.success(request, 'Skill added successfully!')
+        return redirect('skills_list')
     return render(request, 'users/skill_form.html', {'form': form, 'title': 'Add Skill'})
+
 
 @login_required
 def skill_edit(request, pk):
     skill = get_object_or_404(Skill, pk=pk, profile=request.user.profile)
-    if request.method == 'POST':
-        form = SkillForm(request.POST, request.FILES, instance=skill)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Skill updated successfully!')
-            return redirect('skills_list')
-    else:
-        form = SkillForm(instance=skill)
+    form = SkillForm(request.POST or None, request.FILES or None, instance=skill)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Skill updated successfully!')
+        return redirect('skills_list')
     return render(request, 'users/skill_form.html', {'form': form, 'title': 'Edit Skill'})
+
 
 @login_required
 def skill_delete(request, pk):
@@ -202,38 +192,36 @@ def skill_delete(request, pk):
         return redirect('skills_list')
     return render(request, 'users/confirm_delete.html', {'object': skill, 'type': 'Skill'})
 
-# ===== Experience CRUD =====
+
 @login_required
 def experience_list(request):
-    experiences = request.user.profile.experience_set.all()
-    return render(request, 'users/experience_list.html', {'experiences': experiences})
+    return render(request, 'users/experience_list.html', {
+        'experiences': request.user.profile.experience_set.all()
+    })
+
 
 @login_required
 def experience_add(request):
-    if request.method == 'POST':
-        form = ExperienceForm(request.POST)
-        if form.is_valid():
-            experience = form.save(commit=False)
-            experience.profile = request.user.profile
-            experience.save()
-            messages.success(request, 'Experience added successfully!')
-            return redirect('experience_list')
-    else:
-        form = ExperienceForm()
+    form = ExperienceForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        experience = form.save(commit=False)
+        experience.profile = request.user.profile
+        experience.save()
+        messages.success(request, 'Experience added successfully!')
+        return redirect('experience_list')
     return render(request, 'users/experience_form.html', {'form': form, 'title': 'Add Experience'})
+
 
 @login_required
 def experience_edit(request, pk):
     experience = get_object_or_404(Experience, pk=pk, profile=request.user.profile)
-    if request.method == 'POST':
-        form = ExperienceForm(request.POST, instance=experience)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Experience updated successfully!')
-            return redirect('experience_list')
-    else:
-        form = ExperienceForm(instance=experience)
+    form = ExperienceForm(request.POST or None, instance=experience)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Experience updated successfully!')
+        return redirect('experience_list')
     return render(request, 'users/experience_form.html', {'form': form, 'title': 'Edit Experience'})
+
 
 @login_required
 def experience_delete(request, pk):
@@ -244,38 +232,36 @@ def experience_delete(request, pk):
         return redirect('experience_list')
     return render(request, 'users/confirm_delete.html', {'object': experience, 'type': 'Experience'})
 
-# ===== Projects CRUD =====
+
 @login_required
 def projects_list(request):
-    projects = request.user.profile.project_set.all()
-    return render(request, 'users/projects_list.html', {'projects': projects})
+    return render(request, 'users/projects_list.html', {
+        'projects': request.user.profile.project_set.all()
+    })
+
 
 @login_required
 def project_add(request):
-    if request.method == 'POST':
-        form = ProjectForm(request.POST)
-        if form.is_valid():
-            project = form.save(commit=False)
-            project.profile = request.user.profile
-            project.save()
-            messages.success(request, 'Project added successfully!')
-            return redirect('projects_list')
-    else:
-        form = ProjectForm()
+    form = ProjectForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        project = form.save(commit=False)
+        project.profile = request.user.profile
+        project.save()
+        messages.success(request, 'Project added successfully!')
+        return redirect('projects_list')
     return render(request, 'users/project_form.html', {'form': form, 'title': 'Add Project'})
+
 
 @login_required
 def project_edit(request, pk):
     project = get_object_or_404(Project, pk=pk, profile=request.user.profile)
-    if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=project)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Project updated successfully!')
-            return redirect('projects_list')
-    else:
-        form = ProjectForm(instance=project)
+    form = ProjectForm(request.POST or None, instance=project)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Project updated successfully!')
+        return redirect('projects_list')
     return render(request, 'users/project_form.html', {'form': form, 'title': 'Edit Project'})
+
 
 @login_required
 def project_delete(request, pk):
@@ -285,4 +271,3 @@ def project_delete(request, pk):
         messages.success(request, 'Project deleted successfully!')
         return redirect('projects_list')
     return render(request, 'users/confirm_delete.html', {'object': project, 'type': 'Project'})
-
