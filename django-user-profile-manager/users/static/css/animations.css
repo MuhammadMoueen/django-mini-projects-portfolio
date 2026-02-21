@@ -1,9 +1,12 @@
 /* ===================================
    Premium Animated Background System
-   Yellow & Purple Floating Bubbles
+   
+   Creates floating bubbles with smooth
+   animations using yellow and purple
+   gradient colors for visual depth
    =================================== */
 
-/* Main animated background wrapper */
+/* Background container - fixed positioning */
 .animated-background {
     position: fixed;
     top: 0;
@@ -15,7 +18,7 @@
     overflow: hidden;
 }
 
-/* Floating animated bubbles */
+/* Base bubble styling with blur effect */
 .bubble {
     position: absolute;
     border-radius: 50%;
