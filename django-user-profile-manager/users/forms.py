@@ -147,9 +147,21 @@ class ProjectForm(forms.ModelForm):
             'project_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Project Name'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'skills_used': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Python, Django..'}),
-            'live_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://'}),
-            'github_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://github.com'}),
+            'live_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://example.com'}),
+            'github_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://github.com/username/repo'}),
         }
+    
+    def clean_live_link(self):
+        url = self.cleaned_data.get('live_link')
+        if url and not url.startswith(('http://', 'https://')):
+            url = 'https://' + url
+        return url
+    
+    def clean_github_link(self):
+        url = self.cleaned_data.get('github_link')
+        if url and not url.startswith(('http://', 'https://')):
+            url = 'https://' + url
+        return url
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):

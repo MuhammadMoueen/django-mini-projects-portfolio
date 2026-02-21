@@ -81,4 +81,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Auto-prepend https:// to URL fields if missing
+    const urlInputs = document.querySelectorAll('input[type="url"]');
+    urlInputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            let value = this.value.trim();
+            if (value && !value.match(/^https?:\/\//i)) {
+                this.value = 'https://' + value;
+            }
+        });
+    });
 });

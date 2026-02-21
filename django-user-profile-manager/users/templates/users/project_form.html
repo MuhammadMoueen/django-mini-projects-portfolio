@@ -42,6 +42,9 @@
             <div class="mb-3">
                 <label for="{{ form.live_link.id_for_label }}" class="form-label">Live Demo Link (Optional)</label>
                 {{ form.live_link }}
+                <small class="form-text text-muted d-block mt-1">
+                    <i class="bi bi-info-circle"></i> Enter full URL with https:// (e.g., https://example.com)
+                </small>
                 {% if form.live_link.errors %}
                     <div class="text-danger small mt-1">{{ form.live_link.errors }}</div>
                 {% endif %}
@@ -50,6 +53,9 @@
             <div class="mb-3">
                 <label for="{{ form.github_link.id_for_label }}" class="form-label">GitHub Repository (Optional)</label>
                 {{ form.github_link }}
+                <small class="form-text text-muted d-block mt-1">
+                    <i class="bi bi-info-circle"></i> Enter full URL with https:// (e.g., https://github.com/username/repo)
+                </small>
                 {% if form.github_link.errors %}
                     <div class="text-danger small mt-1">{{ form.github_link.errors }}</div>
                 {% endif %}
