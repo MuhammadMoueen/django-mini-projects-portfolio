@@ -12,7 +12,6 @@ class UserProfile(models.Model):
         null=True,
         validators=[validate_image_size, validate_image_extension]
     )
-    # Personal Information
     full_name = models.CharField(max_length=200, blank=True)
     father_name = models.CharField(max_length=200, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
@@ -38,28 +37,22 @@ class UserProfile(models.Model):
     
     @property
     def profile_completion_percentage(self):
-        """Calculate profile completion based on all 5 sections"""
         completion = 0
         
-        # Personal Information (20%)
         personal_fields = ['full_name', 'father_name', 'date_of_birth', 'phone', 'address', 'profile_picture']
         personal_filled = sum([1 for field in personal_fields if getattr(self, field)])
         if personal_filled >= 4:
             completion += 20
         
-        # Education (20%)
         if self.education_set.exists():
             completion += 20
         
-        # Skills & Certifications (20%)
         if self.skill_set.exists():
             completion += 20
         
-        # Experience (20%)
         if self.experience_set.exists():
             completion += 20
         
-        # Portfolio & Projects (20%)
         if self.project_set.exists():
             completion += 20
         
