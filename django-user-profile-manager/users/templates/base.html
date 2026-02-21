@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'dashboard' %}">
-                <i class="bi bi-person-circle"></i> Profile Manager
+                <i class="bi bi-person-circle"></i> <span style="color: #FFD166;">Profile</span><span style="color: #FF6B8A;">Manager</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -48,6 +48,9 @@
                                 <i class="bi bi-box-arrow-right"></i> Logout
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <span class="nav-link" style="color: #FFD166; font-weight: 600;">{{ user.username }}</span>
+                        </li>
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">
@@ -55,7 +58,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}">
+                            <a class="nav-link btn btn-primary px-3" href="{% url 'register' %}" style="margin-left: 0.5rem;">
                                 <i class="bi bi-person-plus"></i> Register
                             </a>
                         </li>
@@ -70,7 +73,7 @@
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                     {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
                 </div>
             {% endfor %}
         {% endif %}
@@ -79,9 +82,9 @@
         {% endblock %}
     </div>
 
-    <footer class="footer mt-5 py-3">
+    <footer class="footer">
         <div class="container text-center">
-            <span>&copy; 2026 Profile Manager. All rights reserved.</span>
+            <span>&copy; 2026 <span style="color: #FFD166;">Profile</span><span style="color: #FF6B8A;">Manager</span>. All rights reserved.</span>
         </div>
     </footer>
 
