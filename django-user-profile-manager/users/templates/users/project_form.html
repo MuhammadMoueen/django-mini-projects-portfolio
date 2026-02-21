@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Profile Manager{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="form-card">
+        <div class="form-header">
+            <h2 class="form-title">
+                <i class="bi bi-folder-fill"></i> {{ title }}
+            </h2>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="{{ form.project_name.id_for_label }}" class="form-label">Project Name</label>
+                {{ form.project_name }}
+                {% if form.project_name.errors %}
+                    <div class="text-danger small mt-1">{{ form.project_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="text-danger small mt-1">{{ form.description.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.skills_used.id_for_label }}" class="form-label">Skills Used</label>
+                {{ form.skills_used }}
+                <small class="text-muted">Separate skills with commas</small>
+                {% if form.skills_used.errors %}
+                    <div class="text-danger small mt-1">{{ form.skills_used.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.live_link.id_for_label }}" class="form-label">Live Demo Link (Optional)</label>
+                {{ form.live_link }}
+                {% if form.live_link.errors %}
+                    <div class="text-danger small mt-1">{{ form.live_link.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.github_link.id_for_label }}" class="form-label">GitHub Repository (Optional)</label>
+                {{ form.github_link }}
+                {% if form.github_link.errors %}
+                    <div class="text-danger small mt-1">{{ form.github_link.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> Save Project
+                </button>
+                <a href="{% url 'projects_list' %}" class="btn btn-secondary-section">
+                    <i class="bi bi-x-lg"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
