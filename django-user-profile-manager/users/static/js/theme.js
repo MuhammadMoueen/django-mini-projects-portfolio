@@ -60,28 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Smooth dropdown animation for profile menu
-    const profileDropdown = document.getElementById('profileDropdown');
-    if (profileDropdown) {
-        profileDropdown.addEventListener('click', function(e) {
-            e.preventDefault();
-            const dropdownMenu = this.nextElementSibling;
-            if (dropdownMenu.classList.contains('show')) {
-                dropdownMenu.classList.remove('show');
-            } else {
-                dropdownMenu.classList.add('show');
-            }
-        });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!profileDropdown.contains(e.target)) {
-                const dropdownMenu = profileDropdown.nextElementSibling;
-                dropdownMenu.classList.remove('show');
-            }
-        });
-    }
-
     // Auto-prepend https:// to URL fields if missing
     const urlInputs = document.querySelectorAll('input[type="url"]');
     urlInputs.forEach(input => {

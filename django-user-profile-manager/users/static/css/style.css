@@ -1135,6 +1135,8 @@ a:hover {
 
 .profile-dropdown {
     margin-left: 1rem;
+    position: relative;
+    z-index: 1050;
 }
 
 .profile-avatar-link {
@@ -1191,6 +1193,7 @@ a:hover {
     padding: 0.5rem !important;
     margin-top: 0.5rem !important;
     min-width: 200px;
+    z-index: 1050 !important;
     animation: dropdownFadeIn 0.3s ease;
 }
 
