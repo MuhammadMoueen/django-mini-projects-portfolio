@@ -40,7 +40,7 @@ body {
 }
 
 /* ===================================
-   NAVBAR STYLES
+   NAVBAR STYLES - Sticky Navigation
    =================================== */
 
 .navbar {
@@ -58,6 +58,11 @@ body {
     font-weight: 700;
     color: var(--text-white) !important;
     letter-spacing: -0.5px;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
 }
 
 .nav-link {
