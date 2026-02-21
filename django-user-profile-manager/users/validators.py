@@ -10,7 +10,7 @@ def validate_image_size(image):
 def validate_image_extension(image):
     ext = os.path.splitext(image.name)[1]
     valid_extensions = ['.jpg', '.jpeg', '.png', '.gif']
-    if not ext.lower() in valid_extensions:
+    if ext.lower() not in valid_extensions:
         raise ValidationError(f"Unsupported file extension. Allowed: {', '.join(valid_extensions)}")
 
 def validate_phone_number(phone):
