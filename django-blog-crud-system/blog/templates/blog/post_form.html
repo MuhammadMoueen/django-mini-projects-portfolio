@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ action }} Post - Blog System{% endblock %}
 
@@ -59,27 +60,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const titleInput = document.querySelector('input[name="title"]');
-    const contentInput = document.querySelector('textarea[name="content"]');
-    const titleCount = document.getElementById('titleCount');
-    const contentCount = document.getElementById('contentCount');
-    
-    function updateTitleCount() {
-        titleCount.textContent = titleInput.value.length;
-    }
-    
-    function updateContentCount() {
-        contentCount.textContent = contentInput.value.length;
-    }
-    
-    titleInput.addEventListener('input', updateTitleCount);
-    contentInput.addEventListener('input', updateContentCount);
-    
-    updateTitleCount();
-    updateContentCount();
-});
-</script>
+{% block extra_js %}
+<script src="{% static 'js/post-form.js' %}"></script>
 {% endblock %}
