@@ -9,10 +9,19 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background: rgba(30, 40, 65, 0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+    <!-- Floating Shapes Background Animation -->
+    <div class="floating-shapes">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'home' %}" style="font-size: 1.5rem; letter-spacing: -0.5px;">
-                <span style="color: #FFD166;">Blog</span><span style="color: #FF6B8A;">Sys</span>
+            <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+                <span class="brand-highlight">Blog</span><span>Sys</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -20,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}" style="transition: color 0.3s;">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
@@ -33,14 +42,14 @@
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <span class="nav-link" style="color: #FFD166; font-weight: 600;">{{ user.username }}</span>
+                        <span class="nav-link nav-username">{{ user.username }}</span>
                     </li>
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary px-3" href="{% url 'register' %}" style="margin-left: 0.5rem;">Register</a>
+                    <li class="nav-item ms-2">
+                        <a class="nav-link btn btn-primary px-3" href="{% url 'register' %}">Register</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -48,10 +57,11 @@
         </div>
     </nav>
 
+    <!-- Alert Messages -->
     {% if messages %}
     <div class="container mt-3">
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="background: rgba(255, 107, 138, 0.15); border: 1px solid #FF6B8A; color: #fff;">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
             {{ message }}
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
         </div>
@@ -59,20 +69,23 @@
     </div>
     {% endif %}
 
+    <!-- Main Content Area -->
     <main class="container my-5">
         {% block content %}
         {% endblock %}
     </main>
 
-    <footer class="footer mt-auto py-4" style="background: rgba(30, 40, 65, 0.95); backdrop-filter: blur(10px);">
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container text-center">
             <div class="footer-content">
-                <p class="mb-2" style="color: var(--text-light);">&copy; 2026 <span style="color: #FFD166;">Blog</span><span style="color: #FF6B8A;">Sys</span>. Professional Blog Management System.</p>
+                <p class="mb-2">&copy; 2026 <span class="brand-highlight">Blog</span><span>Sys</span>. Professional Blog Management System.</p>
                 <p class="text-muted small mb-0">Built with Django | Clean Architecture | Modern Design</p>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
