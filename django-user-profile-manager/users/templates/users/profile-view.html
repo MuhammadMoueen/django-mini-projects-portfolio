@@ -158,10 +158,7 @@
                 </div>
             </div>
             {% endif %}
-        </div>
-
-        <!-- Right Column -->
-        <div class="profile-column-right">
+            
             <!-- Skills Card -->
             {% if skills %}
             <div class="profile-card">
@@ -199,7 +196,50 @@
                 </div>
             </div>
             {% endif %}
+        </div>
 
+        <!-- Right Column -->
+        <div class="profile-column-right">
+            <!-- Portfolio & Projects Card -->
+            {% if projects %}
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <div class="profile-card-icon">
+                        <i class="bi bi-folder-fill"></i>
+                    </div>
+                    <h2 class="profile-card-title">Portfolio & Projects</h2>
+                </div>
+                <div class="profile-card-body">
+                    <div class="projects-grid">
+                        {% for project in projects %}
+                        <div class="project-item">
+                            <div class="project-header">
+                                <h3 class="project-name">{{ project.project_name }}</h3>
+                            </div>
+                            <p class="project-desc">{{ project.description }}</p>
+                            <p class="project-tech">
+                                <i class="bi bi-tag-fill"></i>
+                                {{ project.skills_used }}
+                            </p>
+                            <div class="project-actions">
+                                {% if project.live_link %}
+                                <a href="{{ project.live_link }}" target="_blank" class="project-btn">
+                                    <i class="bi bi-globe"></i> Live Demo
+                                </a>
+                                {% endif %}
+                                {% if project.github_link %}
+                                <a href="{{ project.github_link }}" target="_blank" class="project-btn">
+                                    <i class="bi bi-github"></i> GitHub
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
             <!-- Experience Card -->
             {% if experiences %}
             <div class="profile-card">
@@ -238,46 +278,6 @@
             {% endif %}
         </div>
     </div>
-
-    <!-- Full Width Projects Section -->
-    {% if projects %}
-    <div class="profile-card profile-card-full">
-        <div class="profile-card-header">
-            <div class="profile-card-icon">
-                <i class="bi bi-folder-fill"></i>
-            </div>
-            <h2 class="profile-card-title">Portfolio & Projects</h2>
-        </div>
-        <div class="profile-card-body">
-            <div class="projects-grid">
-                {% for project in projects %}
-                <div class="project-item">
-                    <div class="project-header">
-                        <h3 class="project-name">{{ project.project_name }}</h3>
-                    </div>
-                    <p class="project-desc">{{ project.description }}</p>
-                    <p class="project-tech">
-                        <i class="bi bi-tag-fill"></i>
-                        {{ project.skills_used }}
-                    </p>
-                    <div class="project-actions">
-                        {% if project.live_link %}
-                        <a href="{{ project.live_link }}" target="_blank" class="project-btn">
-                            <i class="bi bi-globe"></i> Live Demo
-                        </a>
-                        {% endif %}
-                        {% if project.github_link %}
-                        <a href="{{ project.github_link }}" target="_blank" class="project-btn">
-                            <i class="bi bi-github"></i> GitHub
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% endif %}
 </div>
 
 {% endblock %}
