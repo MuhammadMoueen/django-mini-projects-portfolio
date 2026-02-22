@@ -1385,15 +1385,11 @@ a:hover {
     margin-bottom: 1.5rem;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--purple-main), var(--coral-accent));
-    padding: 6px;
     box-shadow: 
         0 0 40px rgba(255, 184, 0, 0.4),
         0 0 80px rgba(138, 43, 226, 0.3),
         0 10px 40px rgba(0, 0, 0, 0.4);
     animation: glowPulse 3s ease-in-out infinite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
 }
 
@@ -1413,12 +1409,11 @@ a:hover {
 }
 
 .profile-glow-ring .profile-pic-large {
-    width: 100% !important;
-    height: 100% !important;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
     display: block;
-    border: none;
 }
 
 .profile-glow-ring .profile-pic-placeholder {
