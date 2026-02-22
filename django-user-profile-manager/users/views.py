@@ -245,6 +245,18 @@ def project_delete(request, pk):
 
 @login_required
 def profile_public_view(request):
+    """
+    Display user's public profile page with all sections.
+    
+    Shows a professional CV-style layout with:
+    - Personal Information
+    - Skills & Certifications
+    - Education
+    - Work Experience
+    - Portfolio & Projects
+    
+    All sections are ordered by relevance (most recent first).
+    """
     profile = request.user.profile
     context = {
         'profile': profile,
