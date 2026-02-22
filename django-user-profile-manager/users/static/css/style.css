@@ -1464,7 +1464,7 @@ a:hover {
 /* Professional CV Grid Layout - 3-4 Cards Per Row */
 .profile-content-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
     gap: 2rem;
     margin-bottom: 2rem;
     width: 100%;
@@ -1878,8 +1878,12 @@ a:hover {
 /* Responsive Design - Tablet: 2 cards per row */
 @media (max-width: 1200px) {
     .profile-content-grid {
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
         gap: 1.5rem;
+    }
+    
+    .profile-card {
+        min-height: 350px;
     }
 }
 
