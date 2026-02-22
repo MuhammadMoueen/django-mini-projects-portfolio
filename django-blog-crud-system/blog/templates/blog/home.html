@@ -3,7 +3,8 @@
 {% block title %}Home - Blog System{% endblock %}
 
 {% block content %}
-<div class="hero-section text-center mb-5">
+<!-- Hero Section with Animated Content -->
+<div class="hero-section fade-in">
     <h1 class="display-4 fw-bold mb-3">Welcome to BlogSys</h1>
     <p class="lead text-muted mb-4">Discover amazing stories and share your thoughts with the world</p>
     {% if not user.is_authenticated %}
@@ -16,7 +17,8 @@
     {% endif %}
 </div>
 
-<div class="search-section mb-4">
+<!-- Search and Sort Section -->
+<div class="search-section fade-in fade-in-delay-1">
     <form method="get" action="{% url 'home' %}">
         <div class="input-group search-box mb-3">
             <input type="text" name="search" class="form-control" placeholder="Search posts by title, content, or author..." value="{{ search_query }}">
@@ -27,7 +29,7 @@
             <div>
                 {% if search_query %}
                 <small class="text-white">Showing results for: <strong>"{{ search_query }}"</strong></small>
-                <a href="{% url 'home' %}" class="ms-2 text-white">Clear</a>
+                <a href="{% url 'home' %}" class="ms-2 text-yellow">Clear</a>
                 {% endif %}
             </div>
             
@@ -42,18 +44,19 @@
     </form>
 </div>
 
-<div class="posts-section">
+<!-- Posts Grid Section -->
+<div class="posts-section fade-in fade-in-delay-2">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Latest Posts</h2>
         {% if page_obj.paginator.count %}
-        <span class="badge bg-light text-dark">{{ page_obj.paginator.count }} Post{{ page_obj.paginator.count|pluralize }}</span>
+        <span class="badge bg-light">{{ page_obj.paginator.count }} Post{{ page_obj.paginator.count|pluralize }}</span>
         {% endif %}
     </div>
     
     {% if page_obj %}
     <div class="row g-4">
         {% for post in page_obj %}
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-lg-4 fade-in fade-in-delay-{{ forloop.counter|add:2 }}">
             <div class="card post-card h-100">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ post.title }}</h5>
@@ -72,12 +75,44 @@
         {% endfor %}
     </div>
 
+    <!-- Pagination -->
     {% if page_obj.has_other_pages %}
     <nav class="mt-5">
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
             <li class="page-item">
                 <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">Previous</a>
+            </li>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">{{ num }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+    
+    {% else %}
+    <div class="text-center py-5">
+        <p class="text-muted">No posts found.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
             </li>
             {% endif %}
             
