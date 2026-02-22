@@ -1391,6 +1391,9 @@ a:hover {
         0 10px 40px rgba(0, 0, 0, 0.4);
     animation: glowPulse 3s ease-in-out infinite;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes glowPulse {
@@ -1409,6 +1412,9 @@ a:hover {
 }
 
 .profile-glow-ring .profile-pic-large {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -1417,6 +1423,9 @@ a:hover {
 }
 
 .profile-glow-ring .profile-pic-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     border-radius: 50%;
