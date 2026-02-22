@@ -1461,21 +1461,22 @@ a:hover {
 }
 
 /* Two-Column Content Grid */
+/* Professional CV Grid Layout - 3-4 Cards Per Row */
 .profile-content-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-bottom: 2rem;
+    width: 100%;
 }
 
+/* Remove deprecated column classes */
 .profile-column-left,
 .profile-column-right {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    display: contents;
 }
 
-/* Professional Card Styling with Glassmorphism */
+/* Professional Card Styling with Glassmorphism - Equal Heights */
 .profile-card {
     background: rgba(46, 58, 89, 0.6);
     backdrop-filter: blur(20px);
@@ -1488,6 +1489,9 @@ a:hover {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
 }
 
 .profile-card::before {
@@ -1553,6 +1557,9 @@ a:hover {
 
 .profile-card-body {
     color: var(--text-light);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Personal Information Table */
@@ -1875,9 +1882,23 @@ a:hover {
 }
 
 /* Responsive Design for Public Profile */
+/* Responsive Design - Tablet: 2 cards per row */
+@media (max-width: 1200px) {
+    .profile-content-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
+/* Responsive Design - Mobile: 1 card per row */
 @media (max-width: 992px) {
     .profile-content-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .profile-card {
+        min-height: 300px;
     }
     
     .projects-grid {
