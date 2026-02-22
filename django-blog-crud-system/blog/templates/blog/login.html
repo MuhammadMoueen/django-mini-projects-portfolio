@@ -3,13 +3,7 @@
 {% block title %}Login - Blog System{% endblock %}
 
 {% block content %}
-<div class="auth-wrapper">
-    <!-- Floating decorative circles -->
-    <div class="floating-circle circle-1"></div>
-    <div class="floating-circle circle-2"></div>
-    <div class="floating-circle circle-3"></div>
-    <div class="floating-circle circle-4"></div>
-
+<div class="auth-wrapper fade-in">
     <div class="row justify-content-center auth-content w-100">
         <div class="col-md-6 col-lg-5">
             <div class="card auth-card">
@@ -50,7 +44,7 @@
 
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label text-muted" for="rememberMe" style="text-transform: none; font-size: 0.875rem;">
+                            <label class="form-check-label remember-label" for="rememberMe">
                                 Remember me
                             </label>
                         </div>
@@ -65,14 +59,14 @@
                     <div class="social-login">
                         <p class="text-muted">Or sign in with</p>
                         <div class="d-flex justify-content-center gap-2">
-                            <button class="btn btn-outline-light btn-sm" disabled>
-                                <span style="font-size: 1.2rem;">f</span>
+                            <button class="btn btn-outline-light btn-sm social-btn" disabled>
+                                <span class="social-icon">f</span>
                             </button>
-                            <button class="btn btn-outline-light btn-sm" disabled>
-                                <span style="font-size: 1.2rem;">G</span>
+                            <button class="btn btn-outline-light btn-sm social-btn" disabled>
+                                <span class="social-icon">G</span>
                             </button>
-                            <button class="btn btn-outline-light btn-sm" disabled>
-                                <span style="font-size: 1.2rem;">🔗</span>
+                            <button class="btn btn-outline-light btn-sm social-btn" disabled>
+                                <span class="social-icon">🔗</span>
                             </button>
                         </div>
                     </div>
