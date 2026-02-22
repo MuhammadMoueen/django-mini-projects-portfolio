@@ -20,7 +20,7 @@
     <div class="bubble bubble-6"></div>
 </div>
 
-<div class="profile-view-container">
+<div class="public-profile-container">
     <!-- Back to Dashboard Button -->
     <div class="back-to-dashboard-top">
         <a href="{% url 'dashboard' %}" class="btn-back-dashboard">
@@ -28,220 +28,256 @@
         </a>
     </div>
 
-    <!-- Profile Header Card -->
-    <div class="profile-view-header">
-        <div class="profile-view-avatar-wrapper">
+    <!-- Profile Header - Centered with Glowing Ring -->
+    <div class="public-profile-header">
+        <div class="profile-glow-ring">
             {% if profile.profile_picture %}
-                <img src="{{ profile.profile_picture.url }}" alt="{{ profile.full_name }}" class="profile-view-avatar">
+                <img src="{{ profile.profile_picture.url }}" alt="{{ profile.full_name }}" class="profile-pic-large">
             {% else %}
-                <div class="profile-view-avatar-placeholder">
+                <div class="profile-pic-placeholder">
                     <i class="bi bi-person-circle"></i>
                 </div>
             {% endif %}
         </div>
-        <div class="profile-view-header-info">
-            <h1 class="profile-view-name">{{ profile.full_name|default:user.username }}</h1>
-            <p class="profile-view-username">@{{ user.username }}</p>
-            {% if profile.bio %}
-                <p class="profile-view-bio">{{ profile.bio }}</p>
+        <h1 class="profile-display-name">{{ profile.full_name|default:user.username }}</h1>
+        <p class="profile-display-username">@{{ user.username }}</p>
+        {% if profile.bio %}
+            <p class="profile-display-bio">{{ profile.bio }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Two-Column Content Grid -->
+    <div class="profile-content-grid">
+        <!-- Left Column -->
+        <div class="profile-column-left">
+            <!-- Personal Information Card -->
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <div class="profile-card-icon">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h2 class="profile-card-title">Personal Information</h2>
+                </div>
+                <div class="profile-card-body">
+                    <table class="profile-info-table">
+                        {% if profile.full_name %}
+                        <tr>
+                            <td class="info-label">
+                                <i class="bi bi-person"></i>
+                                <span>Full Name</span>
+                            </td>
+                            <td class="info-value">{{ profile.full_name }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if profile.father_name %}
+                        <tr>
+                            <td class="info-label">
+                                <i class="bi bi-person-badge"></i>
+                                <span>Father's Name</span>
+                            </td>
+                            <td class="info-value">{{ profile.father_name }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if user.email %}
+                        <tr>
+                            <td class="info-label">
+                                <i class="bi bi-envelope"></i>
+                                <span>Email</span>
+                            </td>
+                            <td class="info-value">{{ user.email }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if profile.phone %}
+                        <tr>
+                            <td class="info-label">
+                                <i class="bi bi-telephone"></i>
+                                <span>Phone</span>
+                            </td>
+                            <td class="info-value">{{ profile.phone }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if profile.date_of_birth %}
+                        <tr>
+                            <td class="info-label">
+                                <i class="bi bi-calendar"></i>
+                                <span>Date of Birth</span>
+                            </td>
+                            <td class="info-value">{{ profile.date_of_birth|date:"F d, Y" }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if profile.address %}
+                        <tr>
+                            <td class="info-label">
+                                <i class="bi bi-geo-alt"></i>
+                                <span>Address</span>
+                            </td>
+                            <td class="info-value">{{ profile.address }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+
+            <!-- Education Card -->
+            {% if education_items %}
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <div class="profile-card-icon">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <h2 class="profile-card-title">Education</h2>
+                </div>
+                <div class="profile-card-body">
+                    {% for education in education_items %}
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">{{ education.degree }}</h3>
+                            <p class="timeline-subtitle">{{ education.university_name }}</p>
+                            <div class="timeline-meta">
+                                {% if education.cgpa %}
+                                <span class="meta-badge">
+                                    <i class="bi bi-star-fill"></i>
+                                    CGPA: {{ education.cgpa }}
+                                </span>
+                                {% endif %}
+                                {% if education.start_date or education.end_date %}
+                                <span class="meta-date">
+                                    <i class="bi bi-calendar-event"></i>
+                                    {% if education.start_date %}{{ education.start_date|date:"M Y" }}{% endif %}
+                                    {% if education.end_date %} - {{ education.end_date|date:"M Y" }}{% else %} - Present{% endif %}
+                                </span>
+                                {% endif %}
+                            </div>
+                            {% if education.description %}
+                            <p class="timeline-description">{{ education.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Right Column -->
+        <div class="profile-column-right">
+            <!-- Skills Card -->
+            {% if skills %}
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <div class="profile-card-icon">
+                        <i class="bi bi-award-fill"></i>
+                    </div>
+                    <h2 class="profile-card-title">Skills & Certifications</h2>
+                </div>
+                <div class="profile-card-body">
+                    <div class="skills-container">
+                        {% for skill in skills %}
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">{{ skill.skill_name }}</span>
+                                <span class="skill-level level-{{ skill.level }}">{{ skill.get_level_display }}</span>
+                            </div>
+                            {% if skill.certificate_link or skill.certificate_file %}
+                            <div class="skill-certs">
+                                {% if skill.certificate_link %}
+                                <a href="{{ skill.certificate_link }}" target="_blank" class="cert-link">
+                                    <i class="bi bi-link-45deg"></i> Certificate
+                                </a>
+                                {% endif %}
+                                {% if skill.certificate_file %}
+                                <a href="{{ skill.certificate_file.url }}" target="_blank" class="cert-link">
+                                    <i class="bi bi-file-earmark-pdf"></i> Download
+                                </a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Experience Card -->
+            {% if experiences %}
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <div class="profile-card-icon">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <h2 class="profile-card-title">Work Experience</h2>
+                </div>
+                <div class="profile-card-body">
+                    {% for experience in experiences %}
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">{{ experience.job_title }}</h3>
+                            <p class="timeline-subtitle">{{ experience.company_name }}</p>
+                            <div class="timeline-meta">
+                                <span class="meta-date">
+                                    <i class="bi bi-calendar-event"></i>
+                                    {{ experience.start_date|date:"M Y" }}
+                                    {% if experience.is_current %}
+                                        - <span class="badge-current">Current</span>
+                                    {% elif experience.end_date %}
+                                        - {{ experience.end_date|date:"M Y" }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            {% if experience.description %}
+                            <p class="timeline-description">{{ experience.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
             {% endif %}
         </div>
     </div>
 
-    <!-- Profile Content Grid -->
-    <div class="profile-view-content">
-        <!-- Personal Information Section -->
-        <div class="profile-view-section">
-            <div class="profile-view-section-header">
-                <i class="bi bi-person-fill"></i>
-                <h2>Personal Information</h2>
-            </div>
-            <div class="profile-view-section-body">
-                <div class="profile-info-grid">
-                    {% if profile.full_name %}
-                    <div class="profile-info-item">
-                        <span class="profile-info-label"><i class="bi bi-person"></i> Full Name</span>
-                        <span class="profile-info-value">{{ profile.full_name }}</span>
-                    </div>
-                    {% endif %}
-                    
-                    {% if profile.father_name %}
-                    <div class="profile-info-item">
-                        <span class="profile-info-label"><i class="bi bi-person-badge"></i> Father's Name</span>
-                        <span class="profile-info-value">{{ profile.father_name }}</span>
-                    </div>
-                    {% endif %}
-                    
-                    {% if user.email %}
-                    <div class="profile-info-item">
-                        <span class="profile-info-label"><i class="bi bi-envelope"></i> Email</span>
-                        <span class="profile-info-value">{{ user.email }}</span>
-                    </div>
-                    {% endif %}
-                    
-                    {% if profile.phone %}
-                    <div class="profile-info-item">
-                        <span class="profile-info-label"><i class="bi bi-telephone"></i> Phone</span>
-                        <span class="profile-info-value">{{ profile.phone }}</span>
-                    </div>
-                    {% endif %}
-                    
-                    {% if profile.date_of_birth %}
-                    <div class="profile-info-item">
-                        <span class="profile-info-label"><i class="bi bi-calendar"></i> Date of Birth</span>
-                        <span class="profile-info-value">{{ profile.date_of_birth|date:"F d, Y" }}</span>
-                    </div>
-                    {% endif %}
-                    
-                    {% if profile.address %}
-                    <div class="profile-info-item profile-info-item-full">
-                        <span class="profile-info-label"><i class="bi bi-geo-alt"></i> Address</span>
-                        <span class="profile-info-value">{{ profile.address }}</span>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        <!-- Education Section -->
-        {% if education_items %}
-        <div class="profile-view-section">
-            <div class="profile-view-section-header">
-                <i class="bi bi-mortarboard-fill"></i>
-                <h2>Education</h2>
-            </div>
-            <div class="profile-view-section-body">
-                {% for education in education_items %}
-                <div class="profile-timeline-item">
-                    <div class="profile-timeline-icon">
-                        <i class="bi bi-mortarboard"></i>
-                    </div>
-                    <div class="profile-timeline-content">
-                        <h3 class="profile-timeline-title">{{ education.degree }}</h3>
-                        <p class="profile-timeline-subtitle">{{ education.university_name }}</p>
-                        {% if education.cgpa %}
-                        <p class="profile-timeline-meta"><i class="bi bi-star-fill"></i> CGPA: {{ education.cgpa }}</p>
-                        {% endif %}
-                        {% if education.start_date or education.end_date %}
-                        <p class="profile-timeline-date">
-                            <i class="bi bi-calendar-event"></i>
-                            {% if education.start_date %}{{ education.start_date|date:"M Y" }}{% endif %}
-                            {% if education.end_date %} - {{ education.end_date|date:"M Y" }}{% else %} - Present{% endif %}
-                        </p>
-                        {% endif %}
-                        {% if education.description %}
-                        <p class="profile-timeline-description">{{ education.description }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Skills & Certifications Section -->
-        {% if skills %}
-        <div class="profile-view-section">
-            <div class="profile-view-section-header">
-                <i class="bi bi-award-fill"></i>
-                <h2>Skills & Certifications</h2>
-            </div>
-            <div class="profile-view-section-body">
-                <div class="skills-grid">
-                    {% for skill in skills %}
-                    <div class="skill-card">
-                        <div class="skill-card-header">
-                            <h4 class="skill-name">{{ skill.skill_name }}</h4>
-                            <span class="skill-badge badge-{{ skill.level }}">{{ skill.get_level_display }}</span>
-                        </div>
-                        {% if skill.certificate_link or skill.certificate_file %}
-                        <div class="skill-certificates">
-                            {% if skill.certificate_link %}
-                            <a href="{{ skill.certificate_link }}" target="_blank" class="skill-cert-link">
-                                <i class="bi bi-link-45deg"></i> Certificate
-                            </a>
-                            {% endif %}
-                            {% if skill.certificate_file %}
-                            <a href="{{ skill.certificate_file.url }}" target="_blank" class="skill-cert-link">
-                                <i class="bi bi-file-earmark-pdf"></i> Download
-                            </a>
-                            {% endif %}
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Work Experience Section -->
-        {% if experiences %}
-        <div class="profile-view-section">
-            <div class="profile-view-section-header">
-                <i class="bi bi-briefcase-fill"></i>
-                <h2>Work Experience</h2>
-            </div>
-            <div class="profile-view-section-body">
-                {% for experience in experiences %}
-                <div class="profile-timeline-item">
-                    <div class="profile-timeline-icon">
-                        <i class="bi bi-briefcase"></i>
-                    </div>
-                    <div class="profile-timeline-content">
-                        <h3 class="profile-timeline-title">{{ experience.job_title }}</h3>
-                        <p class="profile-timeline-subtitle">{{ experience.company_name }}</p>
-                        <p class="profile-timeline-date">
-                            <i class="bi bi-calendar-event"></i>
-                            {{ experience.start_date|date:"M Y" }}
-                            {% if experience.is_current %}
-                                - <span class="badge-current">Current</span>
-                            {% elif experience.end_date %}
-                                - {{ experience.end_date|date:"M Y" }}
-                            {% endif %}
-                        </p>
-                        {% if experience.description %}
-                        <p class="profile-timeline-description">{{ experience.description }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Projects Section -->
-        {% if projects %}
-        <div class="profile-view-section">
-            <div class="profile-view-section-header">
+    <!-- Full Width Projects Section -->
+    {% if projects %}
+    <div class="profile-card profile-card-full">
+        <div class="profile-card-header">
+            <div class="profile-card-icon">
                 <i class="bi bi-folder-fill"></i>
-                <h2>Portfolio & Projects</h2>
             </div>
-            <div class="profile-view-section-body">
-                <div class="projects-grid">
-                    {% for project in projects %}
-                    <div class="project-card">
-                        <h3 class="project-title">{{ project.project_name }}</h3>
-                        <p class="project-description">{{ project.description }}</p>
-                        <p class="project-skills"><i class="bi bi-tag"></i> {{ project.skills_used }}</p>
-                        <div class="project-links">
-                            {% if project.live_link %}
-                            <a href="{{ project.live_link }}" target="_blank" class="project-link">
-                                <i class="bi bi-globe"></i> Live Demo
-                            </a>
-                            {% endif %}
-                            {% if project.github_link %}
-                            <a href="{{ project.github_link }}" target="_blank" class="project-link">
-                                <i class="bi bi-github"></i> GitHub
-                            </a>
-                            {% endif %}
-                        </div>
+            <h2 class="profile-card-title">Portfolio & Projects</h2>
+        </div>
+        <div class="profile-card-body">
+            <div class="projects-grid">
+                {% for project in projects %}
+                <div class="project-item">
+                    <div class="project-header">
+                        <h3 class="project-name">{{ project.project_name }}</h3>
                     </div>
-                    {% endfor %}
+                    <p class="project-desc">{{ project.description }}</p>
+                    <p class="project-tech">
+                        <i class="bi bi-tag-fill"></i>
+                        {{ project.skills_used }}
+                    </p>
+                    <div class="project-actions">
+                        {% if project.live_link %}
+                        <a href="{{ project.live_link }}" target="_blank" class="project-btn">
+                            <i class="bi bi-globe"></i> Live Demo
+                        </a>
+                        {% endif %}
+                        {% if project.github_link %}
+                        <a href="{{ project.github_link }}" target="_blank" class="project-btn">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
-        {% endif %}
     </div>
+    {% endif %}
 </div>
+
 {% endblock %}
