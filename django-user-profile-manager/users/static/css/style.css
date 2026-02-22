@@ -1391,6 +1391,10 @@ a:hover {
         0 0 80px rgba(138, 43, 226, 0.3),
         0 10px 40px rgba(0, 0, 0, 0.4);
     animation: glowPulse 3s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 @keyframes glowPulse {
@@ -1409,18 +1413,17 @@ a:hover {
 }
 
 .profile-glow-ring .profile-pic-large {
-    width: 228px !important;
-    height: 228px !important;
+    width: 100% !important;
+    height: 100% !important;
     border-radius: 50%;
     object-fit: cover;
     display: block;
-    background: var(--navy-dark);
     border: none;
 }
 
 .profile-glow-ring .profile-pic-placeholder {
-    width: 228px;
-    height: 228px;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--purple-main) 0%, var(--coral-accent) 100%);
     display: flex;
@@ -1889,13 +1892,13 @@ a:hover {
     }
     
     .profile-glow-ring .profile-pic-large {
-        width: 168px !important;
-        height: 168px !important;
+        width: 100% !important;
+        height: 100% !important;
     }
     
     .profile-glow-ring .profile-pic-placeholder {
-        width: 168px;
-        height: 168px;
+        width: 100%;
+        height: 100%;
         font-size: 70px;
     }
     
