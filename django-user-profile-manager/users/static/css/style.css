@@ -1470,12 +1470,6 @@ a:hover {
     width: 100%;
 }
 
-/* Remove deprecated column classes */
-.profile-column-left,
-.profile-column-right {
-    display: contents;
-}
-
 /* Professional Card Styling with Glassmorphism - Equal Heights */
 .profile-card {
     background: rgba(46, 58, 89, 0.6);
@@ -1520,13 +1514,7 @@ a:hover {
     opacity: 1;
 }
 
-/* Full Width Card for Projects */
-.profile-card-full {
-    grid-column: 1 / -1;
-}
-
-/* Card Header */
-.profile-card-header {
+/* Card Header */.profile-card-header {
     display: flex;
     align-items: center;
     gap: 1rem;
