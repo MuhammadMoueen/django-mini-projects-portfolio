@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import (
-    UserRegisterForm, UserUpdateForm, ProfileUpdateForm, CustomPasswordChangeForm,
-    PersonalInfoForm, EducationForm, SkillForm, ExperienceForm, ProjectForm
+    UserRegisterForm, CustomPasswordChangeForm, PersonalInfoForm, 
+    EducationForm, SkillForm, ExperienceForm, ProjectForm
 )
 from .models import UserProfile, Education, Skill, Experience, Project
 
@@ -56,36 +56,6 @@ def dashboard(request):
         'skills_count': profile.skill_set.count(),
         'experience_count': profile.experience_set.count(),
         'projects_count': profile.project_set.count(),
-    })
-
-
-@login_required
-def profile_view(request, username=None):
-    user = get_object_or_404(User, username=username) if username else request.user
-    return render(request, 'users/profile.html', {
-        'profile': user.profile,
-        'user_obj': user
-    })
-
-
-@login_required
-def profile_edit(request):
-    user_form = UserUpdateForm(request.POST or None, instance=request.user)
-    profile_form = ProfileUpdateForm(
-        request.POST or None,
-        request.FILES or None,
-        instance=request.user.profile
-    )
-    
-    if request.method == 'POST' and user_form.is_valid() and profile_form.is_valid():
-        user_form.save()
-        profile_form.save()
-        messages.success(request, 'Your profile has been updated successfully!')
-        return redirect('profile')
-    
-    return render(request, 'users/profile_edit.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
     })
 
 
@@ -275,13 +245,7 @@ def project_delete(request, pk):
 
 @login_required
 def profile_public_view(request):
-    """
-    Display public profile view with all user information.
-    Only accessible to authenticated users.
-    Shows complete profile with education, skills, experience, and projects.
-    """
     profile = request.user.profile
-    
     context = {
         'profile': profile,
         'user': request.user,
@@ -290,6 +254,5 @@ def profile_public_view(request):
         'experiences': profile.experience_set.all().order_by('-start_date'),
         'projects': profile.project_set.all(),
     }
-    
     return render(request, 'users/profile-view.html', context)
 
