@@ -271,3 +271,25 @@ def project_delete(request, pk):
         messages.success(request, 'Project deleted successfully!')
         return redirect('projects_list')
     return render(request, 'users/confirm_delete.html', {'object': project, 'type': 'Project'})
+
+
+@login_required
+def profile_public_view(request):
+    """
+    Display public profile view with all user information.
+    Only accessible to authenticated users.
+    Shows complete profile with education, skills, experience, and projects.
+    """
+    profile = request.user.profile
+    
+    context = {
+        'profile': profile,
+        'user': request.user,
+        'education_items': profile.education_set.all().order_by('-start_date'),
+        'skills': profile.skill_set.all().order_by('-level', 'skill_name'),
+        'experiences': profile.experience_set.all().order_by('-start_date'),
+        'projects': profile.project_set.all(),
+    }
+    
+    return render(request, 'users/profile-view.html', context)
+
