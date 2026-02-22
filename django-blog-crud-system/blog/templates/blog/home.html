@@ -1,3 +1,4 @@
+{% load static %}
 {% extends 'base.html' %}
 
 {% block title %}Home - Blog System{% endblock %}
@@ -109,40 +110,6 @@
     {% else %}
     <div class="text-center py-5">
         <p class="text-muted">No posts found.</p>
-    </div>
-    {% endif %}
-</div>
-{% endblock %}
-            </li>
-            {% endif %}
-            
-            {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-            <li class="page-item active">
-                <span class="page-link">{{ num }}</span>
-            </li>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">{{ num }}</a>
-            </li>
-            {% endif %}
-            {% endfor %}
-            
-            {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">Next</a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
-
-    {% else %}
-    <div class="text-center py-5">
-        <p class="lead text-white">No posts found{% if search_query %} matching your search{% endif %}.</p>
-        {% if user.is_authenticated %}
-        <a href="{% url 'post_create' %}" class="btn btn-primary">Create Post</a>
-        {% endif %}
     </div>
     {% endif %}
 </div>
