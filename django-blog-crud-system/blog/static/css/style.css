@@ -801,14 +801,19 @@ textarea.form-control {
     background: rgba(42, 42, 42, 0.5);
     color: var(--pure-white);
     transition: all var(--transition-fast);
-    cursor: not-allowed;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.social-btn:hover:not([disabled]) {
+.social-btn:hover {
     background: var(--yellow-primary);
     color: var(--primary-black);
     border-color: var(--yellow-primary);
     transform: translateY(-2px);
+    text-decoration: none;
 }
 
 .social-icon {
