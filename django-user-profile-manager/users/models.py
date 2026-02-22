@@ -37,13 +37,16 @@ class UserProfile(models.Model):
     
     @property
     def profile_completion_percentage(self):
+        """Calculate profile completion based on filled sections (20% each)"""
         completion = 0
         
+        # Personal information: requires at least 4 out of 6 fields
         personal_fields = ['full_name', 'father_name', 'date_of_birth', 'phone', 'address', 'profile_picture']
         personal_filled = sum([1 for field in personal_fields if getattr(self, field)])
         if personal_filled >= 4:
             completion += 20
         
+        # Each additional section adds 20% when at least one entry exists
         if self.education_set.exists():
             completion += 20
         

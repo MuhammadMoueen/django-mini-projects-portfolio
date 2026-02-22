@@ -26,6 +26,7 @@ class UserRegisterForm(UserCreationForm):
             })
     
     def clean_email(self):
+        """Prevent duplicate email registrations"""
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('This email address is already in use.')
