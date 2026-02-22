@@ -55,9 +55,9 @@
         <p class="profile-username">@{{ user.username }}</p>
         
         <!-- View Profile Button (Only shown when profile is 100% complete) -->
-        {% if completion_percentage == 100 %}
-        <div class="view-profile-btn-wrapper">
-            <a href="{% url 'profile_public_view' %}" class="btn-view-profile">
+        {% if completion_percentage >= 100 %}
+        <div class="view-profile-btn-wrapper mt-3">
+            <a href="{% url 'profile_public_view' %}" class="btn btn-success btn-lg">
                 <i class="bi bi-eye-fill"></i> View Public Profile
             </a>
         </div>
