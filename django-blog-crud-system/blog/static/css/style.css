@@ -1,19 +1,71 @@
+/* ========================================
+   BLOGSYS - MODERN BLACK/YELLOW/WHITE THEME
+   ========================================
+   
+   A clean, professional blog interface with:
+   - Monochromatic color scheme (Black, Yellow, White)
+   - Smooth floating animations
+   - Micro-interactions on all interactive elements
+   - Responsive design for all screen sizes
+   - Glassmorphism effects with backdrop blur
+   
+   Color Palette:
+   - Primary Black: #0a0a0a (deep backgrounds)
+   - Secondary Black: #1a1a1a (cards, surfaces)
+   - Yellow Accent: #ffd700 (CTAs, highlights)
+   - Pure White: #ffffff (text, borders)
+   - Muted White: #f5f5f5 (secondary text)
+   ======================================== */
+
+
+/* ========================================
+   1. CSS CUSTOM PROPERTIES (THEME VARIABLES)
+   Centralized color and spacing system for
+   easy maintenance and consistent theming
+   ======================================== */
 :root {
-    --primary-color: #4A5FDD;
-    --secondary-color: #2E3A59;
-    --dark-bg: #1E2841;
-    --card-bg: #2E3A59;
-    --text-light: #ffffff;
-    --text-muted: #8B98B5;
-    --border-color: #3D4968;
-    --success: #10b981;
-    --warning: #f59e0b;
-    --danger: #ef4444;
-    --accent-coral: #FF6B8A;
-    --accent-yellow: #FFD166;
-    --accent-blue: #5B7FFF;
+    /* Primary Color Palette */
+    --primary-black: #0a0a0a;
+    --secondary-black: #1a1a1a;
+    --tertiary-black: #2a2a2a;
+    --yellow-primary: #ffd700;
+    --yellow-hover: #ffed4e;
+    --yellow-glow: rgba(255, 215, 0, 0.3);
+    --pure-white: #ffffff;
+    --muted-white: #f5f5f5;
+    --gray-text: #b0b0b0;
+    
+    /* Spacing System */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-full: 50%;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-yellow: 0 0 20px var(--yellow-glow);
 }
 
+
+/* ========================================
+   2. GLOBAL RESET AND BASE STYLES
+   Removes browser defaults and establishes
+   consistent foundation across all elements
+   ======================================== */
 * {
     margin: 0;
     padding: 0;
@@ -22,449 +74,885 @@
 
 html {
     scroll-behavior: smooth;
+    font-size: 16px;
 }
 
+/* Body - Primary container with animated background */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #1E2841 0%, #2E3A59 50%, #4A5FDD 100%);
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+    background: var(--primary-black);
+    color: var(--pure-white);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
     overflow-x: hidden;
+    line-height: 1.6;
 }
 
 main {
     flex: 1;
+    position: relative;
+    z-index: 10;
 }
 
+
+/* ========================================
+   3. FLOATING BACKGROUND ANIMATIONS
+   Soft motion geometric shapes that float
+   across the background creating dynamic
+   visual interest without distraction
+   ======================================== */
+   
+/* Floating shapes container - fixed positioning */
+.floating-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Individual floating shape styling */
+.floating-shape {
+    position: absolute;
+    border-radius: var(--radius-full);
+    opacity: 0.08;
+    filter: blur(50px);
+}
+
+/* Shape 1 - Top left yellow circle */
+.shape-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--yellow-primary);
+    top: -100px;
+    left: -100px;
+    animation: float 20s ease-in-out infinite;
+}
+
+/* Shape 2 - Top right white circle */
+.shape-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--pure-white);
+    top: 10%;
+    right: -50px;
+    animation: float 25s ease-in-out infinite reverse;
+    animation-delay: 2s;
+}
+
+/* Shape 3 - Bottom left yellow circle */
+.shape-3 {
+    width: 350px;
+    height: 350px;
+    background: var(--yellow-primary);
+    bottom: -100px;
+    left: 20%;
+    animation: float 30s ease-in-out infinite;
+    animation-delay: 4s;
+}
+
+/* Shape 4 - Bottom right white circle */
+.shape-4 {
+    width: 250px;
+    height: 250px;
+    background: var(--pure-white);
+    bottom: 10%;
+    right: 10%;
+    animation: float 22s ease-in-out infinite reverse;
+    animation-delay: 6s;
+}
+
+/* Floating animation keyframes - smooth up/down motion */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0) scale(1);
+    }
+    25% {
+        transform: translateY(-50px) translateX(30px) scale(1.05);
+    }
+    50% {
+        transform: translateY(-100px) translateX(-30px) scale(0.95);
+    }
+    75% {
+        transform: translateY(-50px) translateX(30px) scale(1.05);
+    }
+}
+
+
+/* ========================================
+   4. FADE-IN ANIMATIONS
+   Subtle entrance animations for content
+   sections as they appear in viewport
+   ======================================== */
+   
+/* Fade in from bottom */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Staggered animation delays for sequential appearance */
+.fade-in-delay-1 { animation-delay: 0.1s; }
+.fade-in-delay-2 { animation-delay: 0.2s; }
+.fade-in-delay-3 { animation-delay: 0.3s; }
+.fade-in-delay-4 { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ========================================
+   5. NAVIGATION BAR
+   Sticky header with glassmorphism effect
+   and smooth hover transitions on links
+   ======================================== */
+   
 .navbar {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: rgba(26, 26, 26, 0.95) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-sm) 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: var(--transition-normal);
 }
 
+/* Brand logo with yellow accent */
 .navbar-brand {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
     letter-spacing: -0.5px;
+    color: var(--pure-white) !important;
+    transition: var(--transition-fast);
 }
 
-.hero-section {
-    padding: 3rem 0;
-    color: white;
+.navbar-brand:hover {
+    transform: translateY(-2px);
+    text-shadow: var(--shadow-yellow);
 }
 
-.hero-section h1 {
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+.navbar-brand .brand-highlight {
+    color: var(--yellow-primary);
 }
 
-.hero-section .lead {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.search-section {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.search-box {
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.search-box .form-control {
-    border: none;
-    padding: 1rem;
-}
-
-.search-box .btn {
-    padding: 1rem 2rem;
-}
-
-.sort-options {
-    min-width: 150px;
-}
-
-.sort-options .form-select {
-    background-color: white;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-    transition: all 0.3s ease;
-}
-
-.sort-options .form-select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.posts-section h2 {
-    color: white;
-    font-weight: 600;
-    margin-bottom: 2rem;
-}
-
-.post-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none;
-    border-radius: 12px;
-    overflow: hidden;
-    background: white;
-}
-
-.post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.post-card .card-title {
-    color: #1e293b;
-    font-weight: 600;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-}
-
-.post-card .card-text {
-    color: #64748b;
-    line-height: 1.6;
-}
-
-.post-meta {
-    font-size: 0.875rem;
-}
-
-.auth-card {
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    background: var(--card-bg);
+/* Navigation links with hover animation */
+.nav-link {
+    color: var(--muted-white) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
     position: relative;
     overflow: hidden;
 }
 
-.auth-card::before {
+.nav-link::before {
     content: '';
     position: absolute;
-    top: -100px;
-    left: -100px;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--yellow-primary);
+    transform: translateX(-50%);
+    transition: width var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: var(--yellow-primary) !important;
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::before {
+    width: 80%;
+}
+
+/* Active username display */
+.nav-username {
+    color: var(--yellow-primary) !important;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+}
+
+/* Mobile navbar toggle button */
+.navbar-toggler {
+    border-color: var(--yellow-primary);
+    padding: 0.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem var(--yellow-glow);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffd700' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+
+/* ========================================
+   6. BUTTON STYLES & MICRO-INTERACTIONS
+   Interactive buttons with smooth transitions
+   shadow effects, and hover animations
+   ======================================== */
+   
+/* Primary button - Yellow with black text */
+.btn-primary {
+    background: var(--yellow-primary) !important;
+    color: var(--primary-black) !important;
+    border: none !important;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: var(--radius-full);
+    background: rgba(255, 237, 78, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:hover::before {
     width: 300px;
     height: 300px;
-    background: var(--accent-yellow);
-    border-radius: 50%;
-    opacity: 0.15;
+}
+
+.btn-primary:hover {
+    background: var(--yellow-hover) !important;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md), var(--shadow-yellow);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+/* Outline button - White border with transparent background */
+.btn-outline-primary {
+    background: transparent !important;
+    color: var(--pure-white) !important;
+    border: 2px solid var(--pure-white) !important;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.btn-outline-primary:hover {
+    background: var(--pure-white) !important;
+    color: var(--primary-black) !important;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Outline light variant */
+.btn-outline-light {
+    background: transparent !important;
+    color: var(--pure-white) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: var(--yellow-primary) !important;
+    color: var(--yellow-primary) !important;
+    transform: translateY(-2px);
+}
+
+/* Warning button variant */
+.btn-outline-warning {
+    background: transparent !important;
+    color: var(--yellow-primary) !important;
+    border: 2px solid var(--yellow-primary) !important;
+    transition: all var(--transition-fast);
+}
+
+.btn-outline-warning:hover {
+    background: var(--yellow-primary) !important;
+    color: var(--primary-black) !important;
+    transform: translateY(-2px);
+}
+
+/* Danger button variant */
+.btn-outline-danger {
+    background: transparent !important;
+    color: #ff4444 !important;
+    border: 2px solid #ff4444 !important;
+    transition: all var(--transition-fast);
+}
+
+.btn-outline-danger:hover {
+    background: #ff4444 !important;
+    color: var(--pure-white) !important;
+    transform: translateY(-2px);
+}
+
+/* Small button size variant */
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Large button size variant */
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+
+/* ========================================
+   7. CARD COMPONENTS
+   Glassmorphism design with backdrop blur
+   subtle shadows, and smooth hover effects
+   ======================================== */
+   
+.card {
+    background: rgba(26, 26, 26, 0.8) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(255, 215, 0, 0.3) !important;
+}
+
+/* Card header with yellow accent */
+.card-header {
+    background: rgba(255, 215, 0, 0.05) !important;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2) !important;
+    color: var(--pure-white);
+    font-weight: 600;
+}
+
+.card-title {
+    color: var(--pure-white);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    transition: color var(--transition-fast);
+}
+
+.card:hover .card-title {
+    color: var(--yellow-primary);
+}
+
+.card-text {
+    color: var(--gray-text);
+    line-height: 1.6;
+}
+
+
+/* ========================================
+   8. FORM ELEMENTS
+   Modern input fields with focus animations
+   yellow accent borders on interaction
+   ======================================== */
+   
+.form-control,
+.form-select {
+    background: rgba(42, 42, 42, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: var(--pure-white) !important;
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    transition: all var(--transition-fast);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: rgba(42, 42, 42, 0.8) !important;
+    border-color: var(--yellow-primary) !important;
+    box-shadow: 0 0 0 0.25rem var(--yellow-glow) !important;
+    color: var(--pure-white) !important;
+}
+
+.form-control::placeholder {
+    color: var(--gray-text);
+}
+
+/* Form labels */
+.form-label {
+    color: var(--muted-white);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Checkbox styling */
+.form-check-input {
+    background-color: rgba(42, 42, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-check-input:checked {
+    background-color: var(--yellow-primary);
+    border-color: var(--yellow-primary);
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem var(--yellow-glow);
+}
+
+.form-check-label {
+    color: var(--gray-text);
+}
+
+/* Textarea specific styling */
+textarea.form-control {
+    resize: vertical;
+    min-height: 200px;
+}
+
+
+/* ========================================
+   9. HERO SECTION
+   Large banner area with centered content
+   and prominent call-to-action buttons
+   ======================================== */
+   
+.hero-section {
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: var(--spacing-md);
+    background: linear-gradient(135deg, var(--pure-white), var(--yellow-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 0.8s ease;
+}
+
+.hero-section .lead {
+    font-size: 1.25rem;
+    color: var(--gray-text);
+    margin-bottom: var(--spacing-lg);
+    animation: fadeInUp 0.8s ease 0.2s backwards;
+}
+
+.hero-section .btn {
+    animation: fadeInUp 0.8s ease 0.4s backwards;
+}
+
+
+/* ========================================
+   10. SEARCH SECTION
+   Search bar with sort dropdown
+   clean layout and smooth interactions
+   ======================================== */
+   
+.search-section {
+    max-width: 700px;
+    margin: 0 auto var(--spacing-lg);
+    position: relative;
+    z-index: 10;
+}
+
+.search-box {
+    background: rgba(26, 26, 26, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast);
+}
+
+.search-box:focus-within {
+    border-color: var(--yellow-primary);
+    box-shadow: var(--shadow-lg), var(--shadow-yellow);
+    transform: translateY(-2px);
+}
+
+.sort-options .form-select {
+    background: rgba(26, 26, 26, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    padding: 0.5rem 1rem;
+}
+
+
+/* ========================================
+   11. POST CARDS
+   Blog post display cards with hover effects
+   author links, and read more buttons
+   ======================================== */
+   
+.post-card {
+    height: 100%;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+}
+
+.post-card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+.post-meta {
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.author-link {
+    color: var(--yellow-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.author-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--yellow-primary);
+    transition: width var(--transition-fast);
+}
+
+.author-link:hover {
+    color: var(--yellow-hover);
+}
+
+.author-link:hover::after {
+    width: 100%;
+}
+
+
+/* ========================================
+   12. PAGINATION
+   Page navigation with yellow active state
+   and hover effects on page numbers
+   ======================================== */
+   
+.pagination {
+    gap: 0.5rem;
+}
+
+.page-link {
+    background: rgba(26, 26, 26, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: var(--pure-white) !important;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.page-link:hover {
+    background: var(--yellow-primary) !important;
+    color: var(--primary-black) !important;
+    border-color: var(--yellow-primary) !important;
+    transform: translateY(-2px);
+}
+
+.page-item.active .page-link {
+    background: var(--yellow-primary) !important;
+    color: var(--primary-black) !important;
+    border-color: var(--yellow-primary) !important;
+}
+
+
+/* ========================================
+   13. AUTHENTICATION PAGES
+   Login and registration forms with
+   centered layout and decorative elements
+   ======================================== */
+   
+.auth-wrapper {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    position: relative;
+}
+
+.auth-card {
+    background: rgba(26, 26, 26, 0.95) !important;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 215, 0, 0.2) !important;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg), var(--shadow-yellow);
+    max-width: 500px;
+    width: 100%;
+}
+
+.auth-card .card-body {
+    padding: var(--spacing-xl);
 }
 
 .auth-card h2 {
-    color: var(--text-light);
+    color: var(--pure-white);
     font-weight: 700;
 }
 
 .auth-card p {
-    color: var(--text-muted);
+    color: var(--gray-text);
 }
 
-.form-label {
-    font-weight: 500;
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.5px;
-}
-
-.form-control {
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 0.75rem 1rem;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-light);
-}
-
-.form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 95, 221, 0.2);
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--text-light);
-}
-
-.form-control::placeholder {
-    color: var(--text-muted);
-}
-
-.form-control.is-invalid {
-    border-color: var(--danger);
-}
-
-.form-control.is-valid {
-    border-color: var(--success);
-}
-
-.text-danger {
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.btn {
-    padding: 0.75rem 1.5rem;
-    border-radius: 12px;
+.auth-card a {
+    color: var(--yellow-primary);
+    text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 0.875rem;
+    transition: all var(--transition-fast);
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, #FF6B8A 0%, #FF8FA0 100%);
-    color: white;
+.auth-card a:hover {
+    color: var(--yellow-hover);
+    text-decoration: underline;
 }
 
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(255, 107, 138, 0.4);
-    background: linear-gradient(135deg, #FF5A79 0%, #FF7E8F 100%);
-}
-
-.btn-outline-primary {
-    border: 2px solid var(--accent-coral);
-    color: var(--accent-coral);
-    background: transparent;
-}
-
-.btn-outline-primary:hover {
-    background: var(--accent-coral);
-    color: white;
-    transform: translateY(-2px);
-}
-
-.btn-outline-light {
-    border: 1px solid var(--border-color);
-    color: var(--text-light);
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-}
-
-.btn-outline-light:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--accent-yellow);
-    color: var(--accent-yellow);
-}
-
-/* Form check styling */
-.form-check-input {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-}
-
-.form-check-input:checked {
-    background-color: var(--accent-coral);
-    border-color: var(--accent-coral);
-}
-
-.form-check-input:focus {
-    border-color: var(--accent-coral);
-    box-shadow: 0 0 0 3px rgba(255, 107, 138, 0.2);
-}
-
-.form-check-label {
-    color: var(--text-muted);
-}
-
-.dashboard-header {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.dashboard-header h1 {
-    color: #1e293b;
-}
-
-.stat-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.stat-card h3 {
-    color: white;
-}
-
-.stat-card-secondary {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.stat-card-accent {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.empty-state {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 3rem;
-}
-
-.author-header {
-    padding: 2rem 0;
-}
-
-.avatar-circle {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* Profile icon decoration */
+.profile-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-md);
+    background: var(--yellow-primary);
+    border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2.5rem;
-    font-weight: bold;
-    color: white;
-    margin: 0 auto;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-yellow);
+    position: relative;
+    animation: pulse 2s ease-in-out infinite;
 }
 
-.author-stats .badge {
-    font-size: 0.9rem;
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 20px var(--yellow-glow);
+    }
+    50% {
+        box-shadow: 0 0 40px var(--yellow-glow);
+    }
+}
+
+.profile-icon::after {
+    content: '👤';
+    filter: brightness(0);
+}
+
+/* Decorative accent circles */
+.profile-icon-accent {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--yellow-primary);
+    border-radius: var(--radius-full);
+    opacity: 0.3;
+}
+
+.accent-top-right { top: -10px; right: -10px; }
+.accent-bottom-left { bottom: -10px; left: -10px; }
+.accent-bottom-right { bottom: -10px; right: -10px; }
+
+/* Social login buttons */
+.social-login {
+    margin-top: var(--spacing-md);
+    text-align: center;
+}
+
+.social-login p {
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.social-btn {
     padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    background: rgba(42, 42, 42, 0.5);
+    color: var(--pure-white);
+    transition: all var(--transition-fast);
+    cursor: not-allowed;
 }
 
-.author-link {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
+.social-btn:hover:not([disabled]) {
+    background: var(--yellow-primary);
+    color: var(--primary-black);
+    border-color: var(--yellow-primary);
+    transform: translateY(-2px);
 }
 
-.author-link:hover {
-    color: #764ba2;
-    text-decoration: underline;
+.social-icon {
+    font-size: 1.2rem;
+    display: inline-block;
 }
 
-.post-card .author-link {
-    color: #64748b;
+/* Form helper text */
+.form-text-help {
+    color: var(--gray-text);
+    font-size: 0.75rem;
+    display: block;
+    margin-top: 0.25rem;
 }
 
-.post-card .author-link:hover {
-    color: var(--primary-color);
+/* Remember me checkbox label */
+.remember-label {
+    color: var(--gray-text) !important;
+    text-transform: none;
+    font-size: 0.875rem;
 }
 
-.error-page {
-    min-height: 60vh;
+/* Divider with centered text */
+.divider {
     display: flex;
     align-items: center;
-    justify-content: center;
+    text-align: center;
+    margin: var(--spacing-md) 0;
 }
 
-.error-content {
-    max-width: 600px;
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.error-code {
-    font-size: 8rem;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+.divider span {
+    padding: 0 var(--spacing-sm);
+    color: var(--gray-text);
+    font-size: 0.875rem;
 }
 
-.badge {
-    font-weight: 500;
+
+/* ========================================
+   14. DASHBOARD LAYOUT
+   User dashboard with stats cards,
+   post management, and action buttons
+   ======================================== */
+   
+.dashboard-header {
+    background: rgba(26, 26, 26, 0.9);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: var(--shadow-md);
 }
 
-.badge.bg-success {
-    background: var(--success) !important;
-    color: white;
+.stats-card {
+    background: rgba(42, 42, 42, 0.6);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    text-align: center;
+    transition: all var(--transition-normal);
 }
 
-.badge.bg-light {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #1e293b;
-    padding: 0.5rem 1rem;
+.stats-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--yellow-primary);
+    box-shadow: var(--shadow-md);
 }
 
-.btn-outline-warning {
-    border: 2px solid var(--warning);
-    color: var(--warning);
+.stats-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--yellow-primary);
+    margin-bottom: 0.5rem;
 }
 
-.btn-outline-warning:hover {
-    background: var(--warning);
-    color: white;
+.stats-label {
+    color: var(--gray-text);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.btn-outline-danger {
-    border: 2px solid var(--danger);
-    color: var(--danger);
+/* Empty state styling */
+.empty-state {
+    background: rgba(42, 42, 42, 0.4);
+    border: 1px dashed rgba(255, 215, 0, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    text-align: center;
 }
 
-.btn-outline-danger:hover {
-    background: var(--danger);
-    color: white;
-}
 
-.btn-outline-light {
-    border: 2px solid white;
-    color: white;
-}
-
-.btn-outline-light:hover {
-    background: white;
-    color: var(--primary-color);
-}
-
-.post-detail {
-    background: white;
-    padding: 3rem;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-}
-
-.post-detail h1 {
-    color: #1e293b;
-}
-
-.post-content {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #334155;
-}
-
-.post-actions {
-    border-top: 2px solid #e2e8f0;
-}
-
+/* ========================================
+   15. FOOTER
+   Sticky footer with dark background
+   and subtle yellow accents
+   ======================================== */
+   
 .footer {
+    background: rgba(26, 26, 26, 0.98);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+    color: var(--gray-text);
+    padding: var(--spacing-lg) 0;
     margin-top: auto;
-    background: #0f172a;
 }
 
-.footer-content {
-    padding: 1rem 0;
+.footer .brand-highlight {
+    color: var(--yellow-primary);
 }
 
-.footer .text-muted {
-    color: #64748b !important;
+.footer a {
+    color: var(--yellow-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
 }
 
+.footer a:hover {
+    color: var(--yellow-hover);
+}
+
+
+/* ========================================
+   16. ALERTS & MESSAGES
+   Notification banners with close buttons
+   and smooth fade-in animations
+   ======================================== */
+   
 .alert {
-    border-radius: 12px;
-    border: none;
-    animation: slideIn 0.5s ease-out;
+    background: rgba(26, 26, 26, 0.9) !important;
+    border: 1px solid rgba(255, 215, 0, 0.3) !important;
+    color: var(--pure-white) !important;
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(10px);
+    animation: slideDown 0.3s ease;
 }
 
-@keyframes slideIn {
+@keyframes slideDown {
     from {
         opacity: 0;
         transform: translateY(-20px);
@@ -476,274 +964,254 @@ main {
 }
 
 .alert-success {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: white;
+    border-color: var(--yellow-primary) !important;
 }
 
-.alert-danger {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: white;
+.btn-close {
+    filter: invert(1);
+    opacity: 0.7;
 }
 
-.alert-warning {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    color: white;
+.btn-close:hover {
+    opacity: 1;
 }
 
-.alert-info {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    color: white;
+.btn-close-white {
+    filter: invert(1);
 }
 
-.alert .btn-close {
-    filter: brightness(0) invert(1);
+
+/* ========================================
+   17. BADGES
+   Small label indicators with rounded style
+   and yellow primary color scheme
+   ======================================== */
+   
+.badge {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.875rem;
 }
 
-.breadcrumb {
-    padding: 0.75rem 0;
-    margin-bottom: 1rem;
+.badge.bg-light {
+    background: var(--yellow-primary) !important;
+    color: var(--primary-black) !important;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
-    color: rgba(255, 255, 255, 0.6);
+.badge.bg-success {
+    background: var(--yellow-primary) !important;
+    color: var(--primary-black) !important;
 }
 
-.breadcrumb a {
-    transition: all 0.3s ease;
+
+/* ========================================
+   18. POST DETAIL PAGE
+   Single post view with full content display
+   and action buttons for edit/delete  
+   ======================================== */
+   
+.post-detail {
+    background: rgba(26, 26, 26, 0.9);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+    box-shadow: var(--shadow-lg);
 }
 
-.breadcrumb a:hover {
-    opacity: 0.8;
+.post-detail h1 {
+    color: var(--pure-white);
+    font-weight: 800;
+    margin-bottom: var(--spacing-md);
 }
 
-.pagination .page-link {
-    border-radius: 8px;
-    margin: 0 0.25rem;
-    color: var(--primary-color);
-    border: 2px solid #e2e8f0;
+.post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--muted-white);
 }
 
-.pagination .page-item.active .page-link {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-color: transparent;
+.post-actions {
+    border-top: 2px solid rgba(255, 215, 0, 0.1);
+    padding-top: var(--spacing-md);
+    margin-top: var(--spacing-md);
 }
 
-.card {
-    border: none;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+/* ========================================
+   19. AUTHOR PAGE
+   Author profile with avatar and post count
+   displays all posts by specific author
+   ======================================== */
+   
+.author-header {
+    padding: var(--spacing-lg) 0;
+    text-align: center;
 }
 
-textarea.form-control {
-    resize: vertical;
-    min-height: 200px;
+.avatar-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--radius-full);
+    background: var(--yellow-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-black);
+    margin: 0 auto var(--spacing-md);
+    box-shadow: var(--shadow-yellow);
 }
 
+.author-stats .badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+
+/* ========================================
+   20. RESPONSIVE DESIGN
+   Mobile-first approach with breakpoints
+   for tablets and desktop screens
+   ======================================== */
+   
+/* Tablet devices (768px and up) */
 @media (max-width: 768px) {
-    .hero-section {
-        padding: 2rem 0;
+    .hero-section h1 {
+        font-size: 2.5rem;
     }
     
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+    
+    .auth-card .card-body {
+        padding: var(--spacing-lg);
+    }
+    
+    .stats-card {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .post-detail {
+        padding: var(--spacing-lg);
+    }
+    
+    /* Floating shapes - smaller on mobile */
+    .shape-1,
+    .shape-2,
+    .shape-3,
+    .shape-4 {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* Mobile devices (576px and down) */
+@media (max-width: 576px) {
     .hero-section h1 {
         font-size: 2rem;
     }
     
-    .post-detail {
-        padding: 1.5rem;
-    }
-    
-    .dashboard-header {
-        padding: 1.5rem;
-    }
-    
-    .navbar-brand {
-        font-size: 1.25rem;
-    }
-    
-    .stat-card h3, .stat-card-secondary h3, .stat-card-accent h3 {
-        font-size: 2.5rem;
-    }
-    
-    .error-code {
-        font-size: 5rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .btn-lg {
-        padding: 0.5rem 1rem;
+    .hero-section .lead {
         font-size: 1rem;
     }
     
-    .display-4 {
-        font-size: 2.5rem;
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
     }
     
-    .search-box .btn {
-        padding: 0.75rem 1.25rem;
+    .search-section {
+        padding: 0 var(--spacing-sm);
     }
-}
-/* Decorative floating circles */
-.auth-wrapper {
-    position: relative;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.floating-circle {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.circle-1 {
-    width: 150px;
-    height: 150px;
-    background: var(--accent-yellow);
-    opacity: 0.2;
-    top: 10%;
-    left: 5%;
-    animation: float 6s ease-in-out infinite;
-}
-
-.circle-2 {
-    width: 100px;
-    height: 100px;
-    background: var(--accent-coral);
-    opacity: 0.25;
-    top: 60%;
-    left: 10%;
-    animation: float 8s ease-in-out infinite 1s;
-}
-
-.circle-3 {
-    width: 200px;
-    height: 200px;
-    background: var(--accent-blue);
-    opacity: 0.15;
-    bottom: 10%;
-    right: 5%;
-    animation: float 7s ease-in-out infinite 2s;
-}
-
-.circle-4 {
-    width: 120px;
-    height: 120px;
-    background: var(--accent-yellow);
-    opacity: 0.2;
-    top: 20%;
-    right: 15%;
-    animation: float 9s ease-in-out infinite 1.5s;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) translateX(0);
+    
+    .profile-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
     }
-    25% {
-        transform: translateY(-20px) translateX(10px);
-    }
-    50% {
-        transform: translateY(-10px) translateX(-10px);
-    }
-    75% {
-        transform: translateY(-30px) translateX(5px);
+    
+    .stats-value {
+        font-size: 2rem;
     }
 }
 
-.auth-content {
-    position: relative;
-    z-index: 1;
+
+/* ========================================
+   21. UTILITY CLASSES
+   Helper classes for common styling needs
+   spacing, text colors, and visibility
+   ======================================== */
+   
+.text-yellow {
+    color: var(--yellow-primary) !important;
 }
 
-/* Profile icon styling */
-.profile-icon {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-coral), var(--accent-blue));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 2rem;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+.text-muted {
+    color: var(--gray-text) !important;
 }
 
-.profile-icon::after {
-    content: '👤';
-    font-size: 2.5rem;
-    filter: brightness(0) invert(1);
+.bg-dark {
+    background: var(--secondary-black) !important;
 }
 
-.profile-icon-accent {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    border: 3px solid var(--card-bg);
+.border-yellow {
+    border-color: var(--yellow-primary) !important;
 }
 
-.accent-top-right {
-    background: var(--accent-blue);
-    top: 5px;
-    right: 5px;
+
+/* ========================================
+   22. LOADING STATES & TRANSITIONS
+   Smooth loading animations and skeleton
+   screens for better perceived performance
+   ======================================== */
+   
+.loading-spinner {
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid var(--yellow-primary);
+    border-radius: var(--radius-full);
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
 }
 
-.accent-bottom-left {
-    background: var(--accent-yellow);
-    bottom: 10px;
-    left: -5px;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-.accent-bottom-right {
-    background: var(--accent-coral);
-    bottom: 0;
-    right: 15px;
+/* Smooth page transitions */
+.page-transition {
+    animation: fadeIn 0.5s ease;
 }
 
-/* Link styling */
-.auth-card a {
-    color: var(--accent-coral);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.auth-card a:hover {
-    color: var(--accent-yellow);
-    text-decoration: underline;
-}
 
-/* Alternative login section */
-.social-login {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.social-login p {
-    font-size: 0.875rem;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-/* Custom scrollbar */
+/* ========================================
+   23. CUSTOM SCROLLBAR
+   Styled scrollbar matching the theme
+   yellow accent on hover
+   ======================================== */
+   
 ::-webkit-scrollbar {
     width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--dark-bg);
+    background: var(--primary-black);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
+    background: var(--yellow-primary);
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-coral);
+    background: var(--yellow-hover);
 }
