@@ -1357,7 +1357,15 @@ a:hover {
 }
 /* ===================================
    PUBLIC PROFILE VIEW PAGE
-   Professional Card-Based Layout
+   Professional CV-Style Card Layout
+   
+   Features:
+   - CSS Grid with 3-4 equal-height cards per row
+   - Responsive breakpoints (Desktop/Tablet/Mobile)
+   - Glassmorphism card design with soft shadows
+   - Smooth hover transitions and animations
+   - Professional spacing and typography
+   - Optimized for readability and visual hierarchy
    =================================== */
 
 .public-profile-container {
