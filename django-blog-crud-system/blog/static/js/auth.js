@@ -1,13 +1,13 @@
 /**
  * Authentication & Profile JavaScript
- * Handles password visibility toggle and profile picture preview
+ * Handles password visibility toggles and profile picture previews
  */
 
 document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Password Visibility Toggle
-     * Shows/hides password in input fields with eye icon
+     * Allows users to show/hide password in input fields
      */
     const passwordToggles = document.querySelectorAll('.password-toggle-btn');
     
