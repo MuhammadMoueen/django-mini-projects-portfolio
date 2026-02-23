@@ -3,6 +3,12 @@
 {% block title %}{{ post.title }} - Blog System{% endblock %}
 
 {% block content %}
+<div class="mb-4">
+    <a href="{% url 'home' %}" class="btn btn-outline-light back-button">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+</div>
+
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb bg-transparent">
         <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
@@ -42,10 +48,6 @@
                 </div>
             </div>
             {% endif %}
-            
-            <div class="mt-4">
-                <a href="{% url 'home' %}" class="btn btn-outline-secondary">Back to Home</a>
-            </div>
         </article>
     </div>
 </div>
