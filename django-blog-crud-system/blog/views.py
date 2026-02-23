@@ -9,6 +9,20 @@ from .models import Post
 from .forms import UserRegisterForm, PostForm
 
 def home(request):
+    """
+    Display the home page with all blog posts.
+    
+    Features:
+    - Search functionality (title, content, author)
+    - Sorting options (newest, oldest, by title)
+    - Pagination (6 posts per page)
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered home page with posts and pagination
+    """
     posts = Post.objects.all()
     
     search_query = request.GET.get('search', '')
