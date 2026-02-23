@@ -6,7 +6,11 @@ db.sqlite3
 venv/
 .venv/
 *.sqlite3
-media/
+media/*
+!media/.gitkeep
+!media/profile_pics/
+media/profile_pics/*
+!media/profile_pics/.gitkeep
 staticfiles/
 .DS_Store
 *.swp
