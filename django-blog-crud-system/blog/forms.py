@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+
 from .models import Post, UserProfile
+
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(
@@ -21,6 +23,7 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
 
 class UserUpdateForm(forms.ModelForm):
     """Form for updating user information"""
@@ -52,6 +55,7 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'email']
 
+
 class ProfileUpdateForm(forms.ModelForm):
     """Form for updating user profile"""
     bio = forms.CharField(
@@ -73,6 +77,7 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['bio', 'profile_pic']
+
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     """Custom password change form with styled widgets"""
@@ -97,6 +102,7 @@ class CustomPasswordChangeForm(PasswordChangeForm):
             'placeholder': 'Confirm new password'
         })
     )
+
 
 class PostForm(forms.ModelForm):
     class Meta:
