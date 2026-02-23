@@ -1,7 +1,9 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from blog.models import Post
 import random
+
+from blog.models import Post
+
 
 class Command(BaseCommand):
     help = 'Generate sample blog posts for testing'
