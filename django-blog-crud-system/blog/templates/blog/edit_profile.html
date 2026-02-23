@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile - Blog System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center fade-in">
+    <div class="col-lg-8">
+        <div class="card auth-card">
+            <div class="card-body p-5">
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold mb-2">Edit Profile</h2>
+                    <p class="text-muted">Update your personal information</p>
+                </div>
+
+                <!-- Current Profile Picture Preview -->
+                <div class="text-center mb-4">
+                    <div class="profile-pic-preview-wrapper">
+                        {% if user.profile.profile_pic %}
+                        <img src="{{ user.profile.profile_pic.url }}" alt="{{ user.username }}" class="profile-pic-preview" id="profilePreview">
+                        {% else %}
+                        <div class="profile-pic-preview-placeholder" id="profilePreview">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <p class="text-muted small mt-2">Current Profile Picture</p>
+                </div>
+
+                <!-- Forms -->
+                <form method="post" enctype="multipart/form-data" id="profileForm">
+                    {% csrf_token %}
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- Username (Read-only) -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="bi bi-person-badge me-2"></i>Username
+                        </label>
+                        <input type="text" class="form-control" value="{{ user.username }}" disabled>
+                        <small class="form-text text-muted">Username cannot be changed</small>
+                    </div>
+
+                    <!-- First Name -->
+                    <div class="mb-3">
+                        <label for="{{ user_form.first_name.id_for_label }}" class="form-label">
+                            <i class="bi bi-person me-2"></i>First Name
+                        </label>
+                        {{ user_form.first_name }}
+                        {% if user_form.first_name.errors %}
+                        <div class="text-danger mt-1">{{ user_form.first_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="mb-3">
+                        <label for="{{ user_form.last_name.id_for_label }}" class="form-label">
+                            <i class="bi bi-person me-2"></i>Last Name
+                        </label>
+                        {{ user_form.last_name }}
+                        {% if user_form.last_name.errors %}
+                        <div class="text-danger mt-1">{{ user_form.last_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="{{ user_form.email.id_for_label }}" class="form-label">
+                            <i class="bi bi-envelope me-2"></i>Email Address
+                        </label>
+                        {{ user_form.email }}
+                        {% if user_form.email.errors %}
+                        <div class="text-danger mt-1">{{ user_form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="mb-3">
+                        <label for="{{ profile_form.bio.id_for_label }}" class="form-label">
+                            <i class="bi bi-chat-left-text me-2"></i>Bio
+                        </label>
+                        {{ profile_form.bio }}
+                        {% if profile_form.bio.errors %}
+                        <div class="text-danger mt-1">{{ profile_form.bio.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Profile Picture Upload -->
+                    <div class="mb-4">
+                        <label for="{{ profile_form.profile_pic.id_for_label }}" class="form-label">
+                            <i class="bi bi-image me-2"></i>Profile Picture
+                        </label>
+                        {{ profile_form.profile_pic }}
+                        {% if profile_form.profile_pic.errors %}
+                        <div class="text-danger mt-1">{{ profile_form.profile_pic.errors }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted d-block mt-1">
+                            Recommended: Square image, max 2MB (JPG, PNG, GIF)
+                        </small>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="bi bi-save me-2"></i>Save Changes
+                        </button>
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
