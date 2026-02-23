@@ -9,22 +9,6 @@
     </a>
 </div>
 
-<nav aria-label="breadcrumb" class="mb-4">
-    <ol class="breadcrumb bg-transparent">
-        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
-        <li class="breadcrumb-item">
-            <a href="{% url 'author_posts' post.author.username %}" class="text-white">
-                {% if post.author.first_name or post.author.last_name %}
-                    {{ post.author.first_name }} {{ post.author.last_name }}
-                {% else %}
-                    {{ post.author.username }}
-                {% endif %}
-            </a>
-        </li>
-        <li class="breadcrumb-item active text-white" aria-current="page">{{ post.title|truncatewords:5 }}</li>
-    </ol>
-</nav>
-
 <div class="row justify-content-center">
     <div class="col-lg-8">
         <article class="post-detail">
