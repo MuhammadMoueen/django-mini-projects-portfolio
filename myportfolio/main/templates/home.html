@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Bisma Goshi | Frontend & Django Developer{% endblock %}
+{% block title %}Portfolio | Developer{% endblock %}
 
 {% block content %}
-<!-- ===== HERO SECTION ===== -->
 <section class="hero">
     <div class="hero-bg-glow glow-1"></div>
     <div class="hero-bg-glow glow-2"></div>
@@ -17,15 +16,15 @@
             </div>
 
             <h1 class="hero-title fade-up delay-1">
-                Hi, I'm <span class="highlight">{{ name }}</span>
+                Hi, I'm <span class="highlight">Your Name</span>
             </h1>
 
             <p class="hero-role fade-up delay-2">
-                <span id="typingText">{{ profession }}</span><span class="typing-cursor"></span>
+                <span id="typingText">Full Stack Developer</span><span class="typing-cursor"></span>
             </p>
 
             <p class="hero-desc fade-up delay-3">
-                {{ bio }}
+                I build elegant, modern, and responsive web applications using the latest technologies.
             </p>
 
             <div class="hero-actions fade-up delay-4">
@@ -33,10 +32,17 @@
                     <i data-lucide="folder-open" style="width:18px;height:18px;"></i>
                     View Portfolio
                 </a>
+                {% if active_cv %}
+                <a href="{{ active_cv.file.url }}" class="btn btn-outline" download>
+                    <i data-lucide="download" style="width:18px;height:18px;"></i>
+                    Download CV
+                </a>
+                {% else %}
                 <a href="{% url 'contact' %}" class="btn btn-outline">
                     <i data-lucide="send" style="width:18px;height:18px;"></i>
                     Contact Me
                 </a>
+                {% endif %}
             </div>
 
             <div class="hero-stats fade-up">
