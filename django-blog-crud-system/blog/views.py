@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Count, Q
+from django.db.models import Q
 from datetime import datetime, timedelta
 from .models import Post
 from .forms import UserRegisterForm, PostForm, UserUpdateForm, ProfileUpdateForm, CustomPasswordChangeForm
@@ -168,7 +169,6 @@ def post_delete(request, pk):
     return render(request, 'blog/post_confirm_delete.html', {'post': post})
 
 def author_posts(request, username):
-    from django.contrib.auth.models import User
     author = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=author)
     
