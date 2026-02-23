@@ -214,7 +214,7 @@ def edit_profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your profile has been updated successfully!')
-            return redirect('edit_profile')
+            return redirect('dashboard')
     else:
         # Initialize forms with current data
         user_form = UserUpdateForm(instance=request.user)
