@@ -6,9 +6,10 @@ A professional Django blog application with full CRUD functionality and user aut
 
 ### Authentication System
 - User registration with email validation
-- Secure login and logout
+- Secure login and logout with password visibility toggle
 - Password validation with Django built-in validators
 - Automatic user profile creation
+- Profile picture support with default avatar
 
 ### Blog Management
 - Create, read, update, and delete blog posts
@@ -19,15 +20,17 @@ A professional Django blog application with full CRUD functionality and user aut
 
 ### User Experience
 - Modern responsive UI with gradient theme
-- Bootstrap 5 integration
+- Profile dropdown menu with user avatar
+- Bootstrap 5 integration with Bootstrap Icons
 - Dark and white theme combination
 - Mobile-friendly design
 - Smooth scrolling and animations
 - Custom 404 error page
-- Breadcrumb navigation
+- Breadcrumb navigation with back button
 - Search functionality (by title, content, or author)
 - Sorting options (newest, oldest, by title)
 - Pagination for post listings
+- Clean dashboard interface
 
 ### Permissions & Security
 - Only authenticated users can create posts
