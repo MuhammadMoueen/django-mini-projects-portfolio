@@ -538,20 +538,18 @@ textarea.form-control {
 /* Password input with toggle button */
 .password-input-wrapper {
     position: relative;
-    display: flex;
-    align-items: center;
 }
 
 .password-input-wrapper .form-control {
-    padding-right: 3rem;
+    padding-right: 3rem !important;
+    width: 100%;
 }
 
 .password-toggle-btn {
     position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    padding: 0 1rem;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     background: transparent;
     border: none;
     color: var(--gray-text);
@@ -560,20 +558,22 @@ textarea.form-control {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0.5rem;
+    z-index: 10;
 }
 
 .password-toggle-btn:hover {
     color: var(--yellow-primary);
-    transform: scale(1.1);
 }
 
 .password-toggle-btn:active {
-    transform: scale(0.95);
+    transform: translateY(-50%) scale(0.95);
 }
 
 .password-toggle-btn .eye-icon {
     width: 20px;
     height: 20px;
+    display: block;
 }
 
 
