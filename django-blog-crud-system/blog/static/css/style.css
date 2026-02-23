@@ -1,30 +1,4 @@
-/* ========================================
-   BLOGSYS - MODERN BLACK/YELLOW/WHITE THEME
-   ========================================
-   
-   A clean, professional blog interface with:
-   - Monochromatic color scheme (Black, Yellow, White)
-   - Smooth floating animations
-   - Micro-interactions on all interactive elements
-   - Responsive design for all screen sizes
-   - Glassmorphism effects with backdrop blur
-   
-   Color Palette:
-   - Primary Black: #0a0a0a (deep backgrounds)
-   - Secondary Black: #1a1a1a (cards, surfaces)
-   - Yellow Accent: #ffd700 (CTAs, highlights)
-   - Pure White: #ffffff (text, borders)
-   - Muted White: #f5f5f5 (secondary text)
-   ======================================== */
-
-
-/* ========================================
-   1. CSS CUSTOM PROPERTIES (THEME VARIABLES)
-   Centralized color and spacing system for
-   easy maintenance and consistent theming
-   ======================================== */
 :root {
-    /* Primary Color Palette */
     --primary-black: #0a0a0a;
     --secondary-black: #1a1a1a;
     --tertiary-black: #2a2a2a;
@@ -34,26 +8,18 @@
     --pure-white: #ffffff;
     --muted-white: #f5f5f5;
     --gray-text: #b0b0b0;
-    
-    /* Spacing System */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
-    
-    /* Border Radius */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 20px;
     --radius-full: 50%;
-    
-    /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
-    
-    /* Shadows */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
@@ -61,11 +27,6 @@
 }
 
 
-/* ========================================
-   2. GLOBAL RESET AND BASE STYLES
-   Removes browser defaults and establishes
-   consistent foundation across all elements
-   ======================================== */
 * {
     margin: 0;
     padding: 0;
@@ -77,7 +38,6 @@ html {
     font-size: 16px;
 }
 
-/* Body - Primary container with animated background */
 body {
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
     background: var(--primary-black);
@@ -96,15 +56,13 @@ main {
     z-index: 10;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+}
 
-/* ========================================
-   3. FLOATING BACKGROUND ANIMATIONS
-   Soft motion geometric shapes that float
-   across the background creating dynamic
-   visual interest without distraction
-   ======================================== */
-   
-/* Floating shapes container - fixed positioning */
+
 .floating-shapes {
     position: fixed;
     top: 0;
@@ -116,7 +74,6 @@ main {
     overflow: hidden;
 }
 
-/* Individual floating shape styling */
 .floating-shape {
     position: absolute;
     border-radius: var(--radius-full);
@@ -124,7 +81,6 @@ main {
     filter: blur(50px);
 }
 
-/* Shape 1 - Top left yellow circle */
 .shape-1 {
     width: 400px;
     height: 400px;
@@ -134,7 +90,6 @@ main {
     animation: float 20s ease-in-out infinite;
 }
 
-/* Shape 2 - Top right white circle */
 .shape-2 {
     width: 300px;
     height: 300px;
@@ -145,7 +100,6 @@ main {
     animation-delay: 2s;
 }
 
-/* Shape 3 - Bottom left yellow circle */
 .shape-3 {
     width: 350px;
     height: 350px;
@@ -156,7 +110,6 @@ main {
     animation-delay: 4s;
 }
 
-/* Shape 4 - Bottom right white circle */
 .shape-4 {
     width: 250px;
     height: 250px;
@@ -167,7 +120,6 @@ main {
     animation-delay: 6s;
 }
 
-/* Floating animation keyframes - smooth up/down motion */
 @keyframes float {
     0%, 100% {
         transform: translateY(0) translateX(0) scale(1);
@@ -184,20 +136,16 @@ main {
 }
 
 
-/* ========================================
    4. FADE-IN ANIMATIONS
    Subtle entrance animations for content
    sections as they appear in viewport
-   ======================================== */
    
-/* Fade in from bottom */
 .fade-in {
     opacity: 0;
     transform: translateY(30px);
     animation: fadeInUp 0.8s ease forwards;
 }
 
-/* Staggered animation delays for sequential appearance */
 .fade-in-delay-1 { animation-delay: 0.1s; }
 .fade-in-delay-2 { animation-delay: 0.2s; }
 .fade-in-delay-3 { animation-delay: 0.3s; }
@@ -211,11 +159,9 @@ main {
 }
 
 
-/* ========================================
    5. NAVIGATION BAR
    Sticky header with glassmorphism effect
    and smooth hover transitions on links
-   ======================================== */
    
 .navbar {
     background: rgba(26, 26, 26, 0.95) !important;
@@ -230,7 +176,6 @@ main {
     transition: var(--transition-normal);
 }
 
-/* Brand logo with yellow accent */
 .navbar-brand {
     font-size: 1.75rem;
     font-weight: 700;
@@ -248,7 +193,6 @@ main {
     color: var(--yellow-primary);
 }
 
-/* Navigation links with hover animation */
 .nav-link {
     color: var(--muted-white) !important;
     font-weight: 500;
@@ -280,14 +224,12 @@ main {
     width: 80%;
 }
 
-/* Active username display */
 .nav-username {
     color: var(--yellow-primary) !important;
     font-weight: 600;
     padding: 0.5rem 1rem;
 }
 
-/* Mobile navbar toggle button */
 .navbar-toggler {
     border-color: var(--yellow-primary);
     padding: 0.5rem;
@@ -301,7 +243,6 @@ main {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffd700' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Profile Avatar Styles - Clean and Minimal */
 .profile-avatar,
 .profile-avatar-placeholder {
     width: 40px;
@@ -328,7 +269,6 @@ main {
     font-size: 1.2rem;
 }
 
-/* Dropdown avatar in menu header */
 .dropdown-avatar,
 .dropdown-avatar-placeholder {
     width: 45px;
@@ -347,12 +287,10 @@ main {
     font-size: 1.2rem;
 }
 
-/* Remove dropdown arrow */
 .dropdown-toggle::after {
     display: none;
 }
 
-/* Profile dropdown menu */
 .profile-dropdown {
     background: rgba(26, 26, 26, 0.98) !important;
     backdrop-filter: blur(15px);
@@ -426,7 +364,6 @@ main {
     margin: 0.5rem 0;
 }
 
-/* Back button styling */
 .back-button {
     background: rgba(26, 26, 26, 0.8) !important;
     border: 1px solid rgba(255, 215, 0, 0.3) !important;
@@ -452,13 +389,10 @@ main {
 }
 
 
-/* ========================================
    6. BUTTON STYLES & MICRO-INTERACTIONS
    Interactive buttons with smooth transitions
    shadow effects, and hover animations
-   ======================================== */
    
-/* Primary button - Yellow with black text */
 .btn-primary {
     background: var(--yellow-primary) !important;
     color: var(--primary-black) !important;
@@ -500,7 +434,6 @@ main {
     transform: translateY(-1px);
 }
 
-/* Outline button - White border with transparent background */
 .btn-outline-primary {
     background: transparent !important;
     color: var(--pure-white) !important;
@@ -518,7 +451,6 @@ main {
     box-shadow: var(--shadow-md);
 }
 
-/* Outline light variant */
 .btn-outline-light {
     background: transparent !important;
     color: var(--pure-white) !important;
@@ -536,7 +468,6 @@ main {
     transform: translateY(-2px);
 }
 
-/* Warning button variant */
 .btn-outline-warning {
     background: transparent !important;
     color: var(--yellow-primary) !important;
@@ -550,7 +481,6 @@ main {
     transform: translateY(-2px);
 }
 
-/* Danger button variant */
 .btn-outline-danger {
     background: transparent !important;
     color: #ff4444 !important;
@@ -564,24 +494,20 @@ main {
     transform: translateY(-2px);
 }
 
-/* Small button size variant */
 .btn-sm {
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
 }
 
-/* Large button size variant */
 .btn-lg {
     padding: 1rem 2rem;
     font-size: 1.125rem;
 }
 
 
-/* ========================================
    7. CARD COMPONENTS
    Glassmorphism design with backdrop blur
    subtle shadows, and smooth hover effects
-   ======================================== */
    
 .card {
     background: rgba(26, 26, 26, 0.8) !important;
@@ -600,7 +526,6 @@ main {
     border-color: rgba(255, 215, 0, 0.3) !important;
 }
 
-/* Card header with yellow accent */
 .card-header {
     background: rgba(255, 215, 0, 0.05) !important;
     border-bottom: 1px solid rgba(255, 215, 0, 0.2) !important;
@@ -625,11 +550,9 @@ main {
 }
 
 
-/* ========================================
    8. FORM ELEMENTS
    Modern input fields with focus animations
    yellow accent borders on interaction
-   ======================================== */
    
 .form-control,
 .form-select {
@@ -653,14 +576,12 @@ main {
     color: var(--gray-text);
 }
 
-/* Form labels */
 .form-label {
     color: var(--muted-white);
     font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
-/* Checkbox styling */
 .form-check-input {
     background-color: rgba(42, 42, 42, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -679,13 +600,11 @@ main {
     color: var(--gray-text);
 }
 
-/* Textarea specific styling */
 textarea.form-control {
     resize: vertical;
     min-height: 200px;
 }
 
-/* Password input with toggle button */
 .password-input-wrapper {
     position: relative;
 }
@@ -727,11 +646,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    9. HERO SECTION
    Large banner area with centered content
    and prominent call-to-action buttons
-   ======================================== */
    
 .hero-section {
     padding: var(--spacing-xl) 0;
@@ -763,11 +680,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    10. SEARCH SECTION
    Search bar with sort dropdown
    clean layout and smooth interactions
-   ======================================== */
    
 .search-section {
     max-width: 700px;
@@ -798,11 +713,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    11. POST CARDS
    Blog post display cards with hover effects
    author links, and read more buttons
-   ======================================== */
    
 .post-card {
     height: 100%;
@@ -847,11 +760,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    12. PAGINATION
    Page navigation with yellow active state
    and hover effects on page numbers
-   ======================================== */
    
 .pagination {
     gap: 0.5rem;
@@ -880,11 +791,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    13. AUTHENTICATION PAGES
    Login and registration forms with
    centered layout and decorative elements
-   ======================================== */
    
 .auth-wrapper {
     min-height: calc(100vh - 200px);
@@ -930,7 +839,6 @@ textarea.form-control {
     text-decoration: underline;
 }
 
-/* Profile icon decoration */
 .profile-icon {
     width: 80px;
     height: 80px;
@@ -960,7 +868,6 @@ textarea.form-control {
     filter: brightness(0);
 }
 
-/* Decorative accent circles */
 .profile-icon-accent {
     position: absolute;
     width: 20px;
@@ -974,7 +881,6 @@ textarea.form-control {
 .accent-bottom-left { bottom: -10px; left: -10px; }
 .accent-bottom-right { bottom: -10px; right: -10px; }
 
-/* Social login buttons */
 .social-login {
     margin-top: var(--spacing-md);
     text-align: center;
@@ -1012,7 +918,6 @@ textarea.form-control {
     display: inline-block;
 }
 
-/* Form helper text */
 .form-text-help {
     color: var(--gray-text);
     font-size: 0.75rem;
@@ -1020,7 +925,6 @@ textarea.form-control {
     margin-top: 0.25rem;
 }
 
-/* Profile Picture Preview Styles */
 .profile-pic-preview-wrapper {
     display: inline-block;
     position: relative;
@@ -1055,14 +959,12 @@ textarea.form-control {
     opacity: 0.8;
 }
 
-/* Remember me checkbox label */
 .remember-label {
     color: var(--gray-text) !important;
     text-transform: none;
     font-size: 0.875rem;
 }
 
-/* Divider with centered text */
 .divider {
     display: flex;
     align-items: center;
@@ -1084,11 +986,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    14. DASHBOARD LAYOUT
    User dashboard with stats cards,
    post management, and action buttons
-   ======================================== */
    
 .dashboard-header {
     background: rgba(26, 26, 26, 0.9);
@@ -1128,7 +1028,6 @@ textarea.form-control {
     letter-spacing: 1px;
 }
 
-/* Empty state styling */
 .empty-state {
     background: rgba(42, 42, 42, 0.4);
     border: 1px dashed rgba(255, 215, 0, 0.3);
@@ -1138,11 +1037,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    15. FOOTER
    Sticky footer with dark background
    and subtle yellow accents
-   ======================================== */
    
 .footer {
     background: rgba(26, 26, 26, 0.98);
@@ -1168,11 +1065,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    16. ALERTS & MESSAGES
    Notification banners with close buttons
    and smooth fade-in animations
-   ======================================== */
    
 .alert {
     background: rgba(26, 26, 26, 0.9) !important;
@@ -1212,11 +1107,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    17. BADGES
    Small label indicators with rounded style
    and yellow primary color scheme
-   ======================================== */
    
 .badge {
     padding: 0.5rem 1rem;
@@ -1236,11 +1129,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    18. POST DETAIL PAGE
    Single post view with full content display
    and action buttons for edit/delete  
-   ======================================== */
    
 .post-detail {
     background: rgba(26, 26, 26, 0.9);
@@ -1269,11 +1160,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    19. AUTHOR PAGE
    Author profile with avatar and post count
    displays all posts by specific author
-   ======================================== */
    
 .author-header {
     padding: var(--spacing-lg) 0;
@@ -1301,13 +1190,10 @@ textarea.form-control {
 }
 
 
-/* ========================================
    20. RESPONSIVE DESIGN
    Mobile-first approach with breakpoints
    for tablets and desktop screens
-   ======================================== */
    
-/* Tablet devices (768px and up) */
 @media (max-width: 768px) {
     .hero-section h1 {
         font-size: 2.5rem;
@@ -1329,7 +1215,6 @@ textarea.form-control {
         padding: var(--spacing-lg);
     }
     
-    /* Floating shapes - smaller on mobile */
     .shape-1,
     .shape-2,
     .shape-3,
@@ -1339,7 +1224,6 @@ textarea.form-control {
     }
 }
 
-/* Mobile devices (576px and down) */
 @media (max-width: 576px) {
     .hero-section h1 {
         font-size: 2rem;
@@ -1370,11 +1254,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    21. UTILITY CLASSES
    Helper classes for common styling needs
    spacing, text colors, and visibility
-   ======================================== */
    
 .text-yellow {
     color: var(--yellow-primary) !important;
@@ -1393,11 +1275,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    22. LOADING STATES & TRANSITIONS
    Smooth loading animations and skeleton
    screens for better perceived performance
-   ======================================== */
    
 .loading-spinner {
     border: 3px solid rgba(255, 255, 255, 0.1);
@@ -1413,7 +1293,6 @@ textarea.form-control {
     100% { transform: rotate(360deg); }
 }
 
-/* Smooth page transitions */
 .page-transition {
     animation: fadeIn 0.5s ease;
 }
@@ -1424,11 +1303,9 @@ textarea.form-control {
 }
 
 
-/* ========================================
    23. CUSTOM SCROLLBAR
    Styled scrollbar matching the theme
    yellow accent on hover
-   ======================================== */
    
 ::-webkit-scrollbar {
     width: 10px;
@@ -1447,19 +1324,15 @@ textarea.form-control {
     background: var(--yellow-hover);
 }
 
-/* ========================================
    24. PASSWORD EYE ICON STATES
    Control visibility of eye icon elements
-   ======================================== */
 
 .eye-icon .eye-closed {
     display: none;
 }
 
-/* ========================================
    25. SECURITY TIPS BOX
    Highlighted info box for password tips
-   ======================================== */
 
 .security-tips-box {
     background: rgba(255, 215, 0, 0.1);

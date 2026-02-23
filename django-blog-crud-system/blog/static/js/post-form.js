@@ -1,7 +1,3 @@
-/**
- * Post Form Character Counter
- * Tracks and displays character count for title and content fields
- */
 
 document.addEventListener('DOMContentLoaded', function() {
     const titleInput = document.querySelector('input[name="title"]');
@@ -9,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const titleCount = document.getElementById('titleCount');
     const contentCount = document.getElementById('contentCount');
     
-    // Skip if elements don't exist on the page
     if (!titleInput || !contentInput) return;
     
     function updateTitleCount() {
@@ -24,11 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Attach event listeners
     titleInput.addEventListener('input', updateTitleCount);
     contentInput.addEventListener('input', updateContentCount);
     
-    // Initialize counts
     updateTitleCount();
     updateContentCount();
 });

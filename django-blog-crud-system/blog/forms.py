@@ -26,7 +26,6 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    """Form for updating user information"""
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={
@@ -57,7 +56,6 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
-    """Form for updating user profile"""
     bio = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={
@@ -80,7 +78,6 @@ class ProfileUpdateForm(forms.ModelForm):
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
-    """Custom password change form with styled widgets"""
     old_password = forms.CharField(
         label='Current Password',
         widget=forms.PasswordInput(attrs={

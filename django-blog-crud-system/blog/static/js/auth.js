@@ -1,14 +1,4 @@
-/**
- * Authentication & Profile JavaScript
- * Handles password visibility toggles and profile picture previews
- */
-
 document.addEventListener('DOMContentLoaded', function() {
-    
-    /**
-     * Password Visibility Toggle
-     * Allows users to show/hide password in input fields
-     */
     const passwordToggles = document.querySelectorAll('.password-toggle-btn');
     
     passwordToggles.forEach(toggleBtn => {
@@ -21,11 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                // Toggle password visibility
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
                 
-                // Toggle eye icon
                 eyeOpen.forEach(el => {
                     el.style.display = type === 'password' ? 'block' : 'none';
                 });
@@ -36,10 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /**
-     * Profile Picture Preview
-     * Shows preview of selected image before upload
-     */
     const fileInput = document.querySelector('input[type="file"][accept*="image"]');
     const profilePreview = document.getElementById('profilePreview');
     
@@ -47,21 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
         fileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             
-            // Validate file type
             if (file && file.type.startsWith('image/')) {
-                // Check file size (max 2MB)
-                const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+                const maxSize = 2 * 1024 * 1024;
                 if (file.size > maxSize) {
                     alert('File size must be less than 2MB');
                     fileInput.value = '';
                     return;
                 }
                 
-                // Read and display the image
                 const reader = new FileReader();
                 
                 reader.onload = function(event) {
-                    // Replace placeholder with image
                     if (profilePreview.tagName === 'DIV') {
                         const img = document.createElement('img');
                         img.src = event.target.result;
@@ -82,21 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /**
-     * Form Validation Enhancement
-     * Add visual feedback on form validation
-     */
     const forms = document.querySelectorAll('form');
     
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn) {
-                // Disable submit button to prevent double submission
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
                 
-                // Re-enable after 3 seconds (in case of client-side validation failure)
                 setTimeout(() => {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = submitBtn.getAttribute('data-original-text') || 'Submit';
@@ -105,10 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    /**
-     * Auto-hide Messages
-     * Automatically dismiss alert messages after 5 seconds
-     */
     const alerts = document.querySelectorAll('.alert:not(.alert-permanent)');
     
     alerts.forEach(alert => {
@@ -118,10 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-    /**
-     * Smooth Dropdown Animation
-     * Add transition effects to dropdown menus
-     */
     const dropdowns = document.querySelectorAll('.dropdown');
     
     dropdowns.forEach(dropdown => {
@@ -144,10 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-/**
- * Image File Size Formatter
- * Displays file size in human-readable format
- */
 function formatFileSize(bytes) {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;

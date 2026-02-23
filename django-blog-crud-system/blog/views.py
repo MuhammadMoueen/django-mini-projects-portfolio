@@ -12,20 +12,6 @@ from .forms import UserRegisterForm, PostForm, UserUpdateForm, ProfileUpdateForm
 
 
 def home(request):
-    """
-    Display the home page with all blog posts.
-    
-    Features:
-    - Search functionality (title, content, author)
-    - Sorting options (newest, oldest, by title)
-    - Pagination (6 posts per page)
-    
-    Args:
-        request: HTTP request object
-        
-    Returns:
-        Rendered home page with posts and pagination
-    """
     posts = Post.objects.all()
     
     search_query = request.GET.get('search', '')
@@ -188,23 +174,7 @@ def author_posts(request, username):
 
 @login_required
 def edit_profile(request):
-    """
-    Edit user profile page with user info and profile picture upload.
-    
-    Features:
-    - Update first name, last name, email
-    - Upload profile picture with preview
-    - Update bio
-    - Username is read-only
-    
-    Args:
-        request: HTTP request object
-        
-    Returns:
-        Rendered edit profile page with forms
-    """
     if request.method == 'POST':
-        # Process both user and profile forms
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(
             request.POST,
@@ -218,7 +188,6 @@ def edit_profile(request):
             messages.success(request, 'Your profile has been updated successfully!')
             return redirect('dashboard')
     else:
-        # Initialize forms with current data
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.profile)
     
@@ -231,26 +200,10 @@ def edit_profile(request):
 
 @login_required
 def change_password(request):
-    """
-    Change user password page with validation.
-    
-    Features:
-    - Verify old password
-    - Set new password with confirmation
-    - Password strength validation
-    - Session preserved after password change
-    
-    Args:
-        request: HTTP request object
-        
-    Returns:
-        Rendered change password page
-    """
     if request.method == 'POST':
         form = CustomPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            # Keep user logged in after password change
             update_session_auth_hash(request, user)
             messages.success(request, 'Your password has been changed successfully!')
             return redirect('change_password')
