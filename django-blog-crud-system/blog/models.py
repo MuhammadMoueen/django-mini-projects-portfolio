@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class Post(models.Model):
     """
     Blog post model with full CRUD functionality.
@@ -33,6 +34,7 @@ class Post(models.Model):
     @property
     def is_recently_updated(self):
         return self.updated_at > self.created_at
+
 
 class UserProfile(models.Model):
     """
@@ -75,10 +77,12 @@ class UserProfile(models.Model):
         """
         return f"Written by {self.get_full_name()}"
 
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
