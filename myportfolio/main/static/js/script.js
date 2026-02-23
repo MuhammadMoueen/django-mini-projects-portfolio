@@ -1,6 +1,11 @@
 // ===== PORTFOLIO JS =====
 document.addEventListener('DOMContentLoaded', () => {
 
+    // ===== LUCIDE ICONS INITIALIZATION =====
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     // ===== THEME TOGGLE =====
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
