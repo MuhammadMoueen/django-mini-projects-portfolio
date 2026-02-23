@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Count, Q
 from datetime import datetime, timedelta
 from .models import Post
-from .forms import UserRegisterForm, PostForm
+from .forms import UserRegisterForm, PostForm, UserUpdateForm, ProfileUpdateForm, CustomPasswordChangeForm
 
 def home(request):
     """
@@ -183,3 +183,76 @@ def author_posts(request, username):
     }
     
     return render(request, 'blog/author_posts.html', context)
+
+@login_required
+def edit_profile(request):
+    """
+    Edit user profile page with user info and profile picture upload.
+    
+    Features:
+    - Update first name, last name, email
+    - Upload profile picture with preview
+    - Update bio
+    - Username is read-only
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered edit profile page with forms
+    """
+    if request.method == 'POST':
+        # Process both user and profile forms
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(
+            request.POST,
+            request.FILES,
+            instance=request.user.profile
+        )
+        
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+            return redirect('edit_profile')
+    else:
+        # Initialize forms with current data
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+    
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    }
+    
+    return render(request, 'blog/edit_profile.html', context)
+
+@login_required
+def change_password(request):
+    """
+    Change user password page with validation.
+    
+    Features:
+    - Verify old password
+    - Set new password with confirmation
+    - Password strength validation
+    - Session preserved after password change
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered change password page
+    """
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Keep user logged in after password change
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password has been changed successfully!')
+            return redirect('change_password')
+    else:
+        form = CustomPasswordChangeForm(request.user)
+    
+    return render(request, 'blog/change_password.html', {'form': form})
