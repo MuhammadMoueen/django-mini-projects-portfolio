@@ -6,8 +6,10 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import datetime, timedelta
+
 from .models import Post
 from .forms import UserRegisterForm, PostForm, UserUpdateForm, ProfileUpdateForm, CustomPasswordChangeForm
+
 
 def home(request):
     """
