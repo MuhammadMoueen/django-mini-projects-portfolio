@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About | Bisma Goshi{% endblock %}
+{% block title %}About | Portfolio{% endblock %}
 
 {% block content %}
 <!-- ===== PAGE HEADER ===== -->
@@ -19,11 +19,10 @@
 <section class="section">
     <div class="container">
         <div class="about-grid">
-            <!-- Left: Bio & Highlights -->
             <div class="about-text">
                 <p class="fade-up">
-                    Hello! I'm <strong>Bisma Goshi</strong>, a passionate <strong>Frontend &amp; Django Developer</strong> based in Pakistan.
-                    I specialize in creating elegant, responsive, and user-focused websites that bring ideas to life on the web.
+                    Hello! I'm a passionate Full Stack Developer specializing in creating elegant, 
+                    responsive, and user-focused websites that bring ideas to life on the web.
                 </p>
                 <p class="fade-up delay-1">
                     With a strong foundation in both frontend and backend technologies, I enjoy the process of turning
@@ -34,6 +33,15 @@
                     When I'm not coding, you can find me exploring new design trends, reading tech blogs, or experimenting
                     with new frameworks to stay ahead of the curve.
                 </p>
+
+                {% if active_cv %}
+                <div class="fade-up delay-3" style="margin-top: 32px;">
+                    <a href="{{ active_cv.file.url }}" class="btn btn-primary" download>
+                        <i data-lucide="download" style="width:18px;height:18px;"></i>
+                        Download CV
+                    </a>
+                </div>
+                {% endif %}
 
                 <div class="about-highlights fade-up delay-3">
                     <div class="highlight-card">
