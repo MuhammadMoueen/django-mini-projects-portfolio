@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Projects | Bisma Goshi{% endblock %}
+
+{% block content %}
+<!-- ===== PAGE HEADER ===== -->
+<div class="page-header">
+    <div class="hero-bg-glow glow-1"></div>
+    <div class="hero-bg-glow glow-2"></div>
+    <div class="container">
+        <span class="section-label fade-up">My Work</span>
+        <h1 class="section-title fade-up delay-1">Projects</h1>
+        <p class="section-desc fade-up delay-2">A curated collection of my recent projects showcasing frontend and backend development skills.</p>
+    </div>
+</div>
+
+<!-- ===== PROJECTS SECTION ===== -->
+<section class="section">
+    <div class="container">
+        <!-- Filter -->
+        <div class="projects-filter fade-up">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="frontend">Frontend</button>
+            <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+            <button class="filter-btn" data-filter="django">Django</button>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid">
+
+            <!-- Project 1 -->
+            <div class="project-card fade-up" data-category="fullstack">
+                <div class="project-image">
+                    <div class="project-image-placeholder">&#128218;</div>
+                    <div class="project-overlay">
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="external-link" style="width:16px;height:16px;"></i> Live Demo
+                        </a>
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="github" style="width:16px;height:16px;"></i> Code
+                        </a>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Portfolio Website</h3>
+                    <p>A professional developer portfolio website built with Django, featuring smooth animations, dark/light theme toggle, and responsive design.</p>
+                    <div class="project-tags">
+                        <span>Django</span>
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card fade-up delay-1" data-category="frontend">
+                <div class="project-image">
+                    <div class="project-image-placeholder">&#127916;</div>
+                    <div class="project-overlay">
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="external-link" style="width:16px;height:16px;"></i> Live Demo
+                        </a>
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="github" style="width:16px;height:16px;"></i> Code
+                        </a>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Movie Listing App</h3>
+                    <p>A responsive movie browsing app with search, filter functionality, and beautiful card-based layout for movie details.</p>
+                    <div class="project-tags">
+                        <span>React.js</span>
+                        <span>CSS</span>
+                        <span>REST API</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card fade-up delay-2" data-category="django">
+                <div class="project-image">
+                    <div class="project-image-placeholder">&#127891;</div>
+                    <div class="project-overlay">
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="external-link" style="width:16px;height:16px;"></i> Live Demo
+                        </a>
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="github" style="width:16px;height:16px;"></i> Code
+                        </a>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>School Management System</h3>
+                    <p>A full-featured Django web application for managing students, teachers, classes, and attendance with an admin dashboard.</p>
+                    <div class="project-tags">
+                        <span>Django</span>
+                        <span>Python</span>
+                        <span>SQLite</span>
+                        <span>Bootstrap</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card fade-up" data-category="frontend">
+                <div class="project-image">
+                    <div class="project-image-placeholder">&#9732;</div>
+                    <div class="project-overlay">
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="external-link" style="width:16px;height:16px;"></i> Live Demo
+                        </a>
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="github" style="width:16px;height:16px;"></i> Code
+                        </a>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Weather Dashboard</h3>
+                    <p>A sleek weather application displaying real-time weather data with beautiful UI, location search, and responsive charts.</p>
+                    <div class="project-tags">
+                        <span>JavaScript</span>
+                        <span>API</span>
+                        <span>CSS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card fade-up delay-1" data-category="fullstack">
+                <div class="project-image">
+                    <div class="project-image-placeholder">&#128221;</div>
+                    <div class="project-overlay">
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="external-link" style="width:16px;height:16px;"></i> Live Demo
+                        </a>
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="github" style="width:16px;height:16px;"></i> Code
+                        </a>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Blog Platform</h3>
+                    <p>A full-stack blogging platform with user authentication, CRUD operations, rich text editor, and comment system.</p>
+                    <div class="project-tags">
+                        <span>Django</span>
+                        <span>REST API</span>
+                        <span>JavaScript</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card fade-up delay-2" data-category="django">
+                <div class="project-image">
+                    <div class="project-image-placeholder">&#128101;</div>
+                    <div class="project-overlay">
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="external-link" style="width:16px;height:16px;"></i> Live Demo
+                        </a>
+                        <a href="#" class="btn btn-sm" target="_blank">
+                            <i data-lucide="github" style="width:16px;height:16px;"></i> Code
+                        </a>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Session Auth System</h3>
+                    <p>A Django session-based authentication system with login, signup, password reset, and protected routes.</p>
+                    <div class="project-tags">
+                        <span>Django</span>
+                        <span>Python</span>
+                        <span>Authentication</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

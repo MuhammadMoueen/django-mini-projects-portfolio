@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog | Bisma Goshi{% endblock %}
+
+{% block content %}
+<!-- ===== PAGE HEADER ===== -->
+<div class="page-header">
+    <div class="hero-bg-glow glow-1"></div>
+    <div class="hero-bg-glow glow-2"></div>
+    <div class="container">
+        <span class="section-label fade-up">Latest Articles</span>
+        <h1 class="section-title fade-up delay-1">Blog</h1>
+        <p class="section-desc fade-up delay-2">Thoughts, tutorials, and insights on web development and technology.</p>
+    </div>
+</div>
+
+<!-- ===== BLOG SECTION ===== -->
+<section class="section">
+    <div class="container">
+        <div class="blog-grid">
+
+            <!-- Blog Post 1 -->
+            <article class="blog-card fade-up">
+                <div class="blog-image">
+                    &#128187;
+                    <span class="blog-category">Django</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i data-lucide="calendar" style="width:14px;height:14px;"></i> Feb 20, 2026</span>
+                        <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 5 min read</span>
+                    </div>
+                    <h3>Getting Started with Django: A Beginner's Guide</h3>
+                    <p>Learn the fundamentals of Django framework, from setting up your first project to building your first web application with models, views, and templates.</p>
+                    <a href="#" class="read-more">
+                        Read More <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="blog-card fade-up delay-1">
+                <div class="blog-image">
+                    &#127912;
+                    <span class="blog-category">CSS</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i data-lucide="calendar" style="width:14px;height:14px;"></i> Feb 15, 2026</span>
+                        <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 4 min read</span>
+                    </div>
+                    <h3>Modern CSS Techniques Every Developer Should Know</h3>
+                    <p>Explore cutting-edge CSS features like container queries, cascade layers, and the :has() selector that are revolutionizing web design.</p>
+                    <a href="#" class="read-more">
+                        Read More <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article class="blog-card fade-up delay-2">
+                <div class="blog-image">
+                    &#9881;&#65039;
+                    <span class="blog-category">JavaScript</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i data-lucide="calendar" style="width:14px;height:14px;"></i> Feb 10, 2026</span>
+                        <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 6 min read</span>
+                    </div>
+                    <h3>Building Interactive UIs with Vanilla JavaScript</h3>
+                    <p>A deep dive into creating dynamic, interactive user interfaces using only vanilla JavaScript — no frameworks needed. Learn DOM manipulation and event handling.</p>
+                    <a href="#" class="read-more">
+                        Read More <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Blog Post 4 -->
+            <article class="blog-card fade-up">
+                <div class="blog-image">
+                    &#128640;
+                    <span class="blog-category">React</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i data-lucide="calendar" style="width:14px;height:14px;"></i> Feb 5, 2026</span>
+                        <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 7 min read</span>
+                    </div>
+                    <h3>React.js vs Next.js: Which One Should You Choose?</h3>
+                    <p>An in-depth comparison of React.js and Next.js covering SSR, routing, performance, and use cases to help you make the right choice for your project.</p>
+                    <a href="#" class="read-more">
+                        Read More <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Blog Post 5 -->
+            <article class="blog-card fade-up delay-1">
+                <div class="blog-image">
+                    &#128272;
+                    <span class="blog-category">Python</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i data-lucide="calendar" style="width:14px;height:14px;"></i> Jan 28, 2026</span>
+                        <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 5 min read</span>
+                    </div>
+                    <h3>Building REST APIs with Django REST Framework</h3>
+                    <p>Step-by-step guide to creating powerful, scalable REST APIs using Django REST Framework with serializers, viewsets, and authentication.</p>
+                    <a href="#" class="read-more">
+                        Read More <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Blog Post 6 -->
+            <article class="blog-card fade-up delay-2">
+                <div class="blog-image">
+                    &#128736;&#65039;
+                    <span class="blog-category">Tools</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i data-lucide="calendar" style="width:14px;height:14px;"></i> Jan 20, 2026</span>
+                        <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 4 min read</span>
+                    </div>
+                    <h3>Essential VS Code Extensions for Web Developers</h3>
+                    <p>Boost your productivity with these must-have VS Code extensions for HTML, CSS, JavaScript, Python, and Django development.</p>
+                    <a href="#" class="read-more">
+                        Read More <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                    </a>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

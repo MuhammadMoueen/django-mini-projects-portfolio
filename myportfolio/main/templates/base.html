@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bisma Goshi - Professional Frontend & Django Developer Portfolio">
+    <meta name="keywords" content="developer, portfolio, frontend, django, python, web development">
+    <meta name="author" content="Bisma Goshi">
+    <title>{% block title %}Bisma Goshi | Portfolio{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons (lightweight SVG icons) -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="{% url 'home' %}" class="nav-logo">
+                Bisma<span class="dot">.</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+                <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+                <a href="{% url 'projects' %}" class="{% if request.resolver_match.url_name == 'projects' %}active{% endif %}">Projects</a>
+                <a href="{% url 'blog' %}" class="{% if request.resolver_match.url_name == 'blog' %}active{% endif %}">Blog</a>
+                <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span id="themeIcon">&#127769;</span>
+                </button>
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== MOBILE NAV ===== -->
+    <div class="mobile-nav">
+        <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+        <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+        <a href="{% url 'projects' %}" class="{% if request.resolver_match.url_name == 'projects' %}active{% endif %}">Projects</a>
+        <a href="{% url 'blog' %}" class="{% if request.resolver_match.url_name == 'blog' %}active{% endif %}">Blog</a>
+        <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    {% block content %}{% endblock %}
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        Bisma<span class="dot">.</span>
+                    </div>
+                    <p>Crafting clean, interactive, and responsive web experiences with modern technologies and attention to detail.</p>
+                    <div class="contact-socials">
+                        <a href="https://github.com/bisma" target="_blank" class="social-link" aria-label="GitHub">
+                            <i data-lucide="github"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/bisma" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                        <a href="https://facebook.com/" target="_blank" class="social-link" aria-label="Facebook">
+                            <i data-lucide="facebook"></i>
+                        </a>
+                        <a href="mailto:bisma@gmail.com" class="social-link" aria-label="Email">
+                            <i data-lucide="mail"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <a href="{% url 'home' %}">Home</a>
+                    <a href="{% url 'about' %}">About</a>
+                    <a href="{% url 'projects' %}">Projects</a>
+                    <a href="{% url 'blog' %}">Blog</a>
+                    <a href="{% url 'contact' %}">Contact</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Skills</h4>
+                    <a href="#">HTML &amp; CSS</a>
+                    <a href="#">JavaScript</a>
+                    <a href="#">React.js</a>
+                    <a href="#">Python &amp; Django</a>
+                    <a href="#">REST APIs</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <a href="https://github.com/bisma" target="_blank">GitHub</a>
+                    <a href="https://linkedin.com/in/bisma" target="_blank">LinkedIn</a>
+                    <a href="https://facebook.com/" target="_blank">Facebook</a>
+                    <a href="mailto:bisma@gmail.com">Google / Email</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear">2026</span> Bisma Goshi. All Rights Reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="{% url 'about' %}">About</a>
+                    <a href="{% url 'contact' %}">Contact</a>
+                    <a href="{% url 'projects' %}">Projects</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

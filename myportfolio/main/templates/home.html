@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bisma Goshi | Frontend & Django Developer{% endblock %}
+
+{% block content %}
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+    <div class="hero-bg-glow glow-1"></div>
+    <div class="hero-bg-glow glow-2"></div>
+
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge fade-up">
+                <span class="pulse"></span>
+                Available for freelance work
+            </div>
+
+            <h1 class="hero-title fade-up delay-1">
+                Hi, I'm <span class="highlight">{{ name }}</span>
+            </h1>
+
+            <p class="hero-role fade-up delay-2">
+                <span id="typingText">{{ profession }}</span><span class="typing-cursor"></span>
+            </p>
+
+            <p class="hero-desc fade-up delay-3">
+                {{ bio }}
+            </p>
+
+            <div class="hero-actions fade-up delay-4">
+                <a href="{% url 'projects' %}" class="btn btn-primary">
+                    <i data-lucide="folder-open" style="width:18px;height:18px;"></i>
+                    View Portfolio
+                </a>
+                <a href="{% url 'contact' %}" class="btn btn-outline">
+                    <i data-lucide="send" style="width:18px;height:18px;"></i>
+                    Contact Me
+                </a>
+            </div>
+
+            <div class="hero-stats fade-up">
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
