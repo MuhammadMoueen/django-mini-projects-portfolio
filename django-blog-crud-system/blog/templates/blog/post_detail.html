@@ -12,7 +12,15 @@
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb bg-transparent">
         <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'author_posts' post.author.username %}" class="text-white">{{ post.author.username }}</a></li>
+        <li class="breadcrumb-item">
+            <a href="{% url 'author_posts' post.author.username %}" class="text-white">
+                {% if post.author.first_name or post.author.last_name %}
+                    {{ post.author.first_name }} {{ post.author.last_name }}
+                {% else %}
+                    {{ post.author.username }}
+                {% endif %}
+            </a>
+        </li>
         <li class="breadcrumb-item active text-white" aria-current="page">{{ post.title|truncatewords:5 }}</li>
     </ol>
 </nav>
@@ -24,7 +32,13 @@
                 <h1 class="display-5 fw-bold mb-3">{{ post.title }}</h1>
                 <div class="post-meta d-flex justify-content-between align-items-center mb-4">
                     <div>
-                        <span class="text-muted">By <a href="{% url 'author_posts' post.author.username %}" class="author-link"><strong>{{ post.author.username }}</strong></a></span>
+                        <span class="text-muted">
+                            {% if post.author.first_name or post.author.last_name %}
+                                Written by <a href="{% url 'author_posts' post.author.username %}" class="author-link"><strong>{{ post.author.first_name }} {{ post.author.last_name }}</strong></a>
+                            {% else %}
+                                Written by <a href="{% url 'author_posts' post.author.username %}" class="author-link"><strong>{{ post.author.username }}</strong></a>
+                            {% endif %}
+                        </span>
                         <span class="text-muted mx-2">|</span>
                         <span class="text-muted">{{ post.created_at|date:"F d, Y" }}</span>
                         {% if post.updated_at != post.created_at %}

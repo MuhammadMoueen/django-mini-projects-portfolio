@@ -61,6 +61,19 @@ class UserProfile(models.Model):
         if self.profile_pic:
             return self.profile_pic.url
         return None
+    
+    def get_full_name(self):
+        """
+        Returns the user's full name if available, otherwise returns username.
+        """
+        full_name = f"{self.user.first_name} {self.user.last_name}".strip()
+        return full_name if full_name else self.user.username
+    
+    def get_display_name(self):
+        """
+        Returns formatted display name with 'Written by' prefix.
+        """
+        return f"Written by {self.get_full_name()}"
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

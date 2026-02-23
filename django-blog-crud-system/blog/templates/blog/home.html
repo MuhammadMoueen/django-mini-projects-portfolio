@@ -64,7 +64,12 @@
                     <div class="mt-auto">
                         <div class="post-meta mb-3">
                             <small class="text-muted">
-                                By <a href="{% url 'author_posts' post.author.username %}" class="author-link">{{ post.author.username }}</a> | {{ post.created_at|date:"M d, Y" }}
+                                {% if post.author.first_name or post.author.last_name %}
+                                    Written by <a href="{% url 'author_posts' post.author.username %}" class="author-link">{{ post.author.first_name }} {{ post.author.last_name }}</a>
+                                {% else %}
+                                    Written by <a href="{% url 'author_posts' post.author.username %}" class="author-link">{{ post.author.username }}</a>
+                                {% endif %}
+                                | {{ post.created_at|date:"M d, Y" }}
                             </small>
                         </div>
                         <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-primary">Read More</a>

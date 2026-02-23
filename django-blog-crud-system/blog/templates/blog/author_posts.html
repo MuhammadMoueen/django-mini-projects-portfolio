@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ author.username }}'s Posts - Blog System{% endblock %}
+{% block title %}{% if author.first_name or author.last_name %}{{ author.first_name }} {{ author.last_name }}{% else %}{{ author.username }}{% endif %}'s Posts - Blog System{% endblock %}
 
 {% block content %}
 <div class="author-header text-center mb-5">
     <div class="author-avatar mb-3">
-        <div class="avatar-circle">{{ author.username|slice:":1"|upper }}</div>
+        <div class="avatar-circle">
+            {% if author.first_name %}
+                {{ author.first_name|slice:":1"|upper }}
+            {% else %}
+                {{ author.username|slice:":1"|upper }}
+            {% endif %}
+        </div>
     </div>
-    <h1 class="display-5 fw-bold text-white mb-2">{{ author.username }}</h1>
+    <h1 class="display-5 fw-bold text-white mb-2">
+        {% if author.first_name or author.last_name %}
+            {{ author.first_name }} {{ author.last_name }}
+        {% else %}
+            {{ author.username }}
+        {% endif %}
+    </h1>
     <p class="lead text-white mb-3">
         {% if author.profile.bio %}
             {{ author.profile.bio }}
@@ -22,7 +34,7 @@
 </div>
 
 <div class="posts-section">
-    <h2 class="text-white mb-4">Posts by {{ author.username }}</h2>
+    <h2 class="text-white mb-4">Posts by {% if author.first_name or author.last_name %}{{ author.first_name }} {{ author.last_name }}{% else %}{{ author.username }}{% endif %}</h2>
     
     {% if page_obj %}
     <div class="row g-4">
