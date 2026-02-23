@@ -27,6 +27,7 @@ class Post(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(max_length=500, blank=True)
+    profile_pic = models.ImageField(upload_to='profile_pics/', blank=True, null=True, default='profile_pics/default.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -35,6 +36,12 @@ class UserProfile(models.Model):
     @property
     def total_posts(self):
         return self.user.posts.count()
+    
+    @property
+    def profile_picture(self):
+        if self.profile_pic:
+            return self.profile_pic.url
+        return None
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
