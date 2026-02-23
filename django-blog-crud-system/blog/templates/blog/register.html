@@ -47,7 +47,17 @@
                         
                         <div class="mb-3">
                             <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
-                            {{ form.password1 }}
+                            <div class="password-input-wrapper">
+                                {{ form.password1 }}
+                                <button type="button" class="password-toggle-btn" data-target="id_password1" aria-label="Toggle password visibility">
+                                    <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle class="eye-open" cx="12" cy="12" r="3"></circle>
+                                        <path class="eye-closed" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" style="display: none;"></path>
+                                        <line class="eye-closed" x1="1" y1="1" x2="23" y2="23" style="display: none;"></line>
+                                    </svg>
+                                </button>
+                            </div>
                             {% if form.password1.errors %}
                             <div class="text-danger mt-1">{{ form.password1.errors }}</div>
                             {% else %}
@@ -59,7 +69,17 @@
                         
                         <div class="mb-4">
                             <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
-                            {{ form.password2 }}
+                            <div class="password-input-wrapper">
+                                {{ form.password2 }}
+                                <button type="button" class="password-toggle-btn" data-target="id_password2" aria-label="Toggle password visibility">
+                                    <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle class="eye-open" cx="12" cy="12" r="3"></circle>
+                                        <path class="eye-closed" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" style="display: none;"></path>
+                                        <line class="eye-closed" x1="1" y1="1" x2="23" y2="23" style="display: none;"></line>
+                                    </svg>
+                                </button>
+                            </div>
                             {% if form.password2.errors %}
                             <div class="text-danger mt-1">{{ form.password2.errors }}</div>
                             {% endif %}
@@ -101,4 +121,34 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Password visibility toggle for register page
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleButtons = document.querySelectorAll('.password-toggle-btn');
+
+        toggleButtons.forEach(toggleBtn => {
+            const targetId = toggleBtn.getAttribute('data-target');
+            const passwordInput = document.getElementById(targetId);
+            const eyeOpen = toggleBtn.querySelectorAll('.eye-open');
+            const eyeClosed = toggleBtn.querySelectorAll('.eye-closed');
+
+            if (toggleBtn && passwordInput) {
+                toggleBtn.addEventListener('click', function() {
+                    // Toggle password visibility
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    // Toggle eye icon
+                    eyeOpen.forEach(el => {
+                        el.style.display = type === 'password' ? 'block' : 'none';
+                    });
+                    eyeClosed.forEach(el => {
+                        el.style.display = type === 'password' ? 'none' : 'block';
+                    });
+                });
+            }
+        });
+    });
+</script>
 {% endblock %}
