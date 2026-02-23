@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from .models import Post, UserProfile
+
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -8,6 +10,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     date_hierarchy = 'created_at'
     readonly_fields = ('created_at', 'updated_at')
+
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
