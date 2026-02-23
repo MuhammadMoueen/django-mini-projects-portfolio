@@ -11,5 +11,11 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'created_at', 'total_posts')
+    list_display = ('user', 'created_at', 'total_posts', 'has_profile_pic')
     search_fields = ('user__username', 'bio')
+    readonly_fields = ('created_at',)
+    
+    def has_profile_pic(self, obj):
+        return bool(obj.profile_pic)
+    has_profile_pic.boolean = True
+    has_profile_pic.short_description = 'Has Picture'
