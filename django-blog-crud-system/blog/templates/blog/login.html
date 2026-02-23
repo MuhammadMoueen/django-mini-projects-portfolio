@@ -41,7 +41,7 @@
                             <div class="password-input-wrapper">
                                 <input type="password" name="password" class="form-control" id="password" 
                                        placeholder="••••••••" required>
-                                <button type="button" class="password-toggle-btn" id="togglePassword" aria-label="Toggle password visibility">
+                                <button type="button" class="password-toggle-btn" data-target="password" aria-label="Toggle password visibility">
                                     <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                         <circle class="eye-open" cx="12" cy="12" r="3"></circle>
@@ -88,30 +88,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Password visibility toggle
-    document.addEventListener('DOMContentLoaded', function() {
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
-        const eyeOpen = document.querySelectorAll('.eye-open');
-        const eyeClosed = document.querySelectorAll('.eye-closed');
-
-        if (togglePassword && passwordInput) {
-            togglePassword.addEventListener('click', function() {
-                // Toggle password visibility
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                
-                // Toggle eye icon
-                eyeOpen.forEach(el => {
-                    el.style.display = type === 'password' ? 'block' : 'none';
-                });
-                eyeClosed.forEach(el => {
-                    el.style.display = type === 'password' ? 'none' : 'block';
-                });
-            });
-        }
-    });
-</script>
 {% endblock %}

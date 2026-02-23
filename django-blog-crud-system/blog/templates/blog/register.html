@@ -121,34 +121,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Password visibility toggle for register page
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggleButtons = document.querySelectorAll('.password-toggle-btn');
-
-        toggleButtons.forEach(toggleBtn => {
-            const targetId = toggleBtn.getAttribute('data-target');
-            const passwordInput = document.getElementById(targetId);
-            const eyeOpen = toggleBtn.querySelectorAll('.eye-open');
-            const eyeClosed = toggleBtn.querySelectorAll('.eye-closed');
-
-            if (toggleBtn && passwordInput) {
-                toggleBtn.addEventListener('click', function() {
-                    // Toggle password visibility
-                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordInput.setAttribute('type', type);
-                    
-                    // Toggle eye icon
-                    eyeOpen.forEach(el => {
-                        el.style.display = type === 'password' ? 'block' : 'none';
-                    });
-                    eyeClosed.forEach(el => {
-                        el.style.display = type === 'password' ? 'none' : 'block';
-                    });
-                });
-            }
-        });
-    });
-</script>
 {% endblock %}
