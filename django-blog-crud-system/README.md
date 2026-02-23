@@ -59,12 +59,18 @@ blog-crud-system/
 │   │       └── generate_sample_posts.py
 │   ├── migrations/
 │   ├── static/
-│   │   └── css/
-│   │       └── style.css
+│   │   ├── css/
+│   │   │   └── style.css
+│   │   └── js/
+│   │       ├── auth.js
+│   │       ├── main.js
+│   │       └── post-form.js
 │   ├── templates/
 │   │   ├── blog/
 │   │   │   ├── author_posts.html
+│   │   │   ├── change_password.html
 │   │   │   ├── dashboard.html
+│   │   │   ├── edit_profile.html
 │   │   │   ├── home.html
 │   │   │   ├── login.html
 │   │   │   ├── post_confirm_delete.html
@@ -73,6 +79,8 @@ blog-crud-system/
 │   │   │   └── register.html
 │   │   ├── 404.html
 │   │   └── base.html
+│   ├── templatetags/
+│   │   └── blog_tags.py
 │   ├── admin.py
 │   ├── apps.py
 │   ├── forms.py
@@ -170,6 +178,7 @@ python manage.py runserver
 ### UserProfile Model
 - `user`: OneToOneField to User
 - `bio`: TextField (max 500 characters, optional)
+- `profile_pic`: ImageField (optional, with default avatar)
 - `created_at`: DateTimeField (auto)
 
 ## Tech Stack
@@ -183,11 +192,11 @@ python manage.py runserver
 ## Key Features Implementation
 
 ### Clean Code Practices
-- No comments or docstrings (as per requirements)
+- Separation of concerns (models, views, templates, static files)
 - Clear variable and function naming
-- Proper separation of concerns
-- DRY principles applied
-- Modular template structure
+- Proper import organization following PEP 8
+- No inline CSS or JavaScript in templates
+- Modular template structure with base template inheritance
 
 ### Security Features
 - Password hashing with Django's auth system
