@@ -2,6 +2,14 @@
 
 A professional Django blog application with full CRUD functionality and user authentication. Built with clean architecture, modern UI design, and production-ready features.
 
+## 📚 Documentation
+
+- **[Installation Guide](INSTALLATION.md)** - Complete setup instructions
+- **[User Guide](USER_GUIDE.md)** - How to use the blog system
+- **[Features Documentation](FEATURES.md)** - Detailed feature descriptions
+- **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute
+- **[Changelog](CHANGELOG.md)** - Version history and updates
+
 ## Features
 
 ### Authentication System
