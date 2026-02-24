@@ -136,6 +136,7 @@ a:focus, button:focus, input:focus, textarea:focus {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    will-change: transform;
 }
 
 .section-desc {
@@ -377,6 +378,8 @@ a:focus, button:focus, input:focus, textarea:focus {
     position: relative;
     z-index: 2;
     transition: all var(--transition);
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .profile-image-wrapper:hover .profile-image {
