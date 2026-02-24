@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 
 class CV(models.Model):
+    """Model for storing CV/resume files with activation status."""
     title = models.CharField(max_length=200)
     description = models.TextField(
         blank=True,
@@ -29,6 +30,7 @@ class CV(models.Model):
         super(CV, self).save(*args, **kwargs)
 
 class Project(models.Model):
+    """Model for portfolio projects with categorization and ordering."""
     CATEGORY_CHOICES = [
         ('frontend', 'Frontend'),
         ('fullstack', 'Full Stack'),
@@ -68,6 +70,7 @@ class Project(models.Model):
         return [tech.strip() for tech in self.technologies.split(',') if tech.strip()]
 
 class ContactMessage(models.Model):
+    """Model for storing contact form submissions."""
     name = models.CharField(max_length=200)
     email = models.EmailField()
     message = models.TextField()

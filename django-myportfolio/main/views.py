@@ -6,8 +6,7 @@ from django.conf import settings
 from .models import CV, Project, ContactMessage
 from .forms import ContactForm
 
-def home(request):
-    active_cv = CV.objects.filter(is_active=True).first()
+def home(request):    """Display homepage with latest projects and active CV."""    active_cv = CV.objects.filter(is_active=True).first()
     featured_projects = Project.objects.filter(featured=True).order_by('-order')[:3]
     context = {
         'active_cv': active_cv,
@@ -16,6 +15,7 @@ def home(request):
     return render(request, 'home.html', context)
 
 def about(request):
+    """Display about page with active CV."""
     active_cv = CV.objects.filter(is_active=True).first()
     context = {
         'active_cv': active_cv,
@@ -23,6 +23,7 @@ def about(request):
     return render(request, 'about.html', context)
 
 def projects(request):
+    """Display all projects."""
     all_projects = Project.objects.all()
     context = {
         'projects': all_projects,
@@ -30,9 +31,11 @@ def projects(request):
     return render(request, 'projects.html', context)
 
 def blog(request):
+    """Display blog page."""
     return render(request, 'blog.html')
 
 def contact(request):
+    """Handle contact form submission and display contact page."""
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
