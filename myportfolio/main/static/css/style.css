@@ -487,6 +487,18 @@ ul { list-style: none; }
     box-shadow: 0 8px 30px var(--accent-glow);
 }
 
+.btn-secondary {
+    background: var(--accent-secondary);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
+}
+
+.btn-secondary:hover {
+    background: #00bfa5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
+}
+
 .btn-outline {
     background: transparent;
     color: var(--text-primary);

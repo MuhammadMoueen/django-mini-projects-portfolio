@@ -41,16 +41,15 @@
                     View Portfolio
                 </a>
                 {% if active_cv %}
-                <a href="{{ active_cv.file.url }}" class="btn btn-outline" download>
+                <a href="{{ active_cv.file.url }}" class="btn btn-secondary" download target="_blank">
                     <i data-lucide="download" style="width:18px;height:18px;"></i>
                     Download CV
                 </a>
-                {% else %}
+                {% endif %}
                 <a href="{% url 'contact' %}" class="btn btn-outline">
                     <i data-lucide="send" style="width:18px;height:18px;"></i>
                     Contact Me
                 </a>
-                {% endif %}
             </div>
 
             <div class="hero-stats fade-up">
