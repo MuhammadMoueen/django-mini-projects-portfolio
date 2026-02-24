@@ -1309,8 +1309,14 @@ textarea.form-control {
         margin: 0 auto;
     }
 
+    .hero-content {
+        max-width: 100%;
+    }
+
     .hero-badge {
         justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-actions {
@@ -1372,9 +1378,27 @@ textarea.form-control {
         padding: 0 16px;
     }
 
+    .hero-title {
+        font-size: clamp(1.8rem, 7vw, 2.5rem);
+    }
+
+    .profile-image-wrapper {
+        width: 200px;
+        height: 240px;
+    }
+
+    .hero-stats {
+        gap: 16px;
+    }
+
+    .stat-item .stat-number {
+        font-size: 1.5rem;
+    }
+
     .hero-actions {
         flex-direction: column;
         width: 100%;
+        gap: 12px;
     }
 
     .hero-actions .btn {
