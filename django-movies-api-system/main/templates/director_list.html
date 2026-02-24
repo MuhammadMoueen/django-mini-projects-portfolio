@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Directors - Movies Database{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1><i class="fas fa-person-chalkboard"></i> Directors Management</h1>
+                <p>Manage all your movie directors here</p>
+            </div>
+            <a href="{% url 'director_create' %}" class="btn btn-light">
+                <i class="fas fa-plus"></i> Add New Director
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div id="loading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3 text-muted">Loading directors...</p>
+    </div>
+    
+    <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+    
+    <div id="table-container" class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th><i class="fas fa-user"></i> Full Name</th>
+                    <th><i class="fas fa-calendar-alt"></i> Date of Birth</th>
+                    <th><i class="fas fa-cog"></i> Actions</th>
+                </tr>
+            </thead>
+            <tbody id="directors-tbody"></tbody>
+        </table>
+    </div>
+    
+    <div id="no-data" class="no-data" style="display: none;">
+        <i class="fas fa-user-slash"></i>
+        <p>No directors found. <a href="{% url 'director_create' %}">Create your first director</a></p>
+    </div>
+    
+    <div id="pagination"></div>
+</div>
+
+<script src="{% static 'js/api-directors.js' %}"></script>
+{% endblock %}
+            transform: scale(1.01);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        td {
+            padding: 20px;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .action-btn {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .action-btn.edit {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .action-btn.edit:hover {
+            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .empty-state {
+            padding: 60px 40px;
+            text-align: center;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f5576c;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-add {
+                width: 100%;
+                justify-content: center;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 12px;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">{{ directors|length }}</span>
+                <span class="stat-label">Total Directors</span>
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="header-content">
+                <h1>🎬 Directors List</h1>
+                <a href="{% url 'director_create' %}" class="btn-add">
+                    ➕ Add New Director
+                </a>
+            </div>
+        </div>
+
+        <div class="table-container">
+            {% if directors %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>👤 First Name</th>
+                        <th>👤 Last Name</th>
+                        <th>🎂 Date of Birth</th>
+                        <th>⚙️ Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for director in directors %}
+                    <tr>
+                        <td>{{ director.first_name }}</td>
+                        <td>{{ director.last_name }}</td>
+                        <td>{{ director.dob }}</td>
+                        <td>
+                            <a href="{% url 'director_edit' director.id %}" class="action-btn edit">
+                                ✏️ Edit
+                            </a>
+                            <a href="{% url 'director_delete' director.id %}" class="action-btn">
+                                🗑️ Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">🎬</div>
+                <h3>No Directors Found</h3>
+                <p>Start by adding your first director to the database.</p>
+                <a href="{% url 'director_create' %}" class="btn-add">
+                    ➕ Add First Director
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

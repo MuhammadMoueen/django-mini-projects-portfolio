@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}API Documentation - Movies Database{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    <h1 class="mb-4">
+                        <i class="fas fa-code"></i> API Documentation
+                    </h1>
+                    <p class="lead text-muted">
+                        RESTful API endpoints for the Movies Database application.
+                    </p>
+                    
+                    <hr class="my-4">
+                    
+                    <h2 class="h4 mb-3">
+                        <i class="fas fa-link"></i> Base URL
+                    </h2>
+                    <div class="alert alert-info">
+                        <code>{{ request.scheme }}://{{ request.get_host }}/api/</code>
+                    </div>
+                    
+                    <h2 class="h4 mt-4 mb-3">
+                        <i class="fas fa-list"></i> Available Endpoints
+                    </h2>
+                    
+                    <!-- Movies API -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-film"></i> Movies</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Endpoint</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge bg-success">GET</span></td>
+                                        <td><code>/api/movies/</code></td>
+                                        <td>List all movies (paginated)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-success">GET</span></td>
+                                        <td><code>/api/movies/{id}/</code></td>
+                                        <td>Get a specific movie</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-warning">POST</span></td>
+                                        <td><code>/api/movies/</code></td>
+                                        <td>Create a new movie</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-info">PUT</span></td>
+                                        <td><code>/api/movies/{id}/</code></td>
+                                        <td>Update a movie</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-danger">DELETE</span></td>
+                                        <td><code>/api/movies/{id}/</code></td>
+                                        <td>Delete a movie</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="mb-0"><strong>Query Parameters:</strong> <code>?page=1</code>, <code>?search=inception</code>, <code>?ordering=-release_date</code></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Actors API -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0"><i class="fas fa-users"></i> Actors</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Endpoint</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge bg-success">GET</span></td>
+                                        <td><code>/api/actors/</code></td>
+                                        <td>List all actors</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-success">GET</span></td>
+                                        <td><code>/api/actors/{id}/</code></td>
+                                        <td>Get a specific actor</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-warning">POST</span></td>
+                                        <td><code>/api/actors/</code></td>
+                                        <td>Create a new actor</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-info">PUT</span></td>
+                                        <td><code>/api/actors/{id}/</code></td>
+                                        <td>Update an actor</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-danger">DELETE</span></td>
+                                        <td><code>/api/actors/{id}/</code></td>
+                                        <td>Delete an actor</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Directors API -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="mb-0"><i class="fas fa-person-chalkboard"></i> Directors</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Same endpoints as Actors, replace <code>/api/actors/</code> with <code>/api/directors/</code></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Languages API -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="fas fa-language"></i> Languages</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Same endpoints as Actors, replace <code>/api/actors/</code> with <code>/api/languages/</code></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Genres API -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-warning text-dark">
+                            <h5 class="mb-0"><i class="fas fa-tag"></i> Genres</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Same endpoints as Actors, replace <code>/api/actors/</code> with <code>/api/genres/</code></p>
+                        </div>
+                    </div>
+                    
+                    <h2 class="h4 mt-5 mb-3">
+                        <i class="fas fa-tools"></i> Testing the API
+                    </h2>
+                    <p>Try accessing the API endpoints directly:</p>
+                    <ul>
+                        <li><a href="{% url 'movie-list' %}" target="_blank">{{ request.scheme }}://{{ request.get_host }}{% url 'movie-list' %}</a></li>
+                        <li><a href="{% url 'actor-list' %}" target="_blank">{{ request.scheme }}://{{ request.get_host }}{% url 'actor-list' %}</a></li>
+                        <li><a href="{% url 'director-list' %}" target="_blank">{{ request.scheme }}://{{ request.get_host }}{% url 'director-list' %}</a></li>
+                        <li><a href="{% url 'language-list' %}" target="_blank">{{ request.scheme }}://{{ request.get_host }}{% url 'language-list' %}</a></li>
+                        <li><a href="{% url 'genre-list' %}" target="_blank">{{ request.scheme }}://{{ request.get_host }}{% url 'genre-list' %}</a></li>
+                    </ul>
+                    
+                    <div class="alert alert-light mt-4">
+                        <h6><i class="fas fa-info-circle"></i> Additional Information</h6>
+                        <ul class="mb-0">
+                            <li>All endpoints support <strong>pagination</strong> (12 items per page)</li>
+                            <li>Use <code>?search=term</code> to search across relevant fields</li>
+                            <li>Use <code>?ordering=field</code> or <code>?ordering=-field</code> to sort results</li>
+                            <li>Authentication is not required (development mode)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

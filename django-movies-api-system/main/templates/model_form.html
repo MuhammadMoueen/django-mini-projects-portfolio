@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - Movies Database{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>
+            <i class="{{ icon|default:'fas fa-edit' }}"></i> {{ title }}
+        </h1>
+        <p>{{ subtitle }}</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <h4>Please correct the following errors:</h4>
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data" class="needs-validation">
+                        {% csrf_token %}
+                        
+                        {% for field in form %}
+                            {% if field.name == 'actors' %}
+                                {# Special handling for ManyToMany checkboxes #}
+                                <div class="form-group mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-users"></i> {{ field.label }}
+                                    </label>
+                                    <div class="actors-checkbox-list">
+                                        {% for checkbox in field %}
+                                            <div class="form-check">
+                                                {{ checkbox.tag }}
+                                                <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                    {{ checkbox.choice_label }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                {# Standard field rendering #}
+                                <div class="form-group mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label">
+                                        {% if field.name == 'first_name' or field.name == 'last_name' or field.name == 'name' %}
+                                            <i class="fas fa-user"></i>
+                                        {% elif field.name == 'dob' or field.name == 'release_date' %}
+                                            <i class="fas fa-calendar-alt"></i>
+                                        {% elif field.name == 'title' %}
+                                            <i class="fas fa-film"></i>
+                                        {% elif field.name == 'description' %}
+                                            <i class="fas fa-align-left"></i>
+                                        {% elif field.name == 'duration' %}
+                                            <i class="fas fa-clock"></i>
+                                        {% elif field.name == 'rating' %}
+                                            <i class="fas fa-star"></i>
+                                        {% elif field.name == 'genre' %}
+                                            <i class="fas fa-tag"></i>
+                                        {% elif field.name == 'language' %}
+                                            <i class="fas fa-language"></i>
+                                        {% elif field.name == 'director' %}
+                                            <i class="fas fa-person-chalkboard"></i>
+                                        {% elif field.name == 'poster_image' %}
+                                            <i class="fas fa-image"></i>
+                                        {% endif %}
+                                        {{ field.label }}
+                                        {% if field.field.required %}
+                                            <span class="text-danger">*</span>
+                                        {% endif %}
+                                    </label>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% if field.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ field.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> {{ submit_text|default:"Save" }}
+                            </button>
+                            <a href="{{ cancel_url }}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
