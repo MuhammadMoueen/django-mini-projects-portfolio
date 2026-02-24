@@ -6,7 +6,9 @@ from django.conf import settings
 from .models import CV, Project, ContactMessage
 from .forms import ContactForm
 
-def home(request):    """Display homepage with latest projects and active CV."""    active_cv = CV.objects.filter(is_active=True).first()
+def home(request):
+    """Display homepage with latest projects and active CV."""
+    active_cv = CV.objects.filter(is_active=True).first()
     featured_projects = Project.objects.filter(featured=True).order_by('-order')[:3]
     context = {
         'active_cv': active_cv,
