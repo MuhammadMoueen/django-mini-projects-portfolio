@@ -575,6 +575,10 @@ ul { list-style: none; }
     line-height: 1.8;
 }
 
+.about-cv-section {
+    margin-top: 32px;
+}
+
 .about-highlights {
     display: grid;
     grid-template-columns: 1fr 1fr;
