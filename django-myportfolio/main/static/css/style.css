@@ -927,6 +927,16 @@ a:focus, button:focus, input:focus, textarea:focus {
     gap: 4px;
 }
 
+.blog-meta span i {
+    width: 14px;
+    height: 14px;
+}
+
+.read-more i {
+    width: 16px;
+    height: 16px;
+}
+
 .blog-body h3 {
     font-size: 1.15rem;
     font-weight: 600;

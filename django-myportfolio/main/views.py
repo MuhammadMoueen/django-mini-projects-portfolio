@@ -38,7 +38,6 @@ def contact(request):
         if form.is_valid():
             contact_message = form.save()
             
-            # Send email notification
             try:
                 subject = f"New Contact Message from {contact_message.name}"
                 message = f"""

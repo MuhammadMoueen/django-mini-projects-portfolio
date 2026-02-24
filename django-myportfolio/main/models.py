@@ -25,7 +25,6 @@ class CV(models.Model):
     
     def save(self, *args, **kwargs):
         if self.is_active:
-            # Deactivate all other CVs before saving this one as active
             CV.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
         super(CV, self).save(*args, **kwargs)
 
