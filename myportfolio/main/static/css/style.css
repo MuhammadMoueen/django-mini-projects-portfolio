@@ -320,6 +320,7 @@ a:focus, button:focus, input:focus, textarea:focus {
     align-items: center;
     position: relative;
     overflow: hidden;
+    padding-top: 100px;
 }
 
 .hero-bg-glow {
