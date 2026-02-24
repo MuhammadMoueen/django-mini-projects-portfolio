@@ -467,6 +467,18 @@ a:focus, button:focus, input:focus, textarea:focus {
     line-height: 1.8;
 }
 
+.cv-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin-bottom: 32px;
+    line-height: 1.6;
+    padding: 12px 20px;
+    background: rgba(139, 92, 246, 0.05);
+    border-left: 3px solid var(--primary);
+    border-radius: 4px;
+}
+
 .hero-actions {
     display: flex;
     align-items: center;

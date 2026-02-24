@@ -44,6 +44,11 @@
                             <i data-lucide="github"></i> Code
                         </a>
                         {% endif %}
+                        {% if project.pdf_file %}
+                        <a href="{{ project.pdf_file.url }}" class="btn btn-sm" target="_blank">
+                            <i data-lucide="file-text"></i> PDF
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="project-body">

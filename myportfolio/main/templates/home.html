@@ -35,6 +35,12 @@
                 I build elegant, modern, and responsive web applications using the latest technologies.
             </p>
 
+            {% if active_cv and active_cv.description %}
+            <p class="cv-description fade-up delay-3">
+                {{ active_cv.description }}
+            </p>
+            {% endif %}
+
             <div class="hero-actions fade-up delay-4">
                 <a href="{% url 'projects' %}" class="btn btn-primary">
                     <i data-lucide="folder-open"></i>

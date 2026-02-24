@@ -7,8 +7,17 @@ from .models import CV, Project, ContactMessage
 class CVAdmin(admin.ModelAdmin):
     list_display = ['title', 'is_active', 'file_info', 'uploaded_at']
     list_filter = ['is_active', 'uploaded_at']
-    search_fields = ['title']
+    search_fields = ['title', 'description']
     readonly_fields = ['uploaded_at', 'updated_at']
+    fieldsets = (
+        ('CV Information', {
+            'fields': ('title', 'description', 'file', 'is_active')
+        }),
+        ('Timestamps', {
+            'fields': ('uploaded_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
     
     def file_info(self, obj):
         if obj.file:
@@ -19,7 +28,7 @@ class CVAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'featured', 'order', 'has_image', 'created_at']
+    list_display = ['title', 'category', 'featured', 'order', 'has_image', 'has_pdf', 'created_at']
     list_filter = ['category', 'featured', 'created_at']
     search_fields = ['title', 'description', 'technologies']
     list_editable = ['featured', 'order']
@@ -29,7 +38,7 @@ class ProjectAdmin(admin.ModelAdmin):
             'fields': ('title', 'description', 'category')
         }),
         ('Media', {
-            'fields': ('image', 'preview_image')
+            'fields': ('image', 'preview_image', 'pdf_file')
         }),
         ('Details', {
             'fields': ('technologies', 'live_url', 'github_url')
@@ -48,6 +57,12 @@ class ProjectAdmin(admin.ModelAdmin):
             return format_html('<span style="color: green;">✓</span>')
         return format_html('<span style="color: red;">✗</span>')
     has_image.short_description = 'Image'
+    
+    def has_pdf(self, obj):
+        if obj.pdf_file:
+            return format_html('<a href="{}" target="_blank" style="color: green;">✓ View</a>', obj.pdf_file.url)
+        return format_html('<span style="color: gray;">—</span>')
+    has_pdf.short_description = 'PDF'
     
     def preview_image(self, obj):
         if obj.image:

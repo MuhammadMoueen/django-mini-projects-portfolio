@@ -3,6 +3,10 @@ from django.core.validators import FileExtensionValidator
 
 class CV(models.Model):
     title = models.CharField(max_length=200)
+    description = models.TextField(
+        blank=True,
+        help_text='Brief description shown above the download button'
+    )
     file = models.FileField(
         upload_to='cvs/',
         validators=[FileExtensionValidator(allowed_extensions=['pdf'])]
@@ -35,6 +39,13 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     image = models.ImageField(upload_to='projects/', blank=True, null=True)
+    pdf_file = models.FileField(
+        upload_to='projects/pdfs/',
+        blank=True,
+        null=True,
+        validators=[FileExtensionValidator(allowed_extensions=['pdf'])],
+        help_text='Optional PDF documentation for this project'
+    )
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='fullstack')
     technologies = models.CharField(
         max_length=500,
