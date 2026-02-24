@@ -1,12 +1,9 @@
-// ===== PORTFOLIO JS =====
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ===== LUCIDE ICONS INITIALIZATION =====
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
 
-    // ===== THEME TOGGLE =====
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -31,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== NAVBAR SCROLL =====
     const navbar = document.querySelector('.navbar');
     if (navbar) {
         window.addEventListener('scroll', () => {
@@ -43,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== MOBILE MENU =====
     const menuToggle = document.querySelector('.menu-toggle');
     const mobileNav = document.querySelector('.mobile-nav');
 
@@ -67,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== SCROLL ANIMATIONS =====
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -84,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    // ===== TYPING EFFECT (Hero) =====
     const typingEl = document.getElementById('typingText');
     if (typingEl) {
         const roles = [
@@ -123,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
         typeRole();
     }
 
-    // ===== PROJECT FILTER =====
     const filterBtns = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
 
@@ -145,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== CONTACT FORM VALIDATION & SUBMISSION =====
     const contactForm = document.getElementById('contactForm');
     const formSuccess = document.getElementById('formSuccess');
     const submitBtn = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
@@ -155,17 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             let isValid = true;
 
-            // Reset errors
             contactForm.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
 
-            // Name
             const nameInput = contactForm.querySelector('#name');
             if (nameInput && nameInput.value.trim().length < 2) {
                 nameInput.closest('.form-group').classList.add('error');
                 isValid = false;
             }
 
-            // Email
             const emailInput = contactForm.querySelector('#email');
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (emailInput && !emailRegex.test(emailInput.value.trim())) {
@@ -173,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 isValid = false;
             }
 
-            // Message
             const messageInput = contactForm.querySelector('#message');
             if (messageInput && messageInput.value.trim().length < 10) {
                 messageInput.closest('.form-group').classList.add('error');
@@ -181,24 +168,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (isValid) {
-                // Disable submit button
                 if (submitBtn) {
                     submitBtn.disabled = true;
                     submitBtn.textContent = 'Sending...';
                 }
 
                 try {
-                    // Get CSRF token
                     const csrfToken = contactForm.querySelector('[name=csrfmiddlewaretoken]').value;
                     
-                    // Prepare form data
                     const formData = new FormData();
                     formData.append('csrfmiddlewaretoken', csrfToken);
                     formData.append('name', nameInput.value.trim());
                     formData.append('email', emailInput.value.trim());
                     formData.append('message', messageInput.value.trim());
 
-                    // Send AJAX request
                     const response = await fetch(contactForm.action || window.location.href, {
                         method: 'POST',
                         body: formData,
@@ -224,7 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('Error:', error);
                     alert('There was an error sending your message. Please try again.');
                 } finally {
-                    // Re-enable submit button
                     if (submitBtn) {
                         submitBtn.disabled = false;
                         submitBtn.textContent = 'Send Message';
@@ -234,11 +216,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== FOOTER YEAR =====
     const yearEl = document.getElementById('currentYear');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const target = document.querySelector(this.getAttribute('href'));
