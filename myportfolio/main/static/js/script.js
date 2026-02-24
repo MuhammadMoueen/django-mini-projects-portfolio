@@ -145,12 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== CONTACT FORM VALIDATION =====
+    // ===== CONTACT FORM VALIDATION & SUBMISSION =====
     const contactForm = document.getElementById('contactForm');
     const formSuccess = document.getElementById('formSuccess');
+    const submitBtn = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
 
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             let isValid = true;
 
@@ -158,33 +159,77 @@ document.addEventListener('DOMContentLoaded', () => {
             contactForm.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
 
             // Name
-            const name = contactForm.querySelector('#name');
-            if (name && name.value.trim().length < 2) {
-                name.closest('.form-group').classList.add('error');
+            const nameInput = contactForm.querySelector('#name');
+            if (nameInput && nameInput.value.trim().length < 2) {
+                nameInput.closest('.form-group').classList.add('error');
                 isValid = false;
             }
 
             // Email
-            const email = contactForm.querySelector('#email');
+            const emailInput = contactForm.querySelector('#email');
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (email && !emailRegex.test(email.value.trim())) {
-                email.closest('.form-group').classList.add('error');
+            if (emailInput && !emailRegex.test(emailInput.value.trim())) {
+                emailInput.closest('.form-group').classList.add('error');
                 isValid = false;
             }
 
             // Message
-            const message = contactForm.querySelector('#message');
-            if (message && message.value.trim().length < 10) {
-                message.closest('.form-group').classList.add('error');
+            const messageInput = contactForm.querySelector('#message');
+            if (messageInput && messageInput.value.trim().length < 10) {
+                messageInput.closest('.form-group').classList.add('error');
                 isValid = false;
             }
 
-            if (isValid && formSuccess) {
-                formSuccess.classList.add('show');
-                contactForm.reset();
-                setTimeout(() => {
-                    formSuccess.classList.remove('show');
-                }, 5000);
+            if (isValid) {
+                // Disable submit button
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Sending...';
+                }
+
+                try {
+                    // Get CSRF token
+                    const csrfToken = contactForm.querySelector('[name=csrfmiddlewaretoken]').value;
+                    
+                    // Prepare form data
+                    const formData = new FormData();
+                    formData.append('csrfmiddlewaretoken', csrfToken);
+                    formData.append('name', nameInput.value.trim());
+                    formData.append('email', emailInput.value.trim());
+                    formData.append('message', messageInput.value.trim());
+
+                    // Send AJAX request
+                    const response = await fetch(contactForm.action || window.location.href, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        if (formSuccess) {
+                            formSuccess.classList.add('show');
+                            contactForm.reset();
+                            setTimeout(() => {
+                                formSuccess.classList.remove('show');
+                            }, 5000);
+                        }
+                    } else {
+                        alert('There was an error sending your message. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('There was an error sending your message. Please try again.');
+                } finally {
+                    // Re-enable submit button
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Send Message';
+                    }
+                }
             }
         });
     }

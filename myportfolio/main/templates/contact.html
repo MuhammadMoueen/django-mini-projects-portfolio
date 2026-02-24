@@ -22,8 +22,8 @@
 
             <!-- Left: Info -->
             <div class="fade-up">
-                <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 8px;">Let's work together</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 32px; line-height: 1.8;">
+                <h2 class="contact-heading">Let's work together</h2>
+                <p class="contact-intro">
                     I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
                 </p>
 
@@ -34,7 +34,7 @@
                         </div>
                         <div class="info-text">
                             <h4>Email</h4>
-                            <p><a href="mailto:bisma@gmail.com">bisma@gmail.com</a></p>
+                            <p><a href="mailto:muhammadmoueen@gmail.com">muhammadmoueen@gmail.com</a></p>
                         </div>
                     </div>
 
@@ -61,16 +61,16 @@
 
                 <!-- Social Links -->
                 <div class="contact-socials">
-                    <a href="https://github.com/bisma" target="_blank" class="social-link" aria-label="GitHub">
+                    <a href="https://github.com/muhammadmoueen" target="_blank" class="social-link" aria-label="GitHub">
                         <i data-lucide="github"></i>
                     </a>
-                    <a href="https://linkedin.com/in/bisma" target="_blank" class="social-link" aria-label="LinkedIn">
+                    <a href="https://linkedin.com/in/muhammadmoueen" target="_blank" class="social-link" aria-label="LinkedIn">
                         <i data-lucide="linkedin"></i>
                     </a>
-                    <a href="https://facebook.com/" target="_blank" class="social-link" aria-label="Facebook">
+                    <a href="https://facebook.com/muhammadmoueen" target="_blank" class="social-link" aria-label="Facebook">
                         <i data-lucide="facebook"></i>
                     </a>
-                    <a href="mailto:bisma@gmail.com" class="social-link" aria-label="Google / Email">
+                    <a href="mailto:muhammadmoueen@gmail.com" class="social-link" aria-label="Google / Email">
                         <i data-lucide="mail"></i>
                     </a>
                 </div>
@@ -78,34 +78,34 @@
 
             <!-- Right: Form -->
             <div class="contact-form-card fade-up delay-1">
-                <form id="contactForm" novalidate>
+                <form id="contactForm" method="post" novalidate>
                     {% csrf_token %}
 
                     <div class="form-group">
                         <label for="name">Full Name</label>
-                        <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
                         <p class="form-error">Please enter your name (at least 2 characters).</p>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
                         <p class="form-error">Please enter a valid email address.</p>
                     </div>
 
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" class="form-control" placeholder="Write your message..." required></textarea>
+                        <textarea id="message" name="message" class="form-control" placeholder="Write your message..." required></textarea>
                         <p class="form-error">Message must be at least 10 characters long.</p>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                        <i data-lucide="send" style="width:18px;height:18px;"></i>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i data-lucide="send"></i>
                         Send Message
                     </button>
 
-                    <div class="form-success" id="formSuccess" style="margin-top: 20px;">
-                        <i data-lucide="check-circle" style="width:20px;height:20px;"></i>
+                    <div class="form-success" id="formSuccess">
+                        <i data-lucide="check-circle"></i>
                         Message sent successfully! I'll get back to you soon.
                     </div>
                 </form>

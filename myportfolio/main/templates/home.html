@@ -37,17 +37,17 @@
 
             <div class="hero-actions fade-up delay-4">
                 <a href="{% url 'projects' %}" class="btn btn-primary">
-                    <i data-lucide="folder-open" style="width:18px;height:18px;"></i>
+                    <i data-lucide="folder-open"></i>
                     View Portfolio
                 </a>
                 {% if active_cv %}
                 <a href="{{ active_cv.file.url }}" class="btn btn-secondary" download target="_blank">
-                    <i data-lucide="download" style="width:18px;height:18px;"></i>
+                    <i data-lucide="download"></i>
                     Download CV
                 </a>
                 {% endif %}
                 <a href="{% url 'contact' %}" class="btn btn-outline">
-                    <i data-lucide="send" style="width:18px;height:18px;"></i>
+                    <i data-lucide="send"></i>
                     Contact Me
                 </a>
             </div>

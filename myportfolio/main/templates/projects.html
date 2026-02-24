@@ -36,12 +36,12 @@
                     <div class="project-overlay">
                         {% if project.live_url %}
                         <a href="{{ project.live_url }}" class="btn btn-sm" target="_blank">
-                            <i data-lucide="external-link" style="width:16px;height:16px;"></i> Live Demo
+                            <i data-lucide="external-link"></i> Live Demo
                         </a>
                         {% endif %}
                         {% if project.github_url %}
                         <a href="{{ project.github_url }}" class="btn btn-sm" target="_blank">
-                            <i data-lucide="github" style="width:16px;height:16px;"></i> Code
+                            <i data-lucide="github"></i> Code
                         </a>
                         {% endif %}
                     </div>
@@ -57,8 +57,8 @@
                 </div>
             </div>
             {% empty %}
-            <div class="fade-up" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
-                <p style="font-size: 1.2rem; color: var(--text-secondary);">No projects yet. Check back soon!</p>
+            <div class="fade-up empty-state">
+                <p class="empty-state-text">No projects yet. Check back soon!</p>
             </div>
             {% endfor %}
         </div>
