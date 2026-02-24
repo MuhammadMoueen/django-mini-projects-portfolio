@@ -54,19 +54,19 @@ class ProjectAdmin(admin.ModelAdmin):
     
     def has_image(self, obj):
         if obj.image:
-            return format_html('<span style="color: green;">✓</span>')
-        return format_html('<span style="color: red;">✗</span>')
+            return format_html('✓')
+        return format_html('✗')
     has_image.short_description = 'Image'
     
     def has_pdf(self, obj):
         if obj.pdf_file:
-            return format_html('<a href="{}" target="_blank" style="color: green;">✓ View</a>', obj.pdf_file.url)
-        return format_html('<span style="color: gray;">—</span>')
+            return format_html('<a href="{}" target="_blank">✓ View</a>', obj.pdf_file.url)
+        return format_html('—')
     has_pdf.short_description = 'PDF'
     
     def preview_image(self, obj):
         if obj.image:
-            return format_html('<img src="{}" style="max-width: 300px; max-height: 300px; border-radius: 8px;"/>', obj.image.url)
+            return format_html('<img src="{}" width="300" height="300"/>', obj.image.url)
         return "No image uploaded"
     preview_image.short_description = 'Preview'
 
@@ -97,7 +97,7 @@ class ContactMessageAdmin(admin.ModelAdmin):
     preview_message.short_description = 'Message Preview'
     
     def full_message(self, obj):
-        return format_html('<div style="padding: 10px; background: #f5f5f5; border-radius: 5px;">{}</div>', obj.message)
+        return format_html('<div>{}</div>', obj.message)
     full_message.short_description = 'Full Message'
 
 
