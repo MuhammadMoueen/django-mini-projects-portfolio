@@ -11,7 +11,7 @@ class CV(models.Model):
         upload_to='cvs/',
         validators=[FileExtensionValidator(allowed_extensions=['pdf'])]
     )
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
