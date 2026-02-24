@@ -4,7 +4,6 @@
 {% block title %}Contact | Portfolio{% endblock %}
 
 {% block content %}
-<!-- ===== PAGE HEADER ===== -->
 <div class="page-header">
     <div class="hero-bg-glow glow-1"></div>
     <div class="hero-bg-glow glow-2"></div>
@@ -15,12 +14,10 @@
     </div>
 </div>
 
-<!-- ===== CONTACT SECTION ===== -->
 <section class="section">
     <div class="container">
         <div class="contact-grid">
 
-            <!-- Left: Info -->
             <div class="fade-up">
                 <h2 class="contact-heading">Let's work together</h2>
                 <p class="contact-intro">
@@ -59,7 +56,6 @@
                     </div>
                 </div>
 
-                <!-- Social Links -->
                 <div class="contact-socials">
                     <a href="https://github.com/muhammadmoueen" target="_blank" class="social-link" aria-label="GitHub">
                         <i data-lucide="github"></i>
@@ -76,7 +72,6 @@
                 </div>
             </div>
 
-            <!-- Right: Form -->
             <div class="contact-form-card fade-up delay-1">
                 <form id="contactForm" method="post" novalidate>
                     {% csrf_token %}

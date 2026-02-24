@@ -11,20 +11,16 @@
     <meta name="robots" content="index, follow">
     <title>{% block title %}Muhammad Moueen | Portfolio{% endblock %}</title>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
 
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=4.0">
 </head>
 <body>
 
-    <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
         <div class="nav-inner">
             <a href="{% url 'home' %}" class="nav-logo">
@@ -52,7 +48,6 @@
         </div>
     </nav>
 
-    <!-- ===== MOBILE NAV ===== -->
     <div class="mobile-nav">
         <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
         <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
@@ -61,10 +56,8 @@
         <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
     </div>
 
-    <!-- ===== MAIN CONTENT ===== -->
     {% block content %}{% endblock %}
 
-    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -127,7 +120,6 @@
         </div>
     </footer>
 
-    <!-- ===== SCRIPTS ===== -->
     <script src="{% static 'js/script.js' %}?v=3.0"></script>
 </body>
 </html>
