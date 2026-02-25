@@ -132,10 +132,19 @@ finance_tracker/
 ## Security
 
 - Token-based authentication for API access
-- User-specific data isolation
-- Password validation and hashing
-- CSRF protection enabled
-- Input validation on all forms
+- User-specific data isolation ensuring privacy
+- Password validation and secure hashing
+- CSRF protection enabled for form submissions
+- Input validation on all forms and API endpoints
+- Rate limiting to prevent abuse
+- Secure headers configured
+
+## Performance
+
+- Database query optimization with select_related and prefetch_related
+- Pagination for large datasets
+- Efficient aggregation queries for financial summaries
+- Caching strategy for frequently accessed data
 
 ## License
 
