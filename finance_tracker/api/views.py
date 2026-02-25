@@ -173,6 +173,10 @@ def financial_summary(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def monthly_report(request):
+    """
+    Generate financial report for a specific month.
+    Returns income, expense, and net for the specified month.
+    """
     user = request.user
     year = int(request.GET.get('year', datetime.now().year))
     month = int(request.GET.get('month', datetime.now().month))
