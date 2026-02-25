@@ -1,3 +1,6 @@
+// Dashboard functionality for Finance Tracker
+
+// Authentication check - redirect if not logged in
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -5,13 +8,16 @@ if (!token) {
     window.location.href = '/login/';
 }
 
+// API request headers with authentication token
 const apiHeaders = {
     'Content-Type': 'application/json',
     'Authorization': `Token ${token}`
 };
 
+// Display logged-in username
 document.getElementById('userInfo').textContent = user.username || 'User';
 
+// Logout handler
 document.getElementById('logoutBtn').addEventListener('click', async function(e) {
     e.preventDefault();
     await fetch('/api/auth/logout/', {
@@ -22,6 +28,7 @@ document.getElementById('logoutBtn').addEventListener('click', async function(e)
     window.location.href = '/login/';
 });
 
+// Load financial summary from API
 async function loadSummary() {
     try {
         const response = await fetch('/api/summary/', {
