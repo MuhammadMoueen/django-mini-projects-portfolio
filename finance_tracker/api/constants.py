@@ -8,6 +8,7 @@ CATEGORY_TYPES = [
     (EXPENSE_TYPE, 'Expense'),
 ]
 
+# Default categories for new users - Income
 DEFAULT_INCOME_CATEGORIES = [
     'Salary',
     'Freelance',
@@ -17,6 +18,7 @@ DEFAULT_INCOME_CATEGORIES = [
     'Other Income'
 ]
 
+# Default categories for new users - Expense
 DEFAULT_EXPENSE_CATEGORIES = [
     'Food',
     'Transport',
