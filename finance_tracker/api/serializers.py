@@ -52,6 +52,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'first_name', 'last_name']
 
 class CategorySerializer(serializers.ModelSerializer):
+    """
+    Serializer for category management.
+    """
     class Meta:
         model = Category
         fields = ['id', 'name', 'category_type', 'created_at']
@@ -62,6 +65,9 @@ class CategorySerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class IncomeSerializer(serializers.ModelSerializer):
+    """
+    Serializer for income transactions with validation.
+    """
     category_name = serializers.CharField(source='category.name', read_only=True)
     
     class Meta:
