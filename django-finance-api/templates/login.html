@@ -4,31 +4,50 @@
 
 {% block content %}
 <div class="auth-container">
+    <div class="auth-background">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+    
     <div class="auth-card">
-        <div class="logo" style="text-align: center; margin-bottom: 30px;">
-            Finance<span>Tracker</span>
+        <div class="auth-header">
+            <div class="logo-animated">
+                <span class="logo-icon">💰</span>
+                <h1>Finance<span>Tracker</span></h1>
+            </div>
+            <h2 class="auth-title">WELCOME BACK!</h2>
+            <p class="auth-subtitle">Please login to your account</p>
         </div>
-        <h2 class="auth-title">Welcome Back</h2>
         
-        <form id="loginForm">
+        <form id="loginForm" class="auth-form">
             <div class="form-group">
-                <label class="form-label">Username</label>
-                <input type="text" name="username" class="form-control" required>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" name="username" class="form-control" placeholder="Username" required>
+                </div>
             </div>
             
             <div class="form-group">
-                <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                </div>
             </div>
             
-            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
-                Login
+            <div class="form-footer">
+                <a href="#" class="forgot-link">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" class="btn btn-submit">
+                <span class="btn-text">Submit</span>
+                <span class="btn-arrow">→</span>
             </button>
         </form>
         
-        <p style="text-align: center; margin-top: 20px; color: var(--gray-600);">
-            Don't have an account? <a href="/signup/" style="color: var(--black); font-weight: 600;">Sign Up</a>
-        </p>
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="/signup/" class="signup-link">SignUp</a></p>
+        </div>
     </div>
 </div>
 

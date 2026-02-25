@@ -5,37 +5,73 @@
 {% block content %}
 <div class="navbar">
     <div class="navbar-content">
-        <div class="logo">Finance<span>Tracker</span></div>
+        <div class="logo">
+            <span class="logo-icon">💰</span>
+            Finance<span>Tracker</span>
+        </div>
         <ul class="nav-links">
-            <li><a href="#" id="userInfo"></a></li>
+            <li><a href="#" id="userInfo">👤 User</a></li>
             <li><a href="#" id="logoutBtn">Logout</a></li>
         </ul>
     </div>
 </div>
 
-<div class="container" style="padding-top: 40px;">
+<div class="container dashboard-container">
+    <h1 class="dashboard-welcome">Dashboard Overview</h1>
+    
     <div class="dashboard-grid">
-        <div class="stat-card">
+        <div class="stat-card income-card">
+            <div class="stat-icon">📈</div>
             <div class="stat-label">Total Income</div>
             <div class="stat-value" id="totalIncome">$0.00</div>
+            <div class="stat-trend">+0% from last month</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card expense-card">
+            <div class="stat-icon">📉</div>
             <div class="stat-label">Total Expense</div>
             <div class="stat-value" id="totalExpense">$0.00</div>
+            <div class="stat-trend">+0% from last month</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card balance-card">
+            <div class="stat-icon">💰</div>
             <div class="stat-label">Current Balance</div>
             <div class="stat-value" id="balance">$0.00</div>
+            <div class="stat-trend">Net savings</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-grid">
+        <div class="card chart-card">
+            <h3 class="chart-title">
+                <span class="chart-icon">📊</span>
+                Income vs Expense
+            </h3>
+            <canvas id="incomeExpenseChart"></canvas>
+        </div>
+        
+        <div class="card chart-card">
+            <h3 class="chart-title">
+                <span class="chart-icon">🥧</span>
+                Expense by Category
+            </h3>
+            <canvas id="categoryChart"></canvas>
         </div>
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-top: 40px;">
-        <div class="card">
-            <h3 style="margin-bottom: 20px;">Add Income</h3>
-            <form id="incomeForm">
+        <div class="card form-card">
+            <h3 class="form-card-title">
+                <span class="form-icon">💵</span>
+                Add Income
+            </h3>
+            <form id="incomeForm" class="dashboard-form">
                 <div class="form-group">
                     <label class="form-label">Amount</label>
-                    <input type="number" name="amount" class="form-control" step="0.01" required>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" name="amount" class="form-control" step="0.01" placeholder="0.00" required>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Date</label>
@@ -49,18 +85,27 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Notes</label>
-                    <textarea name="notes" class="form-control" rows="2"></textarea>
+                    <textarea name="notes" class="form-control" rows="2" placeholder="Add a note..."></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Income</button>
+                <button type="submit" class="btn btn-submit">
+                    <span class="btn-text">Add Income</span>
+                    <span class="btn-icon">+</span>
+                </button>
             </form>
         </div>
 
-        <div class="card">
-            <h3 style="margin-bottom: 20px;">Add Expense</h3>
-            <form id="expenseForm">
+        <div class="card form-card">
+            <h3 class="form-card-title">
+                <span class="form-icon">💳</span>
+                Add Expense
+            </h3>
+            <form id="expenseForm" class="dashboard-form">
                 <div class="form-group">
                     <label class="form-label">Amount</label>
-                    <input type="number" name="amount" class="form-control" step="0.01" required>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" name="amount" class="form-control" step="0.01" placeholder="0.00" required>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Date</label>
@@ -74,19 +119,31 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Notes</label>
-                    <textarea name="notes" class="form-control" rows="2"></textarea>
+                    <textarea name="notes" class="form-control" rows="2" placeholder="Add a note..."></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Expense</button>
+                <button type="submit" class="btn btn-submit">
+                    <span class="btn-text">Add Expense</span>
+                    <span class="btn-icon">+</span>
+                </button>
             </form>
         </div>
     </div>
 
-    <div class="card" style="margin-top: 40px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3>Recent Transactions</h3>
-            <div>
-                <button class="btn btn-secondary" onclick="showTab('income')" id="incomeTab">Income</button>
-                <button class="btn btn-secondary" onclick="showTab('expense')" id="expenseTab">Expense</button>
+    <div class="card transactions-card" style="margin-top: 40px;">
+        <div class="transactions-header">
+            <h3 class="transactions-title">
+                <span class="transactions-icon">📋</span>
+                Recent Transactions
+            </h3>
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="showTab('income')" id="incomeTab">
+                    <span class="tab-icon">📈</span>
+                    Income
+                </button>
+                <button class="tab-btn" onclick="showTab('expense')" id="expenseTab">
+                    <span class="tab-icon">📉</span>
+                    Expense
+                </button>
             </div>
         </div>
         
@@ -126,5 +183,6 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/static/js/dashboard.js"></script>
 {% endblock %}

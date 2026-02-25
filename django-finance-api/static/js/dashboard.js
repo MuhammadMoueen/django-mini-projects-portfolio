@@ -28,6 +28,10 @@ document.getElementById('logoutBtn').addEventListener('click', async function(e)
     window.location.href = '/login/';
 });
 
+// Chart instances
+let incomeExpenseChart = null;
+let categoryChart = null;
+
 // Load financial summary from API
 async function loadSummary() {
     try {
@@ -39,8 +43,191 @@ async function loadSummary() {
         document.getElementById('totalIncome').textContent = formatCurrency(data.total_income);
         document.getElementById('totalExpense').textContent = formatCurrency(data.total_expense);
         document.getElementById('balance').textContent = formatCurrency(data.balance);
+        
+        // Update charts with new data
+        updateCharts(data);
     } catch (error) {
         console.error('Error loading summary:', error);
+    }
+}
+
+// Initialize and update charts
+async function updateCharts(summaryData) {
+    try {
+        // Income vs Expense Chart
+        if (incomeExpenseChart) {
+            incomeExpenseChart.destroy();
+        }
+        
+        const ctx1 = document.getElementById('incomeExpenseChart').getContext('2d');
+        incomeExpenseChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Income', 'Expense'],
+                datasets: [{
+                    label: 'Amount ($)',
+                    data: [summaryData.total_income, summaryData.total_expense],
+                    backgroundColor: [
+                        'rgba(0, 255, 136, 0.6)',
+                        'rgba(255, 0, 110, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 255, 136, 1)',
+                        'rgba(255, 0, 110, 1)'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(26, 26, 46, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: 'rgba(108, 99, 255, 0.5)',
+                        borderWidth: 1,
+                        padding: 12,
+                        displayColors: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(108, 99, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#e8e8e8',
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#e8e8e8',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Category Expense Chart
+        await updateCategoryChart();
+        
+    } catch (error) {
+        console.error('Error updating charts:', error);
+    }
+}
+
+async function updateCategoryChart() {
+    try {
+        const response = await fetch('/api/category-report/', {
+            headers: apiHeaders
+        });
+        const categoryData = await response.json();
+        
+        if (categoryChart) {
+            categoryChart.destroy();
+        }
+        
+        // Filter out categories with zero amounts and limit to top 6
+        const filteredData = categoryData
+            .filter(item => item.total_amount > 0)
+            .sort((a, b) => b.total_amount - a.total_amount)
+            .slice(0, 6);
+        
+        const labels = filteredData.map(item => item.category__name);
+        const amounts = filteredData.map(item => item.total_amount);
+        
+        // Generate vibrant colors
+        const colors = [
+            'rgba(108, 99, 255, 0.8)',
+            'rgba(0, 212, 255, 0.8)',
+            'rgba(255, 0, 110, 0.8)',
+            'rgba(0, 255, 136, 0.8)',
+            'rgba(255, 136, 0, 0.8)',
+            'rgba(255, 0, 255, 0.8)'
+        ];
+        
+        const ctx2 = document.getElementById('categoryChart').getContext('2d');
+        categoryChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: labels.length > 0 ? labels : ['No Data'],
+                datasets: [{
+                    data: amounts.length > 0 ? amounts : [1],
+                    backgroundColor: colors,
+                    borderColor: 'rgba(26, 26, 46, 1)',
+                    borderWidth: 3,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#e8e8e8',
+                            padding: 15,
+                            font: {
+                                size: 12
+                            },
+                            generateLabels: function(chart) {
+                                const data = chart.data;
+                                if (data.labels.length && data.datasets.length) {
+                                    return data.labels.map((label, i) => {
+                                        const value = data.datasets[0].data[i];
+                                        return {
+                                            text: `${label}: $${value.toLocaleString()}`,
+                                            fillStyle: data.datasets[0].backgroundColor[i],
+                                            hidden: false,
+                                            index: i
+                                        };
+                                    });
+                                }
+                                return [];
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(26, 26, 46, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: 'rgba(108, 99, 255, 0.5)',
+                        borderWidth: 1,
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return `${label}: $${value.toLocaleString()} (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+    } catch (error) {
+        console.error('Error loading category chart:', error);
     }
 }
 
@@ -166,8 +353,7 @@ async function loadIncomes() {
                 <td>${income.category_name || 'N/A'}</td>
                 <td>${income.notes || '-'}</td>
                 <td>
-                    <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 14px;" 
-                            onclick="deleteIncome(${income.id})">Delete</button>
+                    <button class="btn btn-danger" onclick="deleteIncome(${income.id})">Delete</button>
                 </td>
             `;
         });
@@ -194,8 +380,7 @@ async function loadExpenses() {
                 <td>${expense.category_name || 'N/A'}</td>
                 <td>${expense.notes || '-'}</td>
                 <td>
-                    <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 14px;" 
-                            onclick="deleteExpense(${expense.id})">Delete</button>
+                    <button class="btn btn-danger" onclick="deleteExpense(${expense.id})">Delete</button>
                 </td>
             `;
         });
@@ -246,10 +431,16 @@ function showTab(tab) {
     document.getElementById('incomeList').style.display = tab === 'income' ? 'block' : 'none';
     document.getElementById('expenseList').style.display = tab === 'expense' ? 'block' : 'none';
     
-    document.getElementById('incomeTab').style.background = tab === 'income' ? 'var(--black)' : 'var(--white)';
-    document.getElementById('incomeTab').style.color = tab === 'income' ? 'var(--white)' : 'var(--black)';
-    document.getElementById('expenseTab').style.background = tab === 'expense' ? 'var(--black)' : 'var(--white)';
-    document.getElementById('expenseTab').style.color = tab === 'expense' ? 'var(--white)' : 'var(--black)';
+    const incomeTab = document.getElementById('incomeTab');
+    const expenseTab = document.getElementById('expenseTab');
+    
+    if (tab === 'income') {
+        incomeTab.classList.add('active');
+        expenseTab.classList.remove('active');
+    } else {
+        expenseTab.classList.add('active');
+        incomeTab.classList.remove('active');
+    }
 }
 
 loadSummary();
