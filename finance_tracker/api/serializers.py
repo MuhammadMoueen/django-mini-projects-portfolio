@@ -92,6 +92,9 @@ class IncomeSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class ExpenseSerializer(serializers.ModelSerializer):
+    """
+    Serializer for expense transactions with validation.
+    """
     category_name = serializers.CharField(source='category.name', read_only=True)
     
     class Meta:
