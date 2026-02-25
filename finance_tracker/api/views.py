@@ -98,6 +98,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return queryset
 
 class IncomeViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing income transactions.
+    Provides filtering by category and date range.
+    """
     serializer_class = IncomeSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
