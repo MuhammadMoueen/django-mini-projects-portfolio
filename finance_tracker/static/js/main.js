@@ -1,6 +1,10 @@
+// Global utility functions for Finance Tracker
+
+// DOM ready handler
 document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('form');
     
+    // Add loading state to form submissions
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
             const submitBtn = this.querySelector('button[type="submit"]');
@@ -11,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Auto-dismiss alerts after 5 seconds
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(alert => {
         setTimeout(() => {
@@ -20,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Display alert message to user
 function showAlert(message, type = 'success') {
     const alert = document.createElement('div');
     alert.className = `alert alert-${type}`;
