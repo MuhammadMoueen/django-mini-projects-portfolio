@@ -2,7 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from .constants import INCOME_TYPE, EXPENSE_TYPE, CATEGORY_TYPES, MAX_AMOUNT
 
+
 class Category(models.Model):
+    """
+    Category model for organizing income and expense transactions.
+    Each user can create their own categories for better financial organization.
+    """
     INCOME = INCOME_TYPE
     EXPENSE = EXPENSE_TYPE
     
