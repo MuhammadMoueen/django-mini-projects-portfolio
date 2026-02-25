@@ -38,6 +38,7 @@ function showAlert(message, type = 'success') {
     }, 5000);
 }
 
+// Format number as USD currency
 function formatCurrency(amount) {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -45,6 +46,7 @@ function formatCurrency(amount) {
     }).format(amount);
 }
 
+// Format ISO date string to readable format
 function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
