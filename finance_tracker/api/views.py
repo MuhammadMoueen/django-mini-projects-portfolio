@@ -154,6 +154,10 @@ class ExpenseViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def financial_summary(request):
+    """
+    Calculate and return overall financial summary.
+    Returns total income, total expense, and current balance.
+    """
     user = request.user
     
     total_income = Income.objects.filter(user=user).aggregate(total=Sum('amount'))['total'] or 0
