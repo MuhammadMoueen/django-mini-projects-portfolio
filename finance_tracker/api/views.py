@@ -64,12 +64,18 @@ def login(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout(request):
+    """
+    Logout user by deleting their authentication token.
+    """
     request.user.auth_token.delete()
     return Response({'message': 'Successfully logged out'})
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def profile(request):
+    """
+    Get current user's profile information.
+    """
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
 
