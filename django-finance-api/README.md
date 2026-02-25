@@ -26,7 +26,7 @@ A professional finance tracking system built with Django REST Framework featurin
 1. Clone the repository
 ```bash
 git clone <repository-url>
-cd finance_tracker
+cd django-finance-api
 ```
 
 2. Create virtual environment
@@ -94,7 +94,7 @@ python manage.py runserver
 ## Project Structure
 
 ```
-finance_tracker/
+django-finance-api/
 ├── api/                      # Main API application
 │   ├── models.py            # Database models
 │   ├── serializers.py       # API serializers
