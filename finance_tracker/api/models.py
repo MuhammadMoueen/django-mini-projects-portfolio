@@ -47,6 +47,10 @@ class Income(models.Model):
         return f"{self.amount} on {self.date}"
 
 class Expense(models.Model):
+    """
+    Expense model to track all expense transactions.
+    Supports categorization and detailed notes for spending analysis.
+    """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expenses')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='expenses')
     amount = models.DecimalField(max_digits=12, decimal_places=2)
