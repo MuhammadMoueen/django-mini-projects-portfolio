@@ -30,5 +30,6 @@ DEFAULT_EXPENSE_CATEGORIES = [
     'Other Expense'
 ]
 
-MAX_AMOUNT = 999999999999.99
-MIN_AMOUNT = 0.01
+# Maximum and minimum amount validation limits
+MAX_AMOUNT = 999999999999.99  # Maximum transaction amount
+MIN_AMOUNT = 0.01  # Minimum transaction amount
