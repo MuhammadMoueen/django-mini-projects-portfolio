@@ -125,6 +125,10 @@ class IncomeViewSet(viewsets.ModelViewSet):
         return queryset
 
 class ExpenseViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing expense transactions.
+    Provides filtering by category and date range.
+    """
     serializer_class = ExpenseSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
