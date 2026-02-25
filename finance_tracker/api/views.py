@@ -16,6 +16,9 @@ from .serializers import (
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
+    """
+    Register a new user and return authentication token.
+    """
     serializer = UserRegistrationSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
