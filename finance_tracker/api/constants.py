@@ -1,6 +1,8 @@
+# Category type constants
 INCOME_TYPE = 'income'
 EXPENSE_TYPE = 'expense'
 
+# Available category types for the system
 CATEGORY_TYPES = [
     (INCOME_TYPE, 'Income'),
     (EXPENSE_TYPE, 'Expense'),
