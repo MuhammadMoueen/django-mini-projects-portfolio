@@ -3,7 +3,11 @@ from django.core.validators import EmailValidator
 from rest_framework import serializers
 from .models import Category, Income, Expense
 
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    """
+    Serializer for user registration with password validation.
+    """
     password = serializers.CharField(write_only=True, min_length=8)
     password2 = serializers.CharField(write_only=True, min_length=8)
     email = serializers.EmailField(required=True, validators=[EmailValidator()])
