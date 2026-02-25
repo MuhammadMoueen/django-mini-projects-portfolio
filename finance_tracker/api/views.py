@@ -80,6 +80,10 @@ def profile(request):
     return Response(serializer.data)
 
 class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing income and expense categories.
+    Supports full CRUD operations with search and filtering.
+    """
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
