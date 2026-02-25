@@ -1,6 +1,6 @@
-# Finance Tracker
+# Finance Tracker API System
 
-A professional finance tracking system built with Django REST Framework featuring a modern Black & White UI theme with smooth animations.
+A professional finance tracking system built with Django REST Framework featuring a modern Black & White UI theme with smooth animations. Track your income, expenses, and financial goals with an intuitive interface and powerful API.
 
 ## Features
 
