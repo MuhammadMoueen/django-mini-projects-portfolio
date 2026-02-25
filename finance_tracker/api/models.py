@@ -27,6 +27,10 @@ class Category(models.Model):
         return f"{self.name} ({self.category_type})"
 
 class Income(models.Model):
+    """
+    Income model to track all income transactions.
+    Links to user and optional category for detailed financial tracking.
+    """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='incomes')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='incomes')
     amount = models.DecimalField(max_digits=12, decimal_places=2)
