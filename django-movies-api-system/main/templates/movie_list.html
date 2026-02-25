@@ -4,6 +4,7 @@
 {% block title %}Movies - Movies Database{% endblock %}
 
 {% block content %}
+{% csrf_token %}
 <div class="movies-header">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">

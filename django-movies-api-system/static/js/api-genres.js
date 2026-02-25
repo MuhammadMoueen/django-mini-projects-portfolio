@@ -57,9 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         <a href="/genres/edit/${genre.id}/" class="btn btn-sm btn-info flex-fill">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <a href="/genres/delete/${genre.id}/" class="btn btn-sm btn-danger flex-fill">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                        <form method="POST" action="/genres/delete/${genre.id}/" style="display: inline; flex: 1;">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${getCSRFToken()}">
+                            <button type="submit" class="btn btn-sm btn-danger w-100" onclick="return confirm('Are you sure you want to delete this genre?');">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -110,6 +113,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const cardsContainer = document.getElementById('cards-container');
         if (cardsContainer) cardsContainer.style.display = 'none';
         if (noDataElement) noDataElement.style.display = 'block';
+    }
+    
+    function getCSRFToken() {
+        // Get CSRF token from cookie
+        const name = 'csrftoken';
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue || '';
     }
     
     window.loadGenres = loadGenres;

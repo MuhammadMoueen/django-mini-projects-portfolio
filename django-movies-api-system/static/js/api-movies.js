@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </a>
                         <form method="POST" action="/movies/delete/${movie.id}/" class="delete-form">
                             <input type="hidden" name="csrfmiddlewaretoken" value="${getCSRFToken()}">
-                            <button type="submit" class="btn-delete w-100">
+                            <button type="submit" class="btn-delete w-100" onclick="return confirm('Are you sure you want to delete this movie?');">
                                 <i class="fas fa-trash-alt"></i> Delete
                             </button>
                         </form>
@@ -190,8 +190,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function getCSRFToken() {
-        const token = document.querySelector('[name=csrfmiddlewaretoken]');
-        return token ? token.value : '';
+        // Get CSRF token from cookie
+        const name = 'csrftoken';
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue || '';
     }
     
     if (searchInput) {

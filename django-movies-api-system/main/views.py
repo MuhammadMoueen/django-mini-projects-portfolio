@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
+from django.views.decorators.http import require_http_methods
 from .models import Actor, Director, Genre, Language, Movie
 from .forms import ActorForm, DirectorForm, GenreForm, LanguageForm, MovieForm
 
@@ -57,6 +58,7 @@ def actor_edit(request, actor_id):
     return render(request, 'model_form.html', context)
 
 
+@require_http_methods(["POST"])
 def actor_delete(request, actor_id):
     actor = get_object_or_404(Actor, id=actor_id)
     actor_name = f"{actor.first_name} {actor.last_name}"
@@ -113,6 +115,7 @@ def director_edit(request, director_id):
     return render(request, 'model_form.html', context)
 
 
+@require_http_methods(["POST"])
 def director_delete(request, director_id):
     director = get_object_or_404(Director, id=director_id)
     director_name = f"{director.first_name} {director.last_name}"
@@ -169,6 +172,7 @@ def language_edit(request, language_id):
     return render(request, 'model_form.html', context)
 
 
+@require_http_methods(["POST"])
 def language_delete(request, language_id):
     language = get_object_or_404(Language, id=language_id)
     language_name = language.name
@@ -225,6 +229,7 @@ def genre_edit(request, genre_id):
     return render(request, 'model_form.html', context)
 
 
+@require_http_methods(["POST"])
 def genre_delete(request, genre_id):
     genre = get_object_or_404(Genre, id=genre_id)
     genre_name = genre.name
@@ -281,10 +286,10 @@ def movie_edit(request, movie_id):
     return render(request, 'model_form.html', context)
 
 
+@require_http_methods(["POST"])
 def movie_delete(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     movie_title = movie.title
     movie.delete()
     messages.success(request, f'Movie "{movie_title}" deleted successfully!')
-    return redirect('movie_list')
     return redirect('movie_list')

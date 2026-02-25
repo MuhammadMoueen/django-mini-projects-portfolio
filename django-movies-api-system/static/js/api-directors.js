@@ -57,9 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a href="/directors/edit/${director.id}/" class="btn btn-sm btn-info">
                     <i class="fas fa-edit"></i> Edit
                 </a>
-                <a href="/directors/delete/${director.id}/" class="btn btn-sm btn-danger">
-                    <i class="fas fa-trash"></i> Delete
-                </a>
+                <form method="POST" action="/directors/delete/${director.id}/" style="display: inline;">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="${getCSRFToken()}">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this director?');">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </form>
             </td>
         `;
         
@@ -108,6 +111,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const tableContainer = document.getElementById('table-container');
         if (tableContainer) tableContainer.style.display = 'none';
         if (noDataElement) noDataElement.style.display = 'block';
+    }
+    
+    function getCSRFToken() {
+        // Get CSRF token from cookie
+        const name = 'csrftoken';
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue || '';
     }
     
     window.loadDirectors = loadDirectors;
