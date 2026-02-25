@@ -56,6 +56,7 @@ function formatDate(dateString) {
     });
 }
 
+// Handle API errors and display user-friendly messages
 function handleApiError(error) {
     console.error('API Error:', error);
     let message = 'An error occurred. Please try again.';
@@ -67,6 +68,7 @@ function handleApiError(error) {
     showAlert(message, 'error');
 }
 
+// Debounce function to limit function calls
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -79,6 +81,7 @@ function debounce(func, wait) {
     };
 }
 
+// Validate numeric input
 function validateNumber(value, min = 0) {
     const num = parseFloat(value);
     return !isNaN(num) && num > min;
