@@ -210,6 +210,10 @@ def monthly_report(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def category_report(request):
+    """
+    Generate category-wise breakdown of income and expenses.
+    Useful for analyzing spending patterns by category.
+    """
     user = request.user
     
     income_by_category = Income.objects.filter(user=user).values(
