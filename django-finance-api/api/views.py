@@ -16,9 +16,6 @@ from .serializers import (
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
-    """
-    Register a new user and return authentication token.
-    """
     serializer = UserRegistrationSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
@@ -36,9 +33,6 @@ def register(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
-    """
-    Authenticate user and return authentication token.
-    """
     serializer = UserLoginSerializer(data=request.data)
     if serializer.is_valid():
         username = serializer.validated_data['username']
@@ -64,18 +58,12 @@ def login(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout(request):
-    """
-    Logout user by deleting their authentication token.
-    """
     request.user.auth_token.delete()
     return Response({'message': 'Successfully logged out'})
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def profile(request):
-    """
-    Get current user's profile information including extended profile data.
-    """
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     serializer = UserProfileSerializer(user_profile, context={'request': request})
     return Response(serializer.data)
@@ -83,11 +71,13 @@ def profile(request):
 @api_view(['PATCH', 'PUT'])
 @permission_classes([IsAuthenticated])
 def update_profile(request):
-    """
-    Update user profile information including profile picture.
-    """
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-    serializer = UserProfileSerializer(user_profile, data=request.data, partial=True, context={'request': request})
+    serializer = UserProfileSerializer(
+        user_profile, 
+        data=request.data, 
+        partial=True, 
+        context={'request': request}
+    )
     
     if serializer.is_valid():
         serializer.save()
@@ -97,23 +87,26 @@ def update_profile(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def change_password(request):
-    """
-    Change user password with validation.
-    """
     old_password = request.data.get('old_password')
     new_password = request.data.get('new_password')
     
     if not old_password or not new_password:
-        return Response({'error': 'Both old and new passwords are required'}, 
-                       status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {'error': 'Both old and new passwords are required'}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
     
     if not request.user.check_password(old_password):
-        return Response({'error': 'Current password is incorrect'}, 
-                       status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {'error': 'Current password is incorrect'}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
     
     if len(new_password) < 8:
-        return Response({'error': 'New password must be at least 8 characters long'}, 
-                       status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {'error': 'New password must be at least 8 characters long'}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
     
     request.user.set_password(new_password)
     request.user.save()
@@ -121,10 +114,6 @@ def change_password(request):
     return Response({'message': 'Password changed successfully'})
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for managing income and expense categories.
-    Supports full CRUD operations with search and filtering.
-    """
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
@@ -139,10 +128,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return queryset
 
 class IncomeViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for managing income transactions.
-    Provides filtering by category and date range.
-    """
     serializer_class = IncomeSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
@@ -166,10 +151,6 @@ class IncomeViewSet(viewsets.ModelViewSet):
         return queryset
 
 class ExpenseViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for managing expense transactions.
-    Provides filtering by category and date range.
-    """
     serializer_class = ExpenseSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
@@ -195,10 +176,6 @@ class ExpenseViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def financial_summary(request):
-    """
-    Calculate and return overall financial summary.
-    Returns total income, total expense, and current balance.
-    """
     user = request.user
     
     total_income = Income.objects.filter(user=user).aggregate(total=Sum('amount'))['total'] or 0
@@ -214,10 +191,6 @@ def financial_summary(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def monthly_report(request):
-    """
-    Generate financial report for a specific month.
-    Returns income, expense, and net for the specified month.
-    """
     user = request.user
     year = int(request.GET.get('year', datetime.now().year))
     month = int(request.GET.get('month', datetime.now().month))
@@ -251,18 +224,12 @@ def monthly_report(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def category_report(request):
-    """
-    Generate category-wise breakdown of expenses for chart display.
-    Returns expense data grouped by category.
-    """
     user = request.user
     
-    # Get expense breakdown by category for pie chart
     expense_by_category = Expense.objects.filter(user=user).values(
         'category__name'
     ).annotate(total_amount=Sum('amount')).order_by('-total_amount')
     
-    # Return as list for chart
     return Response(list(expense_by_category))
 
 def login_page(request):
@@ -282,6 +249,3 @@ def edit_profile_page(request):
 
 def change_password_page(request):
     return render(request, 'change_password.html')
-
-
-
