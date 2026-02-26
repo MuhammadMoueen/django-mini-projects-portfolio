@@ -230,6 +230,12 @@ function closeCropperModal() {
 async function cropAndUpload() {
     if (!cropper) return;
     
+    // Show loading state
+    const uploadBtn = document.querySelector('.modal-footer .btn-submit');
+    const originalBtnText = uploadBtn.innerHTML;
+    uploadBtn.innerHTML = '<span class="btn-text">Uploading...</span> ⏳';
+    uploadBtn.disabled = true;
+    
     cropper.getCroppedCanvas({
         width: 400,
         height: 400,
@@ -259,11 +265,17 @@ async function cropAndUpload() {
                 closeCropperModal();
                 showAlert('Profile picture updated successfully!', 'success');
             } else {
-                showAlert('Error uploading picture', 'error');
+                const errorData = await response.json();
+                console.error('Upload failed:', errorData);
+                showAlert(errorData.profile_picture ? errorData.profile_picture[0] : 'Error uploading picture', 'error');
             }
         } catch (error) {
             console.error('Upload error:', error);
             showAlert('Network error', 'error');
+        } finally {
+            // Reset button state
+            uploadBtn.innerHTML = originalBtnText;
+            uploadBtn.disabled = false;
         }
     }, 'image/jpeg', 0.9);
 }
