@@ -137,6 +137,8 @@ document.getElementById('addIncomeCategoryForm').addEventListener('submit', asyn
     
     const submitBtn = this.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="btn-text">Adding...</span> ⏳';
+    submitBtn.disabled = true;
     
     const formData = new FormData(this);
     const name = formData.get('name').trim();
@@ -164,11 +166,19 @@ document.getElementById('addIncomeCategoryForm').addEventListener('submit', asyn
             loadCategories();
         } else {
             const error = await response.json();
-            showAlert(error.name ? error.name[0] : 'Error adding category', 'error');
+            let errorMsg = 'Error adding category';
+            if (error.name) {
+                errorMsg = Array.isArray(error.name) ? error.name[0] : error.name;
+            } else if (error.non_field_errors) {
+                errorMsg = Array.isArray(error.non_field_errors) ? error.non_field_errors[0] : error.non_field_errors;
+            } else if (error.detail) {
+                errorMsg = error.detail;
+            }
+            showAlert(errorMsg, 'error');
         }
     } catch (error) {
         console.error('Error adding income category:', error);
-        showAlert('Error adding category', 'error');
+        showAlert('Network error. Please try again.', 'error');
     } finally {
         submitBtn.innerHTML = originalBtnText;
         submitBtn.disabled = false;
@@ -181,6 +191,8 @@ document.getElementById('addExpenseCategoryForm').addEventListener('submit', asy
     
     const submitBtn = this.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="btn-text">Adding...</span> ⏳';
+    submitBtn.disabled = true;
     
     const formData = new FormData(this);
     const name = formData.get('name').trim();
@@ -208,11 +220,19 @@ document.getElementById('addExpenseCategoryForm').addEventListener('submit', asy
             loadCategories();
         } else {
             const error = await response.json();
-            showAlert(error.name ? error.name[0] : 'Error adding category', 'error');
+            let errorMsg = 'Error adding category';
+            if (error.name) {
+                errorMsg = Array.isArray(error.name) ? error.name[0] : error.name;
+            } else if (error.non_field_errors) {
+                errorMsg = Array.isArray(error.non_field_errors) ? error.non_field_errors[0] : error.non_field_errors;
+            } else if (error.detail) {
+                errorMsg = error.detail;
+            }
+            showAlert(errorMsg, 'error');
         }
     } catch (error) {
         console.error('Error adding expense category:', error);
-        showAlert('Error adding category', 'error');
+        showAlert('Network error. Please try again.', 'error');
     } finally {
         submitBtn.innerHTML = originalBtnText;
         submitBtn.disabled = false;
@@ -246,6 +266,8 @@ document.getElementById('editCategoryForm').addEventListener('submit', async fun
     
     const submitBtn = this.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="btn-text">Saving...</span> ⏳';
+    submitBtn.disabled = true;
     
     const id = document.getElementById('editCategoryId').value;
     const name = document.getElementById('editCategoryName').value.trim();
@@ -274,11 +296,19 @@ document.getElementById('editCategoryForm').addEventListener('submit', async fun
             loadCategories();
         } else {
             const error = await response.json();
-            showAlert(error.name ? error.name[0] : 'Error updating category', 'error');
+            let errorMsg = 'Error updating category';
+            if (error.name) {
+                errorMsg = Array.isArray(error.name) ? error.name[0] : error.name;
+            } else if (error.non_field_errors) {
+                errorMsg = Array.isArray(error.non_field_errors) ? error.non_field_errors[0] : error.non_field_errors;
+            } else if (error.detail) {
+                errorMsg = error.detail;
+            }
+            showAlert(errorMsg, 'error');
         }
     } catch (error) {
         console.error('Error updating category:', error);
-        showAlert('Error updating category', 'error');
+        showAlert('Network error. Please try again.', 'error');
     } finally {
         submitBtn.innerHTML = originalBtnText;
         submitBtn.disabled = false;
