@@ -116,11 +116,16 @@ function displayCategories(containerId, categories, type) {
 document.getElementById('addIncomeCategoryForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    
     const formData = new FormData(this);
     const name = formData.get('name').trim();
     
     if (!name) {
         showAlert('Please enter a category name', 'error');
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
         return;
     }
     
@@ -145,6 +150,9 @@ document.getElementById('addIncomeCategoryForm').addEventListener('submit', asyn
     } catch (error) {
         console.error('Error adding income category:', error);
         showAlert('Error adding category', 'error');
+    } finally {
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
     }
 });
 
@@ -152,11 +160,16 @@ document.getElementById('addIncomeCategoryForm').addEventListener('submit', asyn
 document.getElementById('addExpenseCategoryForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    
     const formData = new FormData(this);
     const name = formData.get('name').trim();
     
     if (!name) {
         showAlert('Please enter a category name', 'error');
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
         return;
     }
     
@@ -181,6 +194,9 @@ document.getElementById('addExpenseCategoryForm').addEventListener('submit', asy
     } catch (error) {
         console.error('Error adding expense category:', error);
         showAlert('Error adding category', 'error');
+    } finally {
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
     }
 });
 
@@ -209,12 +225,17 @@ window.addEventListener('click', function(e) {
 document.getElementById('editCategoryForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    
     const id = document.getElementById('editCategoryId').value;
     const name = document.getElementById('editCategoryName').value.trim();
     const type = document.getElementById('editCategoryType').value;
     
     if (!name) {
         showAlert('Please enter a category name', 'error');
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
         return;
     }
     
@@ -239,6 +260,9 @@ document.getElementById('editCategoryForm').addEventListener('submit', async fun
     } catch (error) {
         console.error('Error updating category:', error);
         showAlert('Error updating category', 'error');
+    } finally {
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
     }
 });
 
