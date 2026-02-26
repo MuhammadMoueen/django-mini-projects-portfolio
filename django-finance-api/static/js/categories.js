@@ -21,7 +21,7 @@ async function loadProfilePic() {
             headers: apiHeaders
         });
         const data = await response.json();
-        const profilePicUrl = data.profile_picture || '/static/images/default-avatar.svg';
+        const profilePicUrl = data.profile_picture_url || '/static/images/default-avatar.svg';
         document.getElementById('navProfilePic').src = profilePicUrl;
         
         // Set display name (full name if available, otherwise username)

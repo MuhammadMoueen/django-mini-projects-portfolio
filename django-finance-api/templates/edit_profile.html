@@ -179,7 +179,7 @@ async function loadProfile() {
         document.getElementById('bio').value = data.bio || '';
         
         // Set profile picture
-        const profilePicUrl = data.profile_picture || '/static/images/default-avatar.svg';
+        const profilePicUrl = data.profile_picture_url || '/static/images/default-avatar.svg';
         document.getElementById('profilePicPreview').src = profilePicUrl;
         document.getElementById('navProfilePic').src = profilePicUrl;
         
@@ -250,7 +250,7 @@ async function cropAndUpload() {
             
             if (response.ok) {
                 const result = await response.json();
-                const newPicUrl = result.profile_picture || '/static/images/default-avatar.svg';
+                const newPicUrl = result.profile_picture_url || '/static/images/default-avatar.svg';
                 
                 // Update both preview and navbar
                 document.getElementById('profilePicPreview').src = newPicUrl + '?t=' + Date.now();

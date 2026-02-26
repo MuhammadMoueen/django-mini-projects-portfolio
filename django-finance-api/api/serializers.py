@@ -59,13 +59,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email')
     first_name = serializers.CharField(source='user.first_name', allow_blank=True)
     last_name = serializers.CharField(source='user.last_name', allow_blank=True)
-    profile_picture = serializers.SerializerMethodField()
+    profile_picture = serializers.ImageField(required=False, allow_null=True)
+    profile_picture_url = serializers.SerializerMethodField()
     
     class Meta:
         model = UserProfile
-        fields = ['username', 'email', 'first_name', 'last_name', 'profile_picture', 'bio', 'phone']
+        fields = ['username', 'email', 'first_name', 'last_name', 'profile_picture', 'profile_picture_url', 'bio', 'phone']
     
-    def get_profile_picture(self, obj):
+    def get_profile_picture_url(self, obj):
         if obj.profile_picture:
             request = self.context.get('request')
             if request:
@@ -89,10 +90,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         instance.bio = validated_data.get('bio', instance.bio)
         instance.phone = validated_data.get('phone', instance.phone)
         
-        # Handle profile picture from request.FILES
-        request = self.context.get('request')
-        if request and request.FILES.get('profile_picture'):
-            instance.profile_picture = request.FILES['profile_picture']
+        # Handle profile picture upload
+        if 'profile_picture' in validated_data:
+            instance.profile_picture = validated_data['profile_picture']
         
         instance.save()
         
