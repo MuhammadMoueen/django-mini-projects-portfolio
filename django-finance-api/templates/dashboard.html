@@ -24,10 +24,6 @@
                     <span class="dropdown-icon">📊</span>
                     Dashboard
                 </a>
-                <a href="/categories/" class="dropdown-item">
-                    <span class="dropdown-icon">📁</span>
-                    Categories
-                </a>
                 <a href="/edit-profile/" class="dropdown-item">
                     <span class="dropdown-icon">✏️</span>
                     Edit Profile
@@ -81,20 +77,30 @@
         </div>
         
         <div class="card chart-card">
-            <h3 class="chart-title">
-                <span class="chart-icon">🥧</span>
-                Expense by Category
-            </h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="chart-title" style="margin: 0;">
+                    <span class="chart-icon">🥧</span>
+                    Expense by Category
+                </h3>
+                <a href="/categories/" class="btn-link-small" title="Manage Categories">
+                    <span>📁</span>
+                </a>
+            </div>
             <canvas id="categoryChart"></canvas>
         </div>
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-top: 40px;">
         <div class="card form-card">
-            <h3 class="form-card-title">
-                <span class="form-icon">💵</span>
-                Add Income
-            </h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 class="form-card-title" style="margin: 0;">
+                    <span class="form-icon">💵</span>
+                    Add Income
+                </h3>
+                <a href="/categories/" class="btn-link-small" title="Manage Categories">
+                    <span>📁</span>
+                </a>
+            </div>
             <form id="incomeForm" class="dashboard-form">
                 <div class="form-group">
                     <label class="form-label">Amount</label>
@@ -125,10 +131,15 @@
         </div>
 
         <div class="card form-card">
-            <h3 class="form-card-title">
-                <span class="form-icon">💳</span>
-                Add Expense
-            </h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 class="form-card-title" style="margin: 0;">
+                    <span class="form-icon">💳</span>
+                    Add Expense
+                </h3>
+                <a href="/categories/" class="btn-link-small" title="Manage Categories">
+                    <span>📁</span>
+                </a>
+            </div>
             <form id="expenseForm" class="dashboard-form">
                 <div class="form-group">
                     <label class="form-label">Amount</label>
