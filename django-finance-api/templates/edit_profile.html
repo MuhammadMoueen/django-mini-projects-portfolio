@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Profile - Finance Tracker{% endblock %}
+
+{% block content %}
+<div class="navbar">
+    <div class="navbar-content">
+        <div class="logo">
+            <span class="logo-icon">💰</span>
+            Finance<span>Tracker</span>
+        </div>
+        <div class="profile-dropdown">
+            <button class="profile-btn" id="profileBtn">
+                <img src="" alt="Profile" id="navProfilePic" class="profile-pic-small">
+                <span id="navUsername">User</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="/dashboard/" class="dropdown-item">
+                    <span class="dropdown-icon">🏠</span>
+                    Home
+                </a>
+                <a href="/dashboard/" class="dropdown-item">
+                    <span class="dropdown-icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="/categories/" class="dropdown-item">
+                    <span class="dropdown-icon">📁</span>
+                    Categories
+                </a>
+                <a href="/edit-profile/" class="dropdown-item active">
+                    <span class="dropdown-icon">✏️</span>
+                    Edit Profile
+                </a>
+                <a href="/change-password/" class="dropdown-item">
+                    <span class="dropdown-icon">🔒</span>
+                    Change Password
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" id="logoutBtn" class="dropdown-item">
+                    <span class="dropdown-icon">🚪</span>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container dashboard-container">
+    <div class="profile-header">
+        <h1 class="page-title">
+            <span class="page-icon">✏️</span>
+            Edit Profile
+        </h1>
+    </div>
+
+    <div class="profile-edit-container">
+        <div class="card profile-card">
+            <div class="profile-picture-section">
+                <div class="profile-pic-wrapper">
+                    <img src="" alt="Profile Picture" id="profilePicPreview" class="profile-pic-large">
+                    <div class="profile-pic-overlay">
+                        <span>📷</span>
+                    </div>
+                </div>
+                <div class="profile-pic-actions">
+                    <label for="profilePicInput" class="btn btn-submit">
+                        <span class="btn-text">Upload Photo</span>
+                        <span class="btn-icon">📤</span>
+                    </label>
+                    <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                    <button type="button" id="removePhotoBtn" class="btn btn-danger">
+                        <span class="btn-text">Remove</span>
+                        <span class="btn-icon">🗑️</span>
+                    </button>
+                </div>
+            </div>
+
+            <form id="editProfileForm" class="profile-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" name="first_name" id="firstName" class="form-control" placeholder="Enter first name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" name="last_name" id="lastName" class="form-control" placeholder="Enter last name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter email address">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="Enter phone number">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea name="bio" id="bio" class="form-control" rows="4" placeholder="Tell us about yourself..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-submit">
+                        <span class="btn-text">Save Changes</span>
+                        <span class="btn-icon">💾</span>
+                    </button>
+                    <a href="/dashboard/" class="btn btn-secondary">
+                        <span class="btn-text">Cancel</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+if (!token) {
+    window.location.href = '/login/';
+}
+
+const apiHeaders = {
+    'Authorization': `Token ${token}`
+};
+
+// Set username in navbar
+document.getElementById('navUsername').textContent = user.username || 'User';
+
+// Load profile data
+async function loadProfile() {
+    try {
+        const response = await fetch('/api/auth/profile/', {
+            headers: apiHeaders
+        });
+        const data = await response.json();
+        
+        document.getElementById('firstName').value = data.first_name || '';
+        document.getElementById('lastName').value = data.last_name || '';
+        document.getElementById('email').value = data.email || '';
+        document.getElementById('phone').value = data.phone || '';
+        document.getElementById('bio').value = data.bio || '';
+        
+        // Set profile picture
+        const profilePicUrl = data.profile_picture || '/static/images/default-avatar.png';
+        document.getElementById('profilePicPreview').src = profilePicUrl;
+        document.getElementById('navProfilePic').src = profilePicUrl;
+    } catch (error) {
+        console.error('Error loading profile:', error);
+    }
+}
+
+// Handle profile picture upload
+document.getElementById('profilePicInput').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    // Preview
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('profilePicPreview').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    
+    // Upload
+    const formData = new FormData();
+    formData.append('profile_picture', file);
+    
+    try {
+        const response = await fetch('/api/auth/profile/update/', {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Token ${token}`
+            },
+            body: formData
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            showAlert('Profile picture updated successfully!', 'success');
+            document.getElementById('navProfilePic').src = result.profile_picture;
+        }
+    } catch (error) {
+        showAlert('Error uploading picture', 'error');
+    }
+});
+
+// Handle form submission
+document.getElementById('editProfileForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    try {
+        const response = await fetch('/api/auth/profile/update/', {
+            method: 'PATCH',
+            headers: {
+                ...apiHeaders,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+            showAlert('Profile updated successfully!', 'success');
+            setTimeout(() => window.location.href = '/dashboard/', 1500);
+        } else {
+            showAlert('Error updating profile', 'error');
+        }
+    } catch (error) {
+        showAlert('Network error', 'error');
+    }
+});
+
+// Remove photo
+document.getElementById('removePhotoBtn').addEventListener('click', async function() {
+    if (!confirm('Remove profile picture?')) return;
+    
+    try {
+        const response = await fetch('/api/auth/profile/update/', {
+            method: 'PATCH',
+            headers: {
+                ...apiHeaders,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ profile_picture: null })
+        });
+        
+        if (response.ok) {
+            const defaultPic = '/static/images/default-avatar.png';
+            document.getElementById('profilePicPreview').src = defaultPic;
+            document.getElementById('navProfilePic').src = defaultPic;
+            showAlert('Profile picture removed', 'success');
+        }
+    } catch (error) {
+        showAlert('Error removing picture', 'error');
+    }
+});
+
+// Dropdown toggle
+document.getElementById('profileBtn').addEventListener('click', function() {
+    document.getElementById('dropdownMenu').classList.toggle('show');
+});
+
+// Close dropdown when clicking outside
+window.addEventListener('click', function(e) {
+    if (!e.target.matches('.profile-btn') && !e.target.closest('.profile-dropdown')) {
+        document.getElementById('dropdownMenu').classList.remove('show');
+    }
+});
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', async function(e) {
+    e.preventDefault();
+    await fetch('/api/auth/logout/', {
+        method: 'POST',
+        headers: apiHeaders
+    });
+    localStorage.clear();
+    window.location.href = '/login/';
+});
+
+loadProfile();
+</script>
+{% endblock %}

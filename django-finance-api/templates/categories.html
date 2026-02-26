@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Categories - Finance Tracker{% endblock %}
+
+{% block content %}
+<div class="navbar">
+    <div class="navbar-content">
+        <div class="logo">
+            <span class="logo-icon">💰</span>
+            Finance<span>Tracker</span>
+        </div>
+        <div class="profile-dropdown">
+            <button class="profile-btn" id="profileBtn">
+                <img src="" alt="Profile" id="navProfilePic" class="profile-pic-small">
+                <span id="navUsername">User</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="/dashboard/" class="dropdown-item">
+                    <span class="dropdown-icon">🏠</span>
+                    Home
+                </a>
+                <a href="/dashboard/" class="dropdown-item">
+                    <span class="dropdown-icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="/categories/" class="dropdown-item active">
+                    <span class="dropdown-icon">📁</span>
+                    Categories
+                </a>
+                <a href="/edit-profile/" class="dropdown-item">
+                    <span class="dropdown-icon">✏️</span>
+                    Edit Profile
+                </a>
+                <a href="/change-password/" class="dropdown-item">
+                    <span class="dropdown-icon">🔒</span>
+                    Change Password
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" id="logoutBtn" class="dropdown-item">
+                    <span class="dropdown-icon">🚪</span>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container dashboard-container">
+    <div class="profile-header">
+        <h1 class="page-title">
+            <span class="page-icon">📁</span>
+            Manage Categories
+        </h1>
+        <p class="page-subtitle">Organize your income and expense categories</p>
+    </div>
+
+    <!-- Add Category Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-bottom: 40px;">
+        <div class="card form-card">
+            <h3 class="form-card-title">
+                <span class="form-icon">📈</span>
+                Add Income Category
+            </h3>
+            <form id="addIncomeCategoryForm" class="dashboard-form">
+                <div class="form-group">
+                    <label class="form-label">Category Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="e.g., Salary, Freelance" required>
+                </div>
+                <button type="submit" class="btn btn-submit">
+                    <span class="btn-text">Add Category</span>
+                    <span class="btn-icon">+</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="card form-card">
+            <h3 class="form-card-title">
+                <span class="form-icon">📉</span>
+                Add Expense Category
+            </h3>
+            <form id="addExpenseCategoryForm" class="dashboard-form">
+                <div class="form-group">
+                    <label class="form-label">Category Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="e.g., Food, Transport" required>
+                </div>
+                <button type="submit" class="btn btn-submit">
+                    <span class="btn-text">Add Category</span>
+                    <span class="btn-icon">+</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Categories Lists -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px;">
+        <div class="card">
+            <div class="transactions-header" style="margin-bottom: 20px;">
+                <h3 class="transactions-title">
+                    <span class="transactions-icon">📈</span>
+                    Income Categories
+                </h3>
+            </div>
+            <div id="incomeCategoriesList" class="categories-list">
+                <!-- Income categories will be loaded here -->
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="transactions-header" style="margin-bottom: 20px;">
+                <h3 class="transactions-title">
+                    <span class="transactions-icon">📉</span>
+                    Expense Categories
+                </h3>
+            </div>
+            <div id="expenseCategoriesList" class="categories-list">
+                <!-- Expense categories will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="editCategoryModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <span class="modal-icon">✏️</span>
+                Edit Category
+            </h3>
+            <button class="modal-close" onclick="closeEditModal()">&times;</button>
+        </div>
+        <form id="editCategoryForm" class="modal-form">
+            <input type="hidden" id="editCategoryId">
+            <input type="hidden" id="editCategoryType">
+            <div class="form-group">
+                <label class="form-label">Category Name</label>
+                <input type="text" id="editCategoryName" name="name" class="form-control" required>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                <button type="submit" class="btn btn-submit">
+                    <span class="btn-text">Save Changes</span>
+                    <span class="btn-icon">✓</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'js/categories.js' %}"></script>
+
+{% endblock %}

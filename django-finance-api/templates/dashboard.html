@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Dashboard - Finance Tracker{% endblock %}
 
 {% block content %}
@@ -9,10 +9,40 @@
             <span class="logo-icon">💰</span>
             Finance<span>Tracker</span>
         </div>
-        <ul class="nav-links">
-            <li><a href="#" id="userInfo">👤 User</a></li>
-            <li><a href="#" id="logoutBtn">Logout</a></li>
-        </ul>
+        <div class="profile-dropdown">
+            <button class="profile-btn" id="profileBtn">
+                <img src="" alt="Profile" id="navProfilePic" class="profile-pic-small">
+                <span id="navUsername">User</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="/dashboard/" class="dropdown-item active">
+                    <span class="dropdown-icon">🏠</span>
+                    Home
+                </a>
+                <a href="/dashboard/" class="dropdown-item active">
+                    <span class="dropdown-icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="/categories/" class="dropdown-item">
+                    <span class="dropdown-icon">📁</span>
+                    Categories
+                </a>
+                <a href="/edit-profile/" class="dropdown-item">
+                    <span class="dropdown-icon">✏️</span>
+                    Edit Profile
+                </a>
+                <a href="/change-password/" class="dropdown-item">
+                    <span class="dropdown-icon">🔒</span>
+                    Change Password
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" id="logoutBtn" class="dropdown-item">
+                    <span class="dropdown-icon">🚪</span>
+                    Logout
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -185,4 +215,5 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'js/dashboard.js' %}"></script>
+
 {% endblock %}

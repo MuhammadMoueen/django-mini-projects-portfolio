@@ -211,29 +211,18 @@ def monthly_report(request):
 @permission_classes([IsAuthenticated])
 def category_report(request):
     """
-    Generate category-wise breakdown of income and expenses.
-    Useful for analyzing spending patterns by category.
+    Generate category-wise breakdown of expenses for chart display.
+    Returns expense data grouped by category.
     """
     user = request.user
     
-    income_by_category = Income.objects.filter(user=user).values(
-        'category__name'
-    ).annotate(total=Sum('amount')).order_by('-total')
-    
+    # Get expense breakdown by category for pie chart
     expense_by_category = Expense.objects.filter(user=user).values(
         'category__name'
-    ).annotate(total=Sum('amount')).order_by('-total')
+    ).annotate(total_amount=Sum('amount')).order_by('-total_amount')
     
-    return Response({
-        'income_by_category': [
-            {'category': item['category__name'], 'total': float(item['total'])}
-            for item in income_by_category
-        ],
-        'expense_by_category': [
-            {'category': item['category__name'], 'total': float(item['total'])}
-            for item in expense_by_category
-        ]
-    })
+    # Return as list for chart
+    return Response(list(expense_by_category))
 
 def login_page(request):
     return render(request, 'login.html')
@@ -243,6 +232,15 @@ def signup_page(request):
 
 def dashboard_page(request):
     return render(request, 'dashboard.html')
+
+def categories_page(request):
+    return render(request, 'categories.html')
+
+def edit_profile_page(request):
+    return render(request, 'edit_profile.html')
+
+def change_password_page(request):
+    return render(request, 'change_password.html')
 
 
 

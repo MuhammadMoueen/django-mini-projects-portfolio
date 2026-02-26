@@ -15,7 +15,34 @@ const apiHeaders = {
 };
 
 // Display logged-in username
-document.getElementById('userInfo').textContent = user.username || 'User';
+document.getElementById('navUsername').textContent = user.username || 'User';
+
+// Load profile picture
+async function loadProfilePic() {
+    try {
+        const response = await fetch('/api/auth/profile/', {
+            headers: apiHeaders
+        });
+        const data = await response.json();
+        const profilePicUrl = data.profile_picture || '/static/images/default-avatar.png';
+        document.getElementById('navProfilePic').src = profilePicUrl;
+    } catch (error) {
+        document.getElementById('navProfilePic').src = '/static/images/default-avatar.png';
+    }
+}
+
+// Dropdown toggle
+document.getElementById('profileBtn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.getElementById('dropdownMenu').classList.toggle('show');
+});
+
+// Close dropdown when clicking outside
+window.addEventListener('click', function(e) {
+    if (!e.target.matches('.profile-btn') && !e.target.closest('.profile-dropdown')) {
+        document.getElementById('dropdownMenu').classList.remove('show');
+    }
+});
 
 // Logout handler
 document.getElementById('logoutBtn').addEventListener('click', async function(e) {
@@ -27,6 +54,8 @@ document.getElementById('logoutBtn').addEventListener('click', async function(e)
     localStorage.clear();
     window.location.href = '/login/';
 });
+
+loadProfilePic();
 
 // Chart instances
 let incomeExpenseChart = null;

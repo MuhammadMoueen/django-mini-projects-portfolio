@@ -12,6 +12,9 @@ urlpatterns = [
     path('login/', views.login_page, name='login_page'),
     path('signup/', views.signup_page, name='signup_page'),
     path('dashboard/', views.dashboard_page, name='dashboard'),
+    path('categories/', views.categories_page, name='categories'),
+    path('edit-profile/', views.edit_profile_page, name='edit_profile'),
+    path('change-password/', views.change_password_page, name='change_password'),
     
     path('api/auth/register/', views.register, name='register'),
     path('api/auth/login/', views.login, name='api_login'),
