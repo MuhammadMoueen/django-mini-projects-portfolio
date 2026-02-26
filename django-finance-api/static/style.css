@@ -126,31 +126,32 @@ body {
 
 .profile-btn {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50px;
-    padding: 8px 16px 8px 8px;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    border-radius: 12px;
+    padding: 10px 16px;
     color: var(--white);
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
 }
 
 .profile-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
     transform: translateY(-2px);
 }
 
 .profile-pic-small {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--white);
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .dropdown-arrow {

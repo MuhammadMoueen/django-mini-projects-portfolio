@@ -12,8 +12,7 @@
         <div class="profile-dropdown">
             <button class="profile-btn" id="profileBtn">
                 <img src="" alt="Profile" id="navProfilePic" class="profile-pic-small">
-                <span id="navUsername">User</span>
-                <span class="dropdown-arrow">▼</span>
+                <span id="navDisplayName" style="font-size: 11px; color: rgba(255,255,255,0.9);">User</span>
             </button>
             <div class="dropdown-menu" id="dropdownMenu">
                 <a href="/dashboard/" class="dropdown-item">
@@ -113,6 +112,31 @@
     </div>
 </div>
 
+<!-- Image Cropper Modal -->
+<div id="cropperModal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Crop Profile Picture</h3>
+            <button class="modal-close" onclick="closeCropperModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="max-height: 400px; overflow: hidden;">
+                <img id="cropperImage" style="max-width: 100%;">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeCropperModal()">Cancel</button>
+            <button class="btn btn-submit" onclick="cropAndUpload()">
+                <span class="btn-text">Crop & Upload</span>
+                <span class="btn-icon">✂️</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
 <script>
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -125,8 +149,16 @@ const apiHeaders = {
     'Authorization': `Token ${token}`
 };
 
-// Set username in navbar
-document.getElementById('navUsername').textContent = user.username || 'User';
+let cropper = null;
+let currentFile = null;
+
+// Set display name in navbar (username or full name)
+function updateNavbarName(data) {
+    const displayName = data.first_name && data.last_name 
+        ? `${data.first_name} ${data.last_name}` 
+        : data.username || user.username || 'User';
+    document.getElementById('navDisplayName').textContent = displayName;
+}
 
 // Load profile data
 async function loadProfile() {
@@ -146,44 +178,110 @@ async function loadProfile() {
         const profilePicUrl = data.profile_picture || '/static/images/default-avatar.svg';
         document.getElementById('profilePicPreview').src = profilePicUrl;
         document.getElementById('navProfilePic').src = profilePicUrl;
+        
+        // Update navbar display name
+        updateNavbarName(data);
     } catch (error) {
         console.error('Error loading profile:', error);
     }
 }
 
+// Open cropper modal
+function openCropperModal(file) {
+    currentFile = file;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const image = document.getElementById('cropperImage');
+        image.src = e.target.result;
+        document.getElementById('cropperModal').style.display = 'flex';
+        
+        // Initialize cropper
+        if (cropper) {
+            cropper.destroy();
+        }
+        cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 2,
+            autoCropArea: 1,
+            scalable: true,
+            zoomable: true,
+            cropBoxResizable: true,
+            background: false,
+        });
+    };
+    reader.readAsDataURL(file);
+}
+
+// Close cropper modal
+function closeCropperModal() {
+    document.getElementById('cropperModal').style.display = 'none';
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+    document.getElementById('profilePicInput').value = '';
+}
+
+// Crop and upload image
+async function cropAndUpload() {
+    if (!cropper) return;
+    
+    cropper.getCroppedCanvas({
+        width: 400,
+        height: 400,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
+    }).toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('profile_picture', blob, currentFile.name);
+        
+        try {
+            const response = await fetch('/api/auth/profile/update/', {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Token ${token}`
+                },
+                body: formData
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                const newPicUrl = result.profile_picture || '/static/images/default-avatar.svg';
+                
+                // Update both preview and navbar
+                document.getElementById('profilePicPreview').src = newPicUrl + '?t=' + Date.now();
+                document.getElementById('navProfilePic').src = newPicUrl + '?t=' + Date.now();
+                
+                closeCropperModal();
+                showAlert('Profile picture updated successfully!', 'success');
+            } else {
+                showAlert('Error uploading picture', 'error');
+            }
+        } catch (error) {
+            console.error('Upload error:', error);
+            showAlert('Network error', 'error');
+        }
+    }, 'image/jpeg', 0.9);
+}
+
 // Handle profile picture upload
-document.getElementById('profilePicInput').addEventListener('change', async function(e) {
+document.getElementById('profilePicInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
     
-    // Preview
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        document.getElementById('profilePicPreview').src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-    
-    // Upload
-    const formData = new FormData();
-    formData.append('profile_picture', file);
-    
-    try {
-        const response = await fetch('/api/auth/profile/update/', {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `Token ${token}`
-            },
-            body: formData
-        });
-        
-        if (response.ok) {
-            const result = await response.json();
-            showAlert('Profile picture updated successfully!', 'success');
-            document.getElementById('navProfilePic').src = result.profile_picture;
-        }
-    } catch (error) {
-        showAlert('Error uploading picture', 'error');
+    // Validate file type
+    if (!file.type.match('image.*')) {
+        showAlert('Please select an image file', 'error');
+        return;
     }
+    
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        showAlert('Image size should be less than 5MB', 'error');
+        return;
+    }
+    
+    openCropperModal(file);
 });
 
 // Handle form submission
@@ -204,6 +302,9 @@ document.getElementById('editProfileForm').addEventListener('submit', async func
         });
         
         if (response.ok) {
+            const result = await response.json();
+            // Update navbar display name
+            updateNavbarName(result);
             showAlert('Profile updated successfully!', 'success');
             setTimeout(() => window.location.href = '/dashboard/', 1500);
         } else {

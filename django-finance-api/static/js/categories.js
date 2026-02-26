@@ -14,10 +14,7 @@ const apiHeaders = {
     'Authorization': `Token ${token}`
 };
 
-// Display username
-document.getElementById('navUsername').textContent = user.username || 'User';
-
-// Load profile picture
+// Load profile picture and display name
 async function loadProfilePic() {
     try {
         const response = await fetch('/api/auth/profile/', {
@@ -26,8 +23,15 @@ async function loadProfilePic() {
         const data = await response.json();
         const profilePicUrl = data.profile_picture || '/static/images/default-avatar.svg';
         document.getElementById('navProfilePic').src = profilePicUrl;
+        
+        // Set display name (full name if available, otherwise username)
+        const displayName = data.first_name && data.last_name 
+            ? `${data.first_name} ${data.last_name}` 
+            : data.username || user.username || 'User';
+        document.getElementById('navDisplayName').textContent = displayName;
     } catch (error) {
         document.getElementById('navProfilePic').src = '/static/images/default-avatar.svg';
+        document.getElementById('navDisplayName').textContent = user.username || 'User';
     }
 }
 
