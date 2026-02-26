@@ -1,0 +1,327 @@
+/* UI Polish - Enhanced Effects, Shadows, and Consistency */
+
+/* Card enhancements with better shadows */
+.card {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* Stat cards polish */
+.stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(169, 169, 169, 0.6), rgba(211, 211, 211, 0.6));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Button enhancements with better hover effects */
+.btn-submit,
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-submit:hover,
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 0, 110, 0.4);
+}
+
+.btn-submit:active,
+.btn-primary:active,
+.btn-secondary:active,
+.btn-danger:active {
+    transform: translateY(0);
+}
+
+/* Form input polish */
+.form-control {
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.form-control:focus {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),
+                0 0 0 3px rgba(169, 169, 169, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Table improvements */
+table {
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+tbody tr {
+    transition: all 0.25s ease;
+}
+
+tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+    transform: translateX(3px);
+}
+
+th {
+    background: rgba(0, 0, 0, 0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Category item enhancements */
+.category-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 3px solid transparent;
+}
+
+.category-item:hover {
+    border-left-color: rgba(169, 169, 169, 0.8);
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateX(5px);
+}
+
+/* Modal polish */
+.modal-content {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Progress and loading animations */
+.loading {
+    animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Alert enhancements */
+.alert {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    animation: alertSlideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes alertSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tab button polish */
+.tab-btn {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(169, 169, 169, 0.8), rgba(211, 211, 211, 0.8));
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.tab-btn.active::after,
+.tab-btn:hover::after {
+    width: 80%;
+}
+
+/* Profile dropdown polish */
+.dropdown-menu {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-item {
+    position: relative;
+}
+
+.dropdown-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, rgba(169, 169, 169, 0.8), rgba(211, 211, 211, 0.8));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dropdown-item:hover::before {
+    opacity: 1;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+    background: rgba(169, 169, 169, 0.4);
+    color: #ffffff;
+}
+
+::-moz-selection {
+    background: rgba(169, 169, 169, 0.4);
+    color: #ffffff;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(169, 169, 169, 0.5);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(169, 169, 169, 0.7);
+}
+
+/* Focus visible improvements */
+*:focus-visible {
+    outline: 2px solid rgba(169, 169, 169, 0.6);
+    outline-offset: 2px;
+}
+
+/* Navbar polish */
+.navbar {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Logo animation enhancement */
+.logo-icon {
+    transition: transform 0.3s ease;
+}
+
+.logo:hover .logo-icon {
+    transform: scale(1.15) rotate(5deg);
+}
+
+/* Add subtle animations to page load */
+.dashboard-container,
+.auth-container {
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Transaction list improvements */
+.transactions-card {
+    position: relative;
+}
+
+.transactions-title {
+    letter-spacing: 0.3px;
+    font-weight: 600;
+}
+
+/* Form card improvements */
+.form-card-title {
+    letter-spacing: 0.2px;
+    font-weight: 600;
+}
+
+/* Improve link hover states */
+a:not(.btn) {
+    transition: all 0.2s ease;
+}
+
+a:not(.btn):hover {
+    opacity: 0.85;
+}
+
+/* Better spacing consistency */
+.dashboard-grid,
+.charts-grid,
+.dashboard-forms-grid {
+    margin-bottom: 30px;
+}
+
+/* Enhanced focus states for accessibility */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+    outline: 2px solid rgba(169, 169, 169, 0.6);
+    outline-offset: 2px;
+}
