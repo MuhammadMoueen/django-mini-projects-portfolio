@@ -1,5 +1,21 @@
 // Categories Management - Finance Tracker
 
+// Get CSRF token from cookie
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 // Authentication check
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -8,10 +24,13 @@ if (!token) {
     window.location.href = '/login/';
 }
 
+const csrftoken = getCookie('csrftoken');
+
 // API request headers
 const apiHeaders = {
     'Content-Type': 'application/json',
-    'Authorization': `Token ${token}`
+    'Authorization': `Token ${token}`,
+    'X-CSRFToken': csrftoken
 };
 
 // Load profile picture and display name
