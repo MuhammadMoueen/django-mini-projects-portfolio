@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Finance Tracker{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=2.0">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     {% block content %}{% endblock %}
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}?v=2.0"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
