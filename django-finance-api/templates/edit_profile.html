@@ -12,7 +12,7 @@
         <div class="profile-dropdown">
             <button class="profile-btn" id="profileBtn">
                 <img src="" alt="Profile" id="navProfilePic" class="profile-pic-small">
-                <span id="navDisplayName" style="font-size: 11px; color: rgba(255,255,255,0.9);">User</span>
+                <span id="navDisplayName" class="nav-display-name">User</span>
             </button>
             <div class="dropdown-menu" id="dropdownMenu">
                 <a href="/dashboard/" class="dropdown-item">
@@ -67,7 +67,7 @@
                         <span class="btn-text">Upload Photo</span>
                         <span class="btn-icon">📤</span>
                     </label>
-                    <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                    <input type="file" id="profilePicInput" accept="image/*" class="profile-pic-input-hidden">
                     <button type="button" id="removePhotoBtn" class="btn btn-danger">
                         <span class="btn-text">Remove</span>
                         <span class="btn-icon">🗑️</span>
@@ -117,15 +117,15 @@
 </div>
 
 <!-- Image Cropper Modal -->
-<div id="cropperModal" class="modal" style="display: none;">
-    <div class="modal-content" style="max-width: 600px;">
+<div id="cropperModal" class="modal cropper-modal-hidden">
+    <div class="modal-content cropper-modal-content">
         <div class="modal-header">
             <h3>Crop Profile Picture</h3>
             <button class="modal-close" onclick="closeCropperModal()">&times;</button>
         </div>
         <div class="modal-body">
-            <div style="max-height: 400px; overflow: hidden;">
-                <img id="cropperImage" style="max-width: 100%;">
+            <div class="cropper-image-container">
+                <img id="cropperImage" class="cropper-image-full-width">
             </div>
         </div>
         <div class="modal-footer">

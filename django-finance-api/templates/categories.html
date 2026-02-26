@@ -13,7 +13,7 @@
         <div class="profile-dropdown">
             <button class="profile-btn" id="profileBtn">
                 <img src="" alt="Profile" id="navProfilePic" class="profile-pic-small">
-                <span id="navDisplayName" style="font-size: 11px; color: rgba(255,255,255,0.9);">User</span>
+                <span id="navDisplayName" class="nav-display-name">User</span>
             </button>
             <div class="dropdown-menu" id="dropdownMenu">
                 <a href="/dashboard/" class="dropdown-item">
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Add Category Cards -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-bottom: 40px;">
+    <div class="categories-forms-grid">
         <div class="card form-card">
             <h3 class="form-card-title">
                 <span class="form-icon">📈</span>
@@ -93,9 +93,9 @@
     </div>
 
     <!-- Categories Lists -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px;">
+    <div class="categories-lists-grid">
         <div class="card">
-            <div class="transactions-header" style="margin-bottom: 20px;">
+            <div class="transactions-header categories-header-margin">
                 <h3 class="transactions-title">
                     <span class="transactions-icon">📈</span>
                     Income Categories
@@ -107,7 +107,7 @@
         </div>
 
         <div class="card">
-            <div class="transactions-header" style="margin-bottom: 20px;">
+            <div class="transactions-header categories-header-margin">
                 <h3 class="transactions-title">
                     <span class="transactions-icon">📉</span>
                     Expense Categories

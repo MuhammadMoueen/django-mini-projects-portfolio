@@ -13,7 +13,7 @@
         <div class="profile-dropdown">
             <button class="profile-btn" id="profileBtn">
                 <img src="" alt="Profile" id="navProfilePic" class="profile-pic-small">
-                <span id="navDisplayName" style="font-size: 11px; color: rgba(255,255,255,0.9);">User</span>
+                <span id="navDisplayName" class="nav-display-name">User</span>
             </button>
             <div class="dropdown-menu" id="dropdownMenu">
                 <a href="/dashboard/" class="dropdown-item active">
@@ -81,8 +81,8 @@
         </div>
         
         <div class="card chart-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 class="chart-title" style="margin: 0;">
+            <div class="chart-header-row">
+                <h3 class="chart-title chart-title-no-margin">
                     <span class="chart-icon">🥧</span>
                     Expense by Category
                 </h3>
@@ -94,10 +94,10 @@
         </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-top: 40px;">
+    <div class="dashboard-forms-grid">
         <div class="card form-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h3 class="form-card-title" style="margin: 0;">
+            <div class="form-header-row">
+                <h3 class="form-card-title form-card-title-no-margin">
                     <span class="form-icon">💵</span>
                     Add Income
                 </h3>
@@ -174,7 +174,7 @@
         </div>
     </div>
 
-    <div class="card transactions-card" style="margin-top: 40px;">
+    <div class="card transactions-card transactions-card-top-margin">
         <div class="transactions-header">
             <h3 class="transactions-title">
                 <span class="transactions-icon">📋</span>
@@ -209,7 +209,7 @@
             </div>
         </div>
         
-        <div id="expenseList" class="transaction-list" style="display: none;">
+        <div id="expenseList" class="transaction-list transaction-list-hidden">
             <div class="table-container">
                 <table>
                     <thead>
