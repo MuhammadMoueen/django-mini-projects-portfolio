@@ -1,0 +1,98 @@
+/* Dashboard Chart Enhancements - Professional Styling */
+
+/* Chart container improvements */
+.chart-card {
+    max-height: 450px;
+}
+
+.chart-card canvas {
+    max-height: 350px !important;
+}
+
+/* Smaller, more compact chart sizing */
+#incomeExpenseChart {
+    max-height: 280px !important;
+    width: 100% !important;
+}
+
+#categoryChart {
+    max-height: 320px !important;
+    width: 100% !important;
+}
+
+/* Chart title improvements */
+.chart-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #d3d3d3;
+    letter-spacing: 0.3px;
+}
+
+.chart-icon {
+    opacity: 0.9;
+}
+
+/* Chart grid enhancements */
+.charts-grid {
+    gap: 25px;
+}
+
+.chart-card {
+    transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive chart sizing */
+@media (max-width: 1024px) {
+    .chart-card canvas {
+        max-height: 300px !important;
+    }
+    
+    #incomeExpenseChart {
+        max-height: 240px !important;
+    }
+    
+    #categoryChart {
+        max-height: 280px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-card canvas {
+        max-height: 280px !important;
+    }
+    
+    #incomeExpenseChart {
+        max-height: 220px !important;
+    }
+    
+    #categoryChart {
+        max-height: 260px !important;
+    }
+    
+    .chart-title {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chart-card {
+        max-height: 400px;
+    }
+    
+    .chart-card canvas {
+        max-height: 250px !important;
+    }
+    
+    #incomeExpenseChart {
+        max-height: 200px !important;
+    }
+    
+    #categoryChart {
+        max-height: 230px !important;
+    }
+}
