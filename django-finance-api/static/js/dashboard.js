@@ -106,7 +106,7 @@ async function loadSummary() {
 // Initialize and update charts
 async function updateCharts(summaryData) {
     try {
-        // Income vs Expense Chart
+        // Income vs Expense Chart - Professional Black/White/Grey Theme
         if (incomeExpenseChart) {
             incomeExpenseChart.destroy();
         }
@@ -120,42 +120,59 @@ async function updateCharts(summaryData) {
                     label: 'Amount ($)',
                     data: [summaryData.total_income, summaryData.total_expense],
                     backgroundColor: [
-                        'rgba(0, 255, 136, 0.6)',
-                        'rgba(255, 0, 110, 0.6)'
+                        'rgba(169, 169, 169, 0.85)',
+                        'rgba(64, 64, 64, 0.85)'
                     ],
                     borderColor: [
-                        'rgba(0, 255, 136, 1)',
-                        'rgba(255, 0, 110, 1)'
+                        'rgba(211, 211, 211, 1)',
+                        'rgba(96, 96, 96, 1)'
                     ],
                     borderWidth: 2,
-                    borderRadius: 10
+                    borderRadius: 8,
+                    barThickness: 60
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
+                aspectRatio: 2,
+                animation: {
+                    duration: 1000,
+                    easing: 'easeInOutQuart'
+                },
                 plugins: {
                     legend: {
                         display: false
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(26, 26, 46, 0.9)',
-                        titleColor: '#fff',
-                        bodyColor: '#fff',
-                        borderColor: 'rgba(108, 99, 255, 0.5)',
+                        backgroundColor: 'rgba(40, 40, 40, 0.95)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#e8e8e8',
+                        borderColor: 'rgba(169, 169, 169, 0.5)',
                         borderWidth: 1,
-                        padding: 12,
-                        displayColors: false
+                        padding: 14,
+                        displayColors: false,
+                        titleFont: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 13
+                        }
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: 'rgba(108, 99, 255, 0.1)'
+                            color: 'rgba(169, 169, 169, 0.15)',
+                            borderColor: 'rgba(128, 128, 128, 0.3)'
                         },
                         ticks: {
-                            color: '#e8e8e8',
+                            color: '#b8b8b8',
+                            font: {
+                                size: 12
+                            },
                             callback: function(value) {
                                 return '$' + value.toLocaleString();
                             }
@@ -163,13 +180,14 @@ async function updateCharts(summaryData) {
                     },
                     x: {
                         grid: {
-                            display: false
+                            display: false,
+                            borderColor: 'rgba(128, 128, 128, 0.3)'
                         },
                         ticks: {
-                            color: '#e8e8e8',
+                            color: '#d3d3d3',
                             font: {
-                                size: 14,
-                                weight: 'bold'
+                                size: 13,
+                                weight: '600'
                             }
                         }
                     }
@@ -205,14 +223,14 @@ async function updateCategoryChart() {
         const labels = filteredData.map(item => item.category__name);
         const amounts = filteredData.map(item => item.total_amount);
         
-        // Generate vibrant colors
+        // Professional grey scale colors with subtle variations
         const colors = [
-            'rgba(108, 99, 255, 0.8)',
-            'rgba(0, 212, 255, 0.8)',
-            'rgba(255, 0, 110, 0.8)',
-            'rgba(0, 255, 136, 0.8)',
-            'rgba(255, 136, 0, 0.8)',
-            'rgba(255, 0, 255, 0.8)'
+            'rgba(96, 96, 96, 0.90)',
+            'rgba(128, 128, 128, 0.90)',
+            'rgba(169, 169, 169, 0.90)',
+            'rgba(192, 192, 192, 0.90)',
+            'rgba(211, 211, 211, 0.90)',
+            'rgba(224, 224, 224, 0.90)'
         ];
         
         const ctx2 = document.getElementById('categoryChart').getContext('2d');
@@ -223,23 +241,35 @@ async function updateCategoryChart() {
                 datasets: [{
                     data: amounts.length > 0 ? amounts : [1],
                     backgroundColor: colors,
-                    borderColor: 'rgba(26, 26, 46, 1)',
-                    borderWidth: 3,
-                    hoverOffset: 15
+                    borderColor: 'rgba(40, 40, 40, 0.8)',
+                    borderWidth: 2,
+                    hoverOffset: 12,
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: 'rgba(255, 255, 255, 0.9)'
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
+                aspectRatio: 1.8,
+                animation: {
+                    animateRotate: true,
+                    animateScale: true,
+                    duration: 1200,
+                    easing: 'easeInOutQuart'
+                },
                 plugins: {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: '#e8e8e8',
-                            padding: 15,
+                            color: '#c8c8c8',
+                            padding: 12,
                             font: {
-                                size: 12
+                                size: 11,
+                                weight: '500'
                             },
+                            usePointStyle: true,
+                            pointStyle: 'circle',
                             generateLabels: function(chart) {
                                 const data = chart.data;
                                 if (data.labels.length && data.datasets.length) {
@@ -258,12 +288,19 @@ async function updateCategoryChart() {
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(26, 26, 46, 0.9)',
-                        titleColor: '#fff',
-                        bodyColor: '#fff',
-                        borderColor: 'rgba(108, 99, 255, 0.5)',
+                        backgroundColor: 'rgba(40, 40, 40, 0.95)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#e8e8e8',
+                        borderColor: 'rgba(169, 169, 169, 0.5)',
                         borderWidth: 1,
-                        padding: 12,
+                        padding: 14,
+                        titleFont: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 13
+                        },
                         callbacks: {
                             label: function(context) {
                                 const label = context.label || '';
@@ -275,7 +312,7 @@ async function updateCategoryChart() {
                         }
                     }
                 },
-                cutout: '65%'
+                cutout: '60%'
             }
         });
     } catch (error) {
