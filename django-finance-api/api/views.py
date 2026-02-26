@@ -119,6 +119,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name']
     ordering_fields = ['name', 'created_at']
+    pagination_class = None
 
     def get_queryset(self):
         queryset = Category.objects.filter(user=self.request.user)

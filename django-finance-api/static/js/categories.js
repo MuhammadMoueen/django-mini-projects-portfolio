@@ -86,7 +86,15 @@ async function loadCategories() {
         const response = await fetch('/api/categories/', {
             headers: apiHeaders
         });
-        const categories = await response.json();
+        
+        if (!response.ok) {
+            throw new Error('Failed to load categories');
+        }
+        
+        const data = await response.json();
+        
+        // Handle paginated response from DRF
+        const categories = data.results || data;
         
         const incomeCategories = categories.filter(c => c.category_type === 'income');
         const expenseCategories = categories.filter(c => c.category_type === 'expense');
