@@ -20,6 +20,8 @@ urlpatterns = [
     path('api/auth/login/', views.login, name='api_login'),
     path('api/auth/logout/', views.logout, name='logout'),
     path('api/auth/profile/', views.profile, name='profile'),
+    path('api/auth/profile/update/', views.update_profile, name='update_profile'),
+    path('api/auth/change-password/', views.change_password, name='change_password'),
     
     path('api/summary/', views.financial_summary, name='financial_summary'),
     path('api/monthly-report/', views.monthly_report, name='monthly_report'),

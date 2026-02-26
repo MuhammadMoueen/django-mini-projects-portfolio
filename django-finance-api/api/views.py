@@ -7,10 +7,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from .models import Category, Income, Expense
+from .models import Category, Income, Expense, UserProfile
 from .serializers import (
     UserRegistrationSerializer, UserLoginSerializer, UserSerializer,
-    CategorySerializer, IncomeSerializer, ExpenseSerializer
+    UserProfileSerializer, CategorySerializer, IncomeSerializer, ExpenseSerializer
 )
 
 @api_view(['POST'])
@@ -74,10 +74,51 @@ def logout(request):
 @permission_classes([IsAuthenticated])
 def profile(request):
     """
-    Get current user's profile information.
+    Get current user's profile information including extended profile data.
     """
-    serializer = UserSerializer(request.user)
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    serializer = UserProfileSerializer(user_profile, context={'request': request})
     return Response(serializer.data)
+
+@api_view(['PATCH', 'PUT'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    """
+    Update user profile information including profile picture.
+    """
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    serializer = UserProfileSerializer(user_profile, data=request.data, partial=True, context={'request': request})
+    
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    """
+    Change user password with validation.
+    """
+    old_password = request.data.get('old_password')
+    new_password = request.data.get('new_password')
+    
+    if not old_password or not new_password:
+        return Response({'error': 'Both old and new passwords are required'}, 
+                       status=status.HTTP_400_BAD_REQUEST)
+    
+    if not request.user.check_password(old_password):
+        return Response({'error': 'Current password is incorrect'}, 
+                       status=status.HTTP_400_BAD_REQUEST)
+    
+    if len(new_password) < 8:
+        return Response({'error': 'New password must be at least 8 characters long'}, 
+                       status=status.HTTP_400_BAD_REQUEST)
+    
+    request.user.set_password(new_password)
+    request.user.save()
+    
+    return Response({'message': 'Password changed successfully'})
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """

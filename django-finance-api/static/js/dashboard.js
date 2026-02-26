@@ -24,10 +24,10 @@ async function loadProfilePic() {
             headers: apiHeaders
         });
         const data = await response.json();
-        const profilePicUrl = data.profile_picture || '/static/images/default-avatar.png';
+        const profilePicUrl = data.profile_picture || '/static/images/default-avatar.svg';
         document.getElementById('navProfilePic').src = profilePicUrl;
     } catch (error) {
-        document.getElementById('navProfilePic').src = '/static/images/default-avatar.png';
+        document.getElementById('navProfilePic').src = '/static/images/default-avatar.svg';
     }
 }
 

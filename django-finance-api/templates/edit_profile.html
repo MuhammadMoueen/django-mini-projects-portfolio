@@ -143,7 +143,7 @@ async function loadProfile() {
         document.getElementById('bio').value = data.bio || '';
         
         // Set profile picture
-        const profilePicUrl = data.profile_picture || '/static/images/default-avatar.png';
+        const profilePicUrl = data.profile_picture || '/static/images/default-avatar.svg';
         document.getElementById('profilePicPreview').src = profilePicUrl;
         document.getElementById('navProfilePic').src = profilePicUrl;
     } catch (error) {
@@ -229,7 +229,7 @@ document.getElementById('removePhotoBtn').addEventListener('click', async functi
         });
         
         if (response.ok) {
-            const defaultPic = '/static/images/default-avatar.png';
+            const defaultPic = '/static/images/default-avatar.svg';
             document.getElementById('profilePicPreview').src = defaultPic;
             document.getElementById('navProfilePic').src = defaultPic;
             showAlert('Profile picture removed', 'success');
@@ -243,6 +243,30 @@ document.getElementById('removePhotoBtn').addEventListener('click', async functi
 document.getElementById('profileBtn').addEventListener('click', function() {
     document.getElementById('dropdownMenu').classList.toggle('show');
 });
+
+// Show alert messages
+function showAlert(message, type) {
+    const existingAlert = document.querySelector('.alert-message');
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+    
+    const alert = document.createElement('div');
+    alert.className = `alert-message alert-${type}`;
+    alert.innerHTML = `
+        <span>${message}</span>
+        <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>
+    `;
+    
+    document.body.appendChild(alert);
+    
+    setTimeout(() => {
+        if (alert.parentElement) {
+            alert.classList.add('fade-out');
+            setTimeout(() => alert.remove(), 300);
+        }
+    }, 5000);
+}
 
 // Close dropdown when clicking outside
 window.addEventListener('click', function(e) {

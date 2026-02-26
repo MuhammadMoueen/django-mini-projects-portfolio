@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import EmailValidator
 from rest_framework import serializers
-from .models import Category, Income, Expense
+from .models import Category, Income, Expense, UserProfile
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -45,11 +45,58 @@ class UserLoginSerializer(serializers.Serializer):
 
 class UserSerializer(serializers.ModelSerializer):
     """
-    Serializer for user profile information.
+    Serializer for user basic information.
     """
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name', 'last_name']
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    """
+    Serializer for complete user profile with extended fields.
+    """
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.EmailField(source='user.email')
+    first_name = serializers.CharField(source='user.first_name', allow_blank=True)
+    last_name = serializers.CharField(source='user.last_name', allow_blank=True)
+    profile_picture = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'email', 'first_name', 'last_name', 'profile_picture', 'bio', 'phone']
+    
+    def get_profile_picture(self, obj):
+        if obj.profile_picture:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.profile_picture.url)
+        return None
+    
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', {})
+        user = instance.user
+        
+        # Update user fields
+        if 'email' in user_data:
+            user.email = user_data['email']
+        if 'first_name' in user_data:
+            user.first_name = user_data['first_name']
+        if 'last_name' in user_data:
+            user.last_name = user_data['last_name']
+        user.save()
+        
+        # Update profile fields
+        instance.bio = validated_data.get('bio', instance.bio)
+        instance.phone = validated_data.get('phone', instance.phone)
+        
+        # Handle profile picture from request.FILES
+        request = self.context.get('request')
+        if request and request.FILES.get('profile_picture'):
+            instance.profile_picture = request.FILES['profile_picture']
+        
+        instance.save()
+        
+        return instance
 
 class CategorySerializer(serializers.ModelSerializer):
     """
