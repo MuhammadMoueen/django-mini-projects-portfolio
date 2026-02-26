@@ -1,0 +1,85 @@
+/* Extracted inline styles from templates */
+
+/* User display name styling */
+.nav-display-name {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Dashboard layout enhancements */
+.dashboard-forms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.form-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-card-title-no-margin {
+    margin: 0;
+}
+
+.chart-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.chart-title-no-margin {
+    margin: 0;
+}
+
+.transactions-card-top-margin {
+    margin-top: 40px;
+}
+
+.transaction-list-hidden {
+    display: none;
+}
+
+/* Categories page layout */
+.categories-forms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.categories-lists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+}
+
+.categories-header-margin {
+    margin-bottom: 20px;
+}
+
+/* Edit profile specific */
+.profile-pic-input-hidden {
+    display: none;
+}
+
+.cropper-modal-hidden {
+    display: none;
+}
+
+.cropper-modal-content {
+    max-width: 600px;
+}
+
+.cropper-image-container {
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.cropper-image-full-width {
+    max-width: 100%;
+}
