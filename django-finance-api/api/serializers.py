@@ -5,9 +5,6 @@ from .models import Category, Income, Expense, UserProfile
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    """
-    Serializer for user registration with password validation.
-    """
     password = serializers.CharField(write_only=True, min_length=8)
     password2 = serializers.CharField(write_only=True, min_length=8)
     email = serializers.EmailField(required=True, validators=[EmailValidator()])
@@ -37,24 +34,15 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 class UserLoginSerializer(serializers.Serializer):
-    """
-    Serializer for user authentication.
-    """
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
 
 class UserSerializer(serializers.ModelSerializer):
-    """
-    Serializer for user basic information.
-    """
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name', 'last_name']
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    """
-    Serializer for complete user profile with extended fields.
-    """
     username = serializers.CharField(source='user.username', read_only=True)
     email = serializers.EmailField(source='user.email')
     first_name = serializers.CharField(source='user.first_name', allow_blank=True)
@@ -87,34 +75,73 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user.save()
         
         # Update profile fields
-        instance.bio = validated_data.get('bio', instance.bio)
-        instance.phone = validated_data.get('phone', instance.phone)
+        if 'bio' in validated_data:
+            instance.bio = validated_data['bio']
+        if 'phone' in validated_data:
+            instance.phone = validated_data['phone']
         
-        # Handle profile picture upload
+        # Handle profile picture upload/removal
         if 'profile_picture' in validated_data:
-            instance.profile_picture = validated_data['profile_picture']
+            profile_picture = validated_data['profile_picture']
+            if profile_picture is None:
+                # Delete old picture when removing
+                if instance.profile_picture:
+                    instance.profile_picture.delete(save=False)
+                instance.profile_picture = None
+            else:
+                # Delete old picture when uploading new one
+                if instance.profile_picture:
+                    instance.profile_picture.delete(save=False)
+                instance.profile_picture = profile_picture
         
         instance.save()
-        
         return instance
 
 class CategorySerializer(serializers.ModelSerializer):
-    """
-    Serializer for category management.
-    """
     class Meta:
         model = Category
         fields = ['id', 'name', 'category_type', 'created_at']
         read_only_fields = ['created_at']
+
+    def validate_name(self, value):
+        return value.strip()
+
+    def validate_category_type(self, value):
+        if value not in ['income', 'expense']:
+            raise serializers.ValidationError("Category type must be 'income' or 'expense'")
+        return value
+
+    def validate(self, data):
+        user = self.context['request'].user
+        name = data.get('name', '').strip()
+        category_type = data.get('category_type')
+        
+        if self.instance is None:
+            if Category.objects.filter(
+                user=user,
+                name__iexact=name,
+                category_type=category_type
+            ).exists():
+                raise serializers.ValidationError({
+                    'name': f"You already have a {category_type} category named '{name}'"
+                })
+        else:
+            if Category.objects.filter(
+                user=user,
+                name__iexact=name,
+                category_type=category_type
+            ).exclude(id=self.instance.id).exists():
+                raise serializers.ValidationError({
+                    'name': f"You already have a {category_type} category named '{name}'"
+                })
+        
+        return data
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
         return super().create(validated_data)
 
 class IncomeSerializer(serializers.ModelSerializer):
-    """
-    Serializer for income transactions with validation.
-    """
     category_name = serializers.CharField(source='category.name', read_only=True)
     
     class Meta:
@@ -139,9 +166,6 @@ class IncomeSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class ExpenseSerializer(serializers.ModelSerializer):
-    """
-    Serializer for expense transactions with validation.
-    """
     category_name = serializers.CharField(source='category.name', read_only=True)
     
     class Meta:
