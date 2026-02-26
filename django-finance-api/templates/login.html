@@ -97,10 +97,34 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             showAlert('Login successful!', 'success');
             setTimeout(() => window.location.href = '/dashboard/', 1000);
         } else {
-            showAlert(result.error || 'Login failed', 'error');
+            let errorMsg = 'Login failed';
+            if (result.error) {
+                errorMsg = result.error;
+            } else if (result.errors) {
+                const errors = [];
+                for (const [field, messages] of Object.entries(result.errors)) {
+                    if (Array.isArray(messages)) {
+                        errors.push(...messages);
+                    } else {
+                        errors.push(messages);
+                    }
+                }
+                errorMsg = errors.join(', ');
+            } else if (result.message) {
+                errorMsg = result.message;
+            }
+            showAlert(errorMsg, 'error');
         }
     } catch (error) {
+        console.error('Error:', error);
         showAlert('Network error. Please try again.', 'error');
+    } finally {
+        // Reset button state
+        const submitBtn = document.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.innerHTML = '<span class="btn-text">Submit</span><span class="btn-arrow">→</span>';
+            submitBtn.disabled = false;
+        }
     }
 });
 </script>
