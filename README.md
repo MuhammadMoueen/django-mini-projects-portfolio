@@ -1,5 +1,5 @@
 ﻿# 🚀 Django Mini Projects Portfolio
-
+Hello Test
 <div align="center">
 
 ![Django](https://img.shields.io/badge/Django-5.2.7-092E20?style=for-the-badge&logo=django&logoColor=white)
