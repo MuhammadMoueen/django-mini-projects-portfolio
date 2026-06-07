@@ -16,11 +16,6 @@
 
 ---
 
-
-
-
-
-
 ## 📋 Table of Contents
 
 - [About](#-about)
