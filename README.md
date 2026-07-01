@@ -1,5 +1,5 @@
 ﻿# 🚀 Django Mini Projects Portfolio
-
+Project
 <div align="center">
 
   
