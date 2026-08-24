@@ -1,4 +1,4 @@
-﻿# 🚀 Django Mini Projects Portfolio.
+﻿# 🚀 Django Mini Projects Portfolio
 
 <div align="center">
   
